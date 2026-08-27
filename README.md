@@ -19,7 +19,7 @@ dos recursos disponíveis.
 
 <div align="center">
 
- [Sobre](#-sobre-o-projeto) • [Design](#-processo-de-design) • [Entregas](#-entregas) • [Como Rodar](#-como-rodar-o-projeto) • [Equipe](#-equipe)
+ `🌐 Sobre` · `🧭 Como Funciona` · `🛰️ Stack` · `📶 Ciclos de Entrega` · `⚙️ Rodando` · `🧑‍🚀 Equipe`
 
  </div>
 
