@@ -54,13 +54,19 @@ dos recursos disponíveis.
 
 ## 👥 Membros da equipe
 
-| Nome completo | E-mail CESAR School |
 | Letícia Almeida | laas2@cesar.school |
+
 | Letícia Dornas de Araújo | lda2@cesar.school |
+
 | Manuela Brayner Medeiros | mbma3@cesar.school |
+
 | Maria Júlia Oliveira Dionísio | mjod@cesar.school |
+
 | Maria Monalysa da Silva | mms2@cesar.school |
+
 | Matheus Araújo | mag3@cesar.school |
+
 | Milena Siqueira Araujo | msa4@cesar.school |
+
 | Rafaela Dubeux Godoy | rdg@cesar.school |
 
