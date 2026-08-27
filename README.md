@@ -34,6 +34,16 @@ Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode 
  
 ---
 
+## 🛰️ Stack do Projeto
+ 
+| Camada | Ferramentas |
+|---|---|
+| 🖥️ **Produto** | *[a definir]* |
+| 🎨 **Design** | Figma (UI, protótipo e design system) · *[outras ferramentas a definir]* |
+| 🗂️ **Gestão & Versionamento** | Git / GitHub · Jira |
+ 
+---
+
 ## 🛠️ Tecnologias Usadas
  
 **Produto**
