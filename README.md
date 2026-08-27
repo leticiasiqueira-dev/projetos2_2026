@@ -1,6 +1,10 @@
-# projetos2_2026
+[NOME DO PROJETO]
 
-# BizuTech IoT
+
+## Sobre a empresa BizuTech
+
+## O que são IoTs?
+
 
 ## 📌 Descrição do projeto
 
@@ -56,8 +60,3 @@ dos recursos disponíveis.
 | Nome do integrante 2 | email@cesar.school |
 | Nome do integrante 3 | email@cesar.school |
 
-## 👤 Membros anteriores
-
-| Nome completo | E-mail CESAR School | Entrada | Saída |
-|---|---|---|---|
-| — | — | — | — |
