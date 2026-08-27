@@ -19,11 +19,11 @@ dos recursos disponíveis.
 
 <div align="center">
 
- `🌐 Sobre` · `🧭 Como Funciona` · `🛰️ Stack` · `📶 Ciclos de Entrega` · `⚙️ Rodando` · `🧑‍🚀 Equipe`
+ `🌐 Sobre` · `🧭 Como Funciona` · `🛰️ Stack` · `📶 Ciclos de Entrega` · `⚙️ Rodando` · `👥 Equipe`
 
  </div>
 
-## 📌 Sobre o Projeto
+## 🌐 Sobre o Projeto
 Boa parte das empresas ainda opera com uma visão parcial do próprio negócio: informações sobre máquinas, processos, infraestrutura e ambiente de trabalho não são acompanhadas de forma contínua, o que dificulta identificar gargalos e antecipar problemas.
  
 Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode preencher essa lacuna, permitindo captar dados operacionais em tempo real e convertê-los em ganhos concretos de produtividade e automação — traduzindo tecnologia em uma experiência de gestão simples e acessível para empresas que ainda não enxergam IoT como ferramenta de decisão.
@@ -41,14 +41,16 @@ Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode 
 
 ---
 
+## 📶 Ciclos de Entrega
+
 ### 📦 Entrega 01
 
 Análise de competidores e definição inicial dos requisitos do produto.
 
 ### Artefatos
 
-- [Documento de análise de competidores](#)
-- [Print do quadro da sprint](#)
+- 📄 [Documento de análise de competidores](#)
+- 🖼️ [Print do quadro da sprint](#)
 
 ### 📦 Entrega 02
 
@@ -56,35 +58,37 @@ Implementação da infraestrutura básica da aplicação e deploy em produção.
 
 ### Artefatos
 
-- [Screencast do uso do sistema](#)
-- [Screencast de explicação do código](#)
-- [Print do bug tracker](#)
-- [Print do quadro da Sprint 02](#)
+- 🎥 [Screencast do uso do sistema](#)
+- 🎥 [Screencast de explicação do código](#)
+- 🖼️ [Print do bug tracker](#)
+- 🖼️ [Print do quadro da Sprint 02](#)
 
 ### Entrega 03
 
 Definição das histórias de usuário e implementação das primeiras histórias selecionadas.
  
 **Artefatos / Screenshots:**
-- [Documento de histórias de usuário](#)
-- [Print do backlog (Jira)](#)
-- [Screencast das histórias implementadas](#)
-- [Screencast de explicação do código](#)
-- [Print do quadro da Sprint 03](#)
+
+- 📄 [Documento de histórias de usuário](#)
+- 🖼️ [Print do backlog (Jira)](#)
+- 🎥 [Screencast das histórias implementadas](#)
+- 🎥 [Screencast de explicação do código](#)
+- 🖼️ [Print do quadro da Sprint 03](#)
+  
 ### Entrega 04
  
 Implementação das histórias restantes, testes automatizados e pipeline de CI/CD.
  
 **Artefatos / Screenshots:**
-- [Screencast do deployment das novas histórias](#)
-- [Screencast dos testes E2E (Selenium)](#)
-- [Screencast do processo de CI/CD](#)
-- [Screencast de explicação do código](#)
-- [Print do quadro da Sprint 04](#)
+- 🎥 [Screencast do deployment das novas histórias](#)
+- 🧪 [Screencast dos testes E2E (Selenium)](#)
+- 🔁 [Screencast do processo de CI/CD](#)
+- 🎥 [Screencast de explicação do código](#)
+- 🖼️ [Print do quadro da Sprint 04](#)
 
 ---
 
-## ▶️ Como rodar o projeto
+## ⚙️ Como rodar o projeto
 
 1. Clone o repositório:
 ```bash
@@ -138,14 +142,15 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
  
 ---
  
-## 🏢 Parceria
+## 🤝 Parceiro
  
 **BzuTech** — tecnologia de IoT voltada à eficiência operacional das empresas.
  
-## 📋 Acompanhamento do Projeto
+## 📡 Painéis de Acompanhamento
  
-- **Jira:** [link do quadro](#)
-- **Figma:** [link do protótipo](#)
+- 🗂️ **Jira:** [link do quadro](#)
+- 🎨 **Figma:** [link do protótipo](#)
+
 ## 📄 Licença
  
 *[Preencher conforme o projeto avançar]*
