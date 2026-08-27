@@ -28,6 +28,12 @@ Boa parte das empresas ainda opera com uma visão parcial do próprio negócio: 
  
 Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode preencher essa lacuna, permitindo captar dados operacionais em tempo real e convertê-los em ganhos concretos de produtividade e automação — traduzindo tecnologia em uma experiência de gestão simples e acessível para empresas que ainda não enxergam IoT como ferramenta de decisão.
 
+## 🧭 Como Funciona
+
+ - *[a definir]*
+ 
+---
+
 ## 🛠️ Tecnologias Usadas
  
 **Produto**
