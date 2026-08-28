@@ -1,17 +1,18 @@
-📊 Relatório de Análise de Competidores
+## Relatório de Análise de Competidores 📊
 
-📌 Introdução
+### Introdução 📌
 Este documento tem como objetivo mapear e comparar soluções de mercado do segmento de IoT (Internet das Coisas) e sensoriamento industrial, servindo de referência para o desenvolvimento do nosso projeto.O escopo da análise abrange plataformas brasileiras que oferecem hardware (sensores, gateways, dataloggers) integrado a software de monitoramento em nuvem, voltadas para setores como indústria 4.0, saneamento, agronegócio, energia e facilities — o mesmo nicho em que nosso produto está inserido.
-
-Foram analisados os seguintes produtos:
+#
+### Foram analisados os seguintes produtos:
 
 - Produto A — Bzu Tech (Bzu Cloud)
 - Produto B — Allexo (Plataforma IoTHINGS)
 - Produto C - IotControl (Plataforma IoTControl)
 - Produto D - TechFab (Plataforma TechFab)
 
+#
 
-📦 Produtos Analisados
+### Produtos Analisados 📦
 
 🅰️ Produto A — Bzu Tech
 <p align="left"> <img src="https://static.wixstatic.com/media/db1550_ed1c30f522fd44c58a52ef417b4c0b76~mv2.png" alt="Logo Bzu Tech" width="160"/> </p>
