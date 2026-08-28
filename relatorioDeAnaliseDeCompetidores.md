@@ -72,8 +72,7 @@ A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em trê
 #
 
 ### Fotos e Recursos Visuais:
-
-
+<img src="https://lh3.googleusercontent.com/d/1QJPEfGa6p0MzcCzrXOP9k3_ZrlRGdFce" alt="Captura de Tela" width="400" />
 #
 
 ### Pontos Fortes:
@@ -104,7 +103,7 @@ A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
 
 #
 ## Fotos e Recursos Visuais
- 
+<img src="https://lh3.googleusercontent.com/d/1AmXZHsIVMtU1jghDew_8i9lh-jsvEZcr" alt="TechFab 1" width="400" /> <img src="https://lh3.googleusercontent.com/d/13cGfVb4Tl0eHkVA_k0w2njFQnb40g6Qp" alt="TechFab 2" width="300" />
 #
  
 ## Pontos Fortes
