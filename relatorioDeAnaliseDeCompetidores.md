@@ -144,3 +144,8 @@ A solução segue um fluxo de monitoramento composto pela coleta de dados por se
 - Forte direcionamento para aplicações industriais e telemetria, podendo apresentar menor abrangência em relação a soluções voltadas também para cidades inteligentes, edifícios e outros ambientes.
 - O site apresenta informações sobre as tecnologias e soluções, mas não deixa tão evidente os planos e preços, dificultando uma comparação direta de custo.
 - A comunicação é mais voltada ao público técnico/industrial, o que pode tornar a solução menos intuitiva para usuários sem conhecimento de IoT.
+
+## 📊 Benchmarking dos concorrentes
+| Critério       | Bzu Tech | Allexo | IoTControl | TechFab | Carmel Tecnologia |
+|----------------|----------|--------|------------|---------|-------------------|
+| **Plataforma** | Bzu Cloud | IoTHINGS® | IoTControl | Plataforma TechFab | RMS + PCD |
