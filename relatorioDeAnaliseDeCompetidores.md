@@ -14,7 +14,7 @@ Este documento tem como objetivo mapear e comparar soluções de mercado do segm
 
 ### Produtos Analisados 📦
 
-🅰️ Produto A — Bzu Tech
+## Produto A — Bzu Tech
 <p align="left"> <img src="https://static.wixstatic.com/media/db1550_ed1c30f522fd44c58a52ef417b4c0b76~mv2.png" alt="Logo Bzu Tech" width="160"/> </p>
 
 🔎 Visão geral
@@ -35,7 +35,7 @@ Cases consolidados (M. Dias Branco, LAFEPE, Hemobras)
 Excesso de informações nos dashboards pode dificultar a navegação para usuários iniciantes
 Modelo por assinatura pode não ser transparente em preço público
 
-🅱️ Produto B — Allexo
+## Produto B — Allexo
 <p align="left"> <img src="https://irp.cdn-website.com/532a02d6/dms3rep/multi/NOVO+Logo+Allexo+Azul-bfca05e9.svg" alt="Logo Allexo" width="160"/> </p>
 
 🔎 Visão geral
