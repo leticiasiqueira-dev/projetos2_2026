@@ -146,6 +146,12 @@ A solução segue um fluxo de monitoramento composto pela coleta de dados por se
 - A comunicação é mais voltada ao público técnico/industrial, o que pode tornar a solução menos intuitiva para usuários sem conhecimento de IoT.
 
 ## 📊 Benchmarking dos concorrentes
-| Critério       | Bzu Tech | Allexo | IoTControl | TechFab | Carmel Tecnologia |
-|----------------|----------|--------|------------|---------|-------------------|
-| **Plataforma** | Bzu Cloud | IoTHINGS® | IoTControl | Plataforma TechFab | RMS + PCD |
+
+| Critério                  | Bzu Tech                             | Allexo                          | IoTControl                     | TechFab                          | Carmel Tecnologia                 |
+|---------------------------|--------------------------------------|---------------------------------|--------------------------------|----------------------------------|-----------------------------------|
+| **Plataforma**            | Bzu Cloud                            | IoTHINGS®                       | IoTControl                     | Plataforma TechFab               | RMS + PCD                         |
+| **Hardware próprio**      | Sensores e gateways                  | Gateways, dataloggers e CLPs    | Sensores e gateways            | Dispositivos IoT                 | Gateways e sensores               |
+| **Alertas**               | WhatsApp                             | WhatsApp                        | Configuráveis                  | Webhooks                         | Tempo real                        |
+| **Integração / API**      | API                                  | APIs                            | Sim                            | GraphQL, Webhooks e Protobuf     | Sim                               |
+| **Principal diferencial** | Solução ponta a ponta + WhatsApp     | Hardware/software próprios + IA | Solução modular e customizada  | Hardware próprio + rede mesh     | Telemetria + gerenciamento remoto |
+| **Principais mercados**   | Indústria, cadeia fria e agronegócio | Indústria, saneamento e energia | Saúde, indústria e agronegócio | Cidades, agricultura e indústria | Indústria, saneamento e logística |
