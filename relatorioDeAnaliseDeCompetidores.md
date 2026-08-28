@@ -4,8 +4,11 @@
 Este documento tem como objetivo mapear e comparar soluções de mercado do segmento de IoT (Internet das Coisas) e sensoriamento industrial, servindo de referência para o desenvolvimento do nosso projeto.O escopo da análise abrange plataformas brasileiras que oferecem hardware (sensores, gateways, dataloggers) integrado a software de monitoramento em nuvem, voltadas para setores como indústria 4.0, saneamento, agronegócio, energia e facilities — o mesmo nicho em que nosso produto está inserido.
 
 Foram analisados os seguintes produtos:
-  Produto A — Bzu Tech (Bzu Cloud)
-  Produto B — Allexo (Plataforma IoTHINGS)
+
+- Produto A — Bzu Tech (Bzu Cloud)
+- Produto B — Allexo (Plataforma IoTHINGS)
+- Produto C - IotControl (Plataforma IoTControl)
+- Produto D - TechFab (Plataforma TechFab)
 
 
 📦 Produtos Analisados
@@ -82,5 +85,40 @@ A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em trê
 #
 
 
+## Produto D - TechFab
 
+<p align="left"> <img src="https://www.techfab.com.br/_astro/logo.C0F4YocJ_Z1JPlyA.svg" alt="Logo Allexo" width="120"/> </p>
+
+ 
+A TechFab é uma empresa recifense que fabrica dispositivos eletrônicos de Internet das Coisas (IoT) sob medida, homologados pela ANATEL, voltados ao monitoramento e controle em tempo real de operações em cidades inteligentes, agricultura e instalações industriais. Diferente de players focados apenas em software, a TechFab atua também na fabricação do próprio hardware, oferecendo o modelo "IoT-as-a-Service".
+
+#
+## Descrição do Funcionamento
+ 
+A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
+ 
+1. **Fabricação de dispositivos (Hardware):** Produção própria de sensores e controladores IoT sob medida (como fotocélulas inteligentes e sensores de solo), homologados pela ANATEL.
+2. **Conectividade de longo alcance:** Uso de tecnologia de rede mesh, capaz de conectar dispositivos a distâncias de quilômetros, com cobertura contínua e redundância, sendo ideal para avenidas urbanas, campos agrícolas extensos e instalações industriais.
+3. **Integração via API:** Conexão dos dispositivos a qualquer software por meio de API GraphQL, Webhooks e Protobuf, permitindo leitura de dados em tempo real, controle remoto e integração com sistemas de gestão e dashboards personalizados.
+
+#
+## Fotos e Recursos Visuais
+ 
+#
+ 
+## Pontos Fortes
+ 
+- **Fabricação própria de hardware:** Controle sobre todo o ciclo do dispositivo, desde a fabricação até a homologação pela ANATEL, o que garante qualidade e conformidade com as normas brasileiras.
+- **Conectividade de longo alcance:** Rede mesh capaz de cobrir distâncias de quilômetros com redundância, superando limitações de soluções baseadas apenas em Wi-Fi convencional.
+- **Integração aberta e flexível:** Oferece API GraphQL, Webhooks e Protobuf, facilitando a integração com sistemas de terceiros sem exigir conhecimento em eletrônica dos desenvolvedores.
+- **Portfólio de produtos versátil:** Soluções aplicáveis a múltiplos segmentos, como iluminação pública, infraestrutura de rede e agricultura de precisão.
+- **Operação contínua 24/7:** Dispositivos mantêm conexão constante à internet, permitindo monitoramento e tomada de decisão em tempo real.
+
+#
+## Pontos Fracos
+ 
+- **Modelo intensivo em hardware:** Por fabricar seus próprios dispositivos, a empresa carrega maior complexidade operacional e logística (produção, homologação, manutenção física) em comparação a soluções puramente de software.
+- **Baixa transparência institucional no site:** O site não apresenta informações claras sobre plataforma/dashboard próprio para o usuário final, casos de clientes ou depoimentos, o que dificulta avaliar a maturidade comercial da solução.
+- **Dependência de integração via desenvolvedor:** Por focar fortemente em API (GraphQL, Webhooks, Protobuf), a solução parece exigir apoio técnico/desenvolvimento para que o cliente final visualize os dados, ao contrário de soluções com dashboard pronto e autoexplicativo.
+- **Escala regional:** Sede única em Recife/PE, sem indicação de presença ou suporte descentralizado em outras regiões do país.
   
