@@ -9,6 +9,7 @@ Este documento tem como objetivo mapear e comparar soluções de mercado do segm
 - Produto B — Allexo (Plataforma IoTHINGS)
 - Produto C - IotControl (Plataforma IoTControl)
 - Produto D - TechFab (Plataforma TechFab)
+- Produto E - Carmel Tecnologia (RMS — Remote Management System)
 
 #
 
@@ -122,3 +123,24 @@ A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
 - **Dependência de integração via desenvolvedor:** Por focar fortemente em API (GraphQL, Webhooks, Protobuf), a solução parece exigir apoio técnico/desenvolvimento para que o cliente final visualize os dados, ao contrário de soluções com dashboard pronto e autoexplicativo.
 - **Escala regional:** Sede única em Recife/PE, sem indicação de presença ou suporte descentralizado em outras regiões do país.
   
+## Produto E - Carmel Tecnologia 
+
+<p align="left"> <img src="https://share.google/sRX5y8INWcDezim4U" alt="Logo Carmel Tecnologia" width="160"/> </p>
+
+## Visão geral
+A Carmel Tecnologia é uma empresa brasileira especializada em IoT Industrial e telemetria M2M, desenvolvendo hardware e software próprios para diferentes aplicações industriais. Atua em segmentos como Indústria 4.0, saneamento, logística, energia e agricultura de precisão. A empresa busca transformar dados coletados por sensores em informações para monitoramento, análise e tomada de decisão.
+
+## Funcionamento
+A solução segue um fluxo de monitoramento composto pela coleta de dados por sensores → comunicação dos dados → armazenamento seguro → análise das informações → tomada de decisão. A Carmel desenvolve dispositivos e sistemas próprios, utilizando tecnologias de IoT e M2M para monitorar e controlar ativos industriais.
+
+## Pontos Fortes
+- Hardware e software próprios, permitindo maior controle sobre a solução.
+- Experiência em IoT Industrial e telemetria M2M.
+- Atuação em diversos segmentos, como Indústria 4.0, saneamento, logística, energia e agricultura.
+- Soluções voltadas para monitoramento, coleta e análise de dados, semelhantes ao modelo ponta a ponta da Bzu.
+- Possibilidade de desenvolver soluções personalizadas para diferentes aplicações industriais.
+
+## Pontos Fracos
+- Forte direcionamento para aplicações industriais e telemetria, podendo apresentar menor abrangência em relação a soluções voltadas também para cidades inteligentes, edifícios e outros ambientes.
+- O site apresenta informações sobre as tecnologias e soluções, mas não deixa tão evidente os planos e preços, dificultando uma comparação direta de custo.
+- A comunicação é mais voltada ao público técnico/industrial, o que pode tornar a solução menos intuitiva para usuários sem conhecimento de IoT.
