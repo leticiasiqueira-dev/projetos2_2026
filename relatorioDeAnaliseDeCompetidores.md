@@ -11,14 +11,14 @@ Foram analisados os seguintes produtos:
 📦 Produtos Analisados
 
 🅰️ Produto A — Bzu Tech
-<img src="https://static.wixstatic.com/media/db1550_ed1c30f522fd44c58a52ef417b4c0b76~mv2.png" alt="Logo Bzu Tech" width="160"/>
+<p align="left"> <img src="https://static.wixstatic.com/media/db1550_ed1c30f522fd44c58a52ef417b4c0b76~mv2.png" alt="Logo Bzu Tech" width="160"/> </p>
 
 🔎 Visão geral
 A Bzu Tech é uma empresa pernambucana especializada em soluções de IoT que integram hardware, software embarcado e nuvem (Bzu Cloud) para monitoramento inteligente. O público-alvo são indústrias e operações que dependem de monitoramento contínuo — cadeia fria, indústria 4.0, utilities, cidades inteligentes, edifícios inteligentes e agronegócio. O propósito central é transformar dados de sensores em decisões, reduzindo falhas e custos operacionais. Entre as principais funcionalidades estão dashboards em tempo real, histórico de medições, alertas automáticos (inclusive via WhatsApp) e APIs para integração externa.
 
 ⚙️ Funcionamento
 O fluxo de funcionamento segue quatro etapas: sensores captam variáveis físicas (temperatura, umidade etc.) → um gateway IoT organiza e transmite os dados de forma segura → a Bzu Cloud armazena, exibe em dashboards e gera relatórios/alertas → o usuário toma decisões com base nas informações.
-<img src="https://static.wixstatic.com/media/db1550_90e16dadd6c440629572030e7fe9713a~mv2.png" alt="Dashboard Bzu Cloud" width="420"/> <img src="https://static.wixstatic.com/media/db1550_924537df27fc4db785cc9edcae02b7ad~mv2.png" alt="Alerta via WhatsApp Bzu" width="200"/>
+<p align="left"> <img src="https://static.wixstatic.com/media/db1550_90e16dadd6c440629572030e7fe9713a~mv2.png" alt="Dashboard Bzu Cloud" width="420"/> </p> <p align="left"> <img src="https://static.wixstatic.com/media/db1550_924537df27fc4db785cc9edcae02b7ad~mv2.png" alt="Alerta via WhatsApp Bzu" width="200"/> </p>
 
 ✅ Pontos fortes
 Solução ponta a ponta (sensor → gateway → nuvem)
