@@ -51,6 +51,35 @@ Suporte técnico completo com equipe própria
 Muitos recursos técnicos podem tornar o uso menos intuitivo para usuários leigos
 Site institucional pouco claro sobre planos e preços
 
+## Produto C - IoTControl 
+<p align="left"> <img src="https://iotcontrol.com.br/wp-content/uploads/2022/08/EO5GMhZ-e1666138202756.png" alt="Logo IoTControl" width="160"/> </p>
+
+  A IOTControl (IoT Control Soluções em Internet das Coisas) é uma empresa recifense especializada no desenvolvimento e integração de soluções de Internet das Coisas (IoT), telemetria e automação. Seu funcionamento baseia-se em uma oferta end-to-end (ponta a ponta), conectando o mundo físico ao digital para permitir que empresas monitorem ativos, recebam alertas em tempo real e automatizem processos operacionais.
+#
+### Descrição de Funcionamento:
+A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em três etapas:
+
+1. **Coleta (Hardware):** Instalação de endpoints e sensores em campo que medem variáveis como temperatura, umidade, nível de reservatórios e status de máquinas.
+
+2. **Conectividade:** Uso de gateways para transmissão contínua de dados via redes sem fio para a nuvem.
+
+3. **Gestão (Plataforma/SaaS):** Processamento dos dados na plataforma proprietária, onde o usuário visualiza dashboards interativos e recebe alertas configuráveis em tempo real.
+
+#
+
+### Fotos e Recursos Visuais:
+
+
+#
+
+### Pontos Fortes:
+
+- **Solução Completa e Modular:** Entrega desde a infraestrutura física (sensores e gateways) até a plataforma SaaS (sistema hospedado na nuvem) pronta para uso.
+- **Diversificação de Verticais:** Ampla atuação no mercado regional, atendendo desde Data Centers e hospitais até condomínios prediais e agronegócio.
+- **Projetos Customizados:** Capacidade de atendimento a "Projetos Especiais" e adaptação de módulos para necessidades específicas do cliente.
+- **Facilidade de Implantação:** Foco em soluções de rápida conexão com dashboards de interface amigável.
+
+#
 
 
 
