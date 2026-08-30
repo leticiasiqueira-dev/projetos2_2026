@@ -148,6 +148,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
 | Artur Henrique Ribeiro Câmara de Oliveira  | ahrco@cesar.school |
 | Cora Jordão Magri | cjm@cesar.school |
 | Luana Malinconico Pereira | lmp3@cesar.school |
+| Mateus Rodrigues de Lira Assunção | mrla@cesar.school |
 
 ## 🔄 Ex-Integrantes
  
