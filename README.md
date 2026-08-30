@@ -8,9 +8,9 @@
 Este projeto tem como objetivo explorar o uso da Internet das Coisas (IoT), 
 com foco em sensoriamento e nos benefícios proporcionados por essa tecnologia.
 
-A proposta da BizuTech é investigar como sensores e dispositivos conectados 
-podem coletar e transmitir dados do ambiente, permitindo monitoramento, 
-automação e apoio à tomada de decisões.
+A proposta da BZU TECH é aplicar sensores e dispositivos conectados para coletar e transmitir dados do ambiente em tempo real. 
+A partir da análise dessas informações brutas, a solução viabiliza o monitoramento contínuo, a automação de processos e o aumento
+da visibilidade operacional, fornecendo suporte estratégico para a tomada de decisões.
 
 Ao longo do projeto, serão analisadas aplicações de IoT em diferentes contextos,
 destacando benefícios como aumento da eficiência, redução de custos, 
