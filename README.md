@@ -130,6 +130,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
  
 | Nome Completo | E-mail Institucional |
 |---|---|
+| Artur Henrique Ribeiro Câmara de Oliveira  | ahrco@cesar.school |
 | Letícia Almeida Abreu de Siqueira  | laas2@cesar.school |
 | Letícia Dornas de Araújo  | lda2@cesar.school |
 | Maria Júlia Oliveira Dionísio  | mjod@cesar.school |
