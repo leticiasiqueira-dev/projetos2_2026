@@ -155,3 +155,12 @@ A solução segue um fluxo de monitoramento composto pela coleta de dados por se
 | **Integração / API**      | API                                  | APIs                            | Sim                            | GraphQL, Webhooks e Protobuf     | Sim                               |
 | **Principal diferencial** | Solução ponta a ponta + WhatsApp     | Hardware/software próprios + IA | Solução modular e customizada  | Hardware próprio + rede mesh     | Telemetria + gerenciamento remoto |
 | **Principais mercados**   | Indústria, cadeia fria e agronegócio | Indústria, saneamento e energia | Saúde, indústria e agronegócio | Cidades, agricultura e indústria | Indústria, saneamento e logística |
+
+## Requisitos obtidos
+1. **Alertas automáticos e personalizáveis** — envio de notificações quando os dados dos sensores ultrapassarem determinados limites.
+
+2. **Integração por API** — permitir a conexão da plataforma com outros sistemas e softwares.
+
+3. **Dashboard simples e intuitivo** — apresentar as informações de forma clara, evitando excesso de dados e complexidade para o usuário.
+
+4. **Personalização e escalabilidade** — permitir adaptar a solução a diferentes setores e adicionar novos sensores conforme a necessidade.
