@@ -125,7 +125,7 @@ A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
   
 ## Produto E - Carmel Tecnologia 
 
-<p align="left"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr9k7x2Zpd3Q4idLfP7lap1-FD_g8ylYYCCYtdr7j32w&s=10" alt="Logo Camel" width="160"/> </p>
+<p align="left"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr9k7x2Zpd3Q4idLfP7lap1-FD_g8ylYYCCYtdr7j32w&s=10" alt="Logo Camel" width="260"/> </p>
 
 ## Visão geral
 A Carmel Tecnologia é uma empresa brasileira especializada em IoT Industrial e telemetria M2M, desenvolvendo hardware e software próprios para diferentes aplicações industriais. Atua em segmentos como Indústria 4.0, saneamento, logística, energia e agricultura de precisão. A empresa busca transformar dados coletados por sensores em informações para monitoramento, análise e tomada de decisão.
