@@ -166,7 +166,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
  
 ## 📡 Painéis de Acompanhamento
  
-- 🗂️ **Jira:** [link do quadro]([https://projetos2ccdsg.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=none](https://projetos2ccdsg.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=subtask))
+- 🗂️ **Jira:** [link do quadro]([https://projetos2ccdsg.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=none](https://projetos2ccdsg.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=subtask)
 - 🎨 **Figma:** [link do protótipo](#)
 
 ## 📄 Licença
