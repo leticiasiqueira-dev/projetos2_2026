@@ -92,7 +92,7 @@ A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em trê
 A TechFab é uma empresa recifense que fabrica dispositivos eletrônicos de Internet das Coisas (IoT) sob medida, homologados pela ANATEL, voltados ao monitoramento e controle em tempo real de operações em cidades inteligentes, agricultura e instalações industriais. Diferente de players focados apenas em software, a TechFab atua também na fabricação do próprio hardware, oferecendo o modelo "IoT-as-a-Service".
 
 #
-## ⚙️ Funcionamento
+⚙️ Funcionamento
  
 A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
  
@@ -127,7 +127,7 @@ A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
 ## Visão geral
 A Carmel Tecnologia é uma empresa brasileira especializada em IoT Industrial e telemetria M2M, desenvolvendo hardware e software próprios para diferentes aplicações industriais. Atua em segmentos como Indústria 4.0, saneamento, logística, energia e agricultura de precisão. A empresa busca transformar dados coletados por sensores em informações para monitoramento, análise e tomada de decisão.
 
-##⚙️  Funcionamento
+⚙️  Funcionamento
 A solução segue um fluxo de monitoramento composto pela coleta de dados por sensores → comunicação dos dados → armazenamento seguro → análise das informações → tomada de decisão. A Carmel desenvolve dispositivos e sistemas próprios, utilizando tecnologias de IoT e M2M para monitorar e controlar ativos industriais.
 
 ## Pontos Fortes
