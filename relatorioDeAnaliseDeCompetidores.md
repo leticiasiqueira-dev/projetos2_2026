@@ -101,7 +101,6 @@ A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
 3. **Integração via API:** Conexão dos dispositivos a qualquer software por meio de API GraphQL, Webhooks e Protobuf, permitindo leitura de dados em tempo real, controle remoto e integração com sistemas de gestão e dashboards personalizados.
 
 #
-## Fotos e Recursos Visuais
 <img src="https://lh3.googleusercontent.com/d/1AmXZHsIVMtU1jghDew_8i9lh-jsvEZcr" alt="TechFab 1" width="400" /> <img src="https://lh3.googleusercontent.com/d/13cGfVb4Tl0eHkVA_k0w2njFQnb40g6Qp" alt="TechFab 2" width="300" />
 #
  
