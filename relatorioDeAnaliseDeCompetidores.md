@@ -21,7 +21,7 @@ Este documento tem como objetivo mapear e comparar soluções de mercado do segm
  Visão geral
 A Bzu Tech é uma empresa pernambucana especializada em soluções de IoT que integram hardware, software embarcado e nuvem (Bzu Cloud) para monitoramento inteligente. O público-alvo são indústrias e operações que dependem de monitoramento contínuo — cadeia fria, indústria 4.0, utilities, cidades inteligentes, edifícios inteligentes e agronegócio. O propósito central é transformar dados de sensores em decisões, reduzindo falhas e custos operacionais. Entre as principais funcionalidades estão dashboards em tempo real, histórico de medições, alertas automáticos (inclusive via WhatsApp) e APIs para integração externa.
 
-⚙️ Funcionamento
+## ⚙️Funcionamento:
 O fluxo de funcionamento segue quatro etapas: sensores captam variáveis físicas (temperatura, umidade etc.) → um gateway IoT organiza e transmite os dados de forma segura → a Bzu Cloud armazena, exibe em dashboards e gera relatórios/alertas → o usuário toma decisões com base nas informações.
 <p align="left"> <img src="https://static.wixstatic.com/media/db1550_90e16dadd6c440629572030e7fe9713a~mv2.png" alt="Dashboard Bzu Cloud" width="420"/> </p> <p align="left"> <img src="https://static.wixstatic.com/media/db1550_924537df27fc4db785cc9edcae02b7ad~mv2.png" alt="Alerta via WhatsApp Bzu" width="200"/> </p>
 
@@ -42,7 +42,7 @@ O fluxo de funcionamento segue quatro etapas: sensores captam variáveis física
  Visão geral
 A Allexo é uma empresa gaúcha com mais de 30 anos de atuação, focada em hardware e software próprios para monitoração de máquinas e equipamentos no chão de fábrica. Atende setores como gestão industrial, saneamento (dataloggers e CLPs) e telemetria de grupos geradores. O público-alvo são indústrias que precisam de manutenção preventiva e controle remoto de ativos.
 
-⚙️ Funcionamento
+## ⚙️Funcionamento:
 A plataforma própria IoTHINGS® conecta gateways inteligentes (com IA integrada) aos equipamentos via protocolos Modbus RTU/TCP, com comunicação celular 4G/5G. Um QR Code simplifica a conexão inicial, e o suporte é feito por um aplicativo móvel exclusivo (RMS — Remote Mobile Support). Os dados são visualizados remotamente com envio automático de alertas por WhatsApp.
 <p align="left"> <img src="https://irp.cdn-website.com/532a02d6/dms3rep/multi/opt/allexo-preview-1920w.png" alt="Preview plataforma Allexo" width="420"/> </p>
 
@@ -61,7 +61,7 @@ A plataforma própria IoTHINGS® conecta gateways inteligentes (com IA integrada
 
   A IOTControl (IoT Control Soluções em Internet das Coisas) é uma empresa recifense especializada no desenvolvimento e integração de soluções de Internet das Coisas (IoT), telemetria e automação. Seu funcionamento baseia-se em uma oferta end-to-end (ponta a ponta), conectando o mundo físico ao digital para permitir que empresas monitorem ativos, recebam alertas em tempo real e automatizem processos operacionais.
 #
-### Descrição de Funcionamento:
+## ⚙️Funcionamento:
 A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em três etapas:
 
 1. **Coleta (Hardware):** Instalação de endpoints e sensores em campo que medem variáveis como temperatura, umidade, nível de reservatórios e status de máquinas.
@@ -92,7 +92,7 @@ A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em trê
 A TechFab é uma empresa recifense que fabrica dispositivos eletrônicos de Internet das Coisas (IoT) sob medida, homologados pela ANATEL, voltados ao monitoramento e controle em tempo real de operações em cidades inteligentes, agricultura e instalações industriais. Diferente de players focados apenas em software, a TechFab atua também na fabricação do próprio hardware, oferecendo o modelo "IoT-as-a-Service".
 
 #
-⚙️ Funcionamento
+## ⚙️Funcionamento:
  
 A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
  
@@ -127,7 +127,7 @@ A TechFab opera com uma arquitetura ponta a ponta baseada em três pilares:
 ## Visão geral
 A Carmel Tecnologia é uma empresa brasileira especializada em IoT Industrial e telemetria M2M, desenvolvendo hardware e software próprios para diferentes aplicações industriais. Atua em segmentos como Indústria 4.0, saneamento, logística, energia e agricultura de precisão. A empresa busca transformar dados coletados por sensores em informações para monitoramento, análise e tomada de decisão.
 
-⚙️  Funcionamento
+## ⚙️Funcionamento:
 A solução segue um fluxo de monitoramento composto pela coleta de dados por sensores → comunicação dos dados → armazenamento seguro → análise das informações → tomada de decisão. A Carmel desenvolve dispositivos e sistemas próprios, utilizando tecnologias de IoT e M2M para monitorar e controlar ativos industriais.
 
 ## Pontos Fortes
