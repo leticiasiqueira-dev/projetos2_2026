@@ -82,6 +82,12 @@ A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em trê
 - **Facilidade de Implantação:** Foco em soluções de rápida conexão com dashboards de interface amigável.
 
 #
+### Pontos Fracos:
+
+- **Escala Regional:** Operação e presença comercial predominantemente focadas em Pernambuco/Nordeste quando comparada a players nacionais consolidados.
+- **Complexidade Logística:** O modelo que engloba a instalação e manutenção física de hardware exige maior esforço operacional e presença em campo do que concorrentes de software puro.
+- **Dependência de Parcerias de Hardware:** Dependendo da origem dos módulos e componentes eletrônicos, pode enfrentar gargalos de estoque ou variação de custos de importação.
+#
 
 
 ## Produto D - TechFab
