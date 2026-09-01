@@ -71,8 +71,6 @@ A IoTControl atua com uma arquitetura end-to-end (ponta a ponta) baseada em trê
 3. **Gestão (Plataforma/SaaS):** Processamento dos dados na plataforma proprietária, onde o usuário visualiza dashboards interativos e recebe alertas configuráveis em tempo real.
 
 #
-
-### Fotos e Recursos Visuais:
 <img src="https://lh3.googleusercontent.com/d/1QJPEfGa6p0MzcCzrXOP9k3_ZrlRGdFce" alt="IoTControl 1" width="400" /><img src="https://lh3.googleusercontent.com/d/1cJsahJdZlLUL5D7c-mCp_aZk3cREMXaL" alt="IoTControl 2" width="400" />
 #
 
