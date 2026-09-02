@@ -66,8 +66,7 @@ Análise de competidores e definição inicial dos requisitos do produto.
 ### Artefatos
 
 - 📄 [Documento de análise de competidores e benchmark](https://github.com/leticiasiqueira-dev/projetos2_2026/blob/main/relatorioDeAnaliseDeCompetidores.md)
-- 🖼️ [Print do quadro da sprint](<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/6710acbc-962f-4f3e-9fe9-451c6e13b1a6" />
-)
+- 🖼️ [Print do quadro da sprint](<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/6710acbc-962f-4f3e-9fe9-451c6e13b1a6"/>)
 
 ### 📦 Entrega 02
 
