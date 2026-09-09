@@ -1,4 +1,4 @@
-# 🔗 [NOME DO PROJETO]
+# 🔗 IoTech
  
 ### Transformando dados de IoT em decisões de negócio mais inteligentes
 *Projeto desenvolvido em parceria com a **BzuTech**, no contexto da disciplina de Projetos (2º período) — CESAR School.*
