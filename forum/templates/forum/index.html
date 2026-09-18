@@ -1,0 +1,41 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+
+<h2>Ocorrências monitoradas</h2>
+
+<p>
+    Consulte situações identificadas por sensores e veja como
+    a tecnologia IoT pode ajudar a evitar impactos em cadeia.
+</p>
+
+{% if perguntas %}
+
+    <ul>
+        {% for pergunta in perguntas %}
+            <li>
+                <a href="{% url 'forum:detalhe' pergunta.id %}">
+                    {{ pergunta.titulo }}
+                </a>
+
+                <br>
+
+                <small>
+                    Registrada por {{ pergunta.usuario }}
+                    em {{ pergunta.data_criacao|date:"d/m/Y H:i" }}
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+
+    <p>Nenhuma ocorrência registrada.</p>
+
+{% endif %}
+
+<a href="{% url 'forum:inserir_pergunta' %}">
+    <button>Registrar nova ocorrência</button>
+</a>
+
+{% endblock %}

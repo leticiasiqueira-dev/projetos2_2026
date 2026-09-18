@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <title>IoTech | Central de Ocorrências IoT</title>
+
+    {% load static %}
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/estilo.css' %}"
+    >
+</head>
+
+<body>
+    <header>
+        <h1>IoTech</h1>
+
+        <p>
+            Transformando dados de IoT em decisões mais inteligentes
+        </p>
+
+        <nav>
+            <a href="/efeito_domino/">
+                Sobre o projeto
+            </a>
+
+            |
+
+            <a href="{% url 'forum:index' %}">
+                Ocorrências
+            </a>
+
+            |
+
+            <a href="{% url 'forum:inserir_pergunta' %}">
+                Registrar ocorrência
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

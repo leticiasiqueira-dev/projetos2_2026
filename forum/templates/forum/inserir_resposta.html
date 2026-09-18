@@ -1,0 +1,33 @@
+{% extends "forum/detalhe.html" %}
+
+{% block respostas %}
+
+<h3>Adicionar diagnóstico ou recomendação</h3>
+
+<p>
+    Informe uma ação que possa controlar o problema e evitar
+    consequências para a operação.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <textarea
+        rows="6"
+        cols="50"
+        id="texto"
+        name="texto_resposta"
+        placeholder="Ex.: Interromper preventivamente o equipamento e acionar a equipe de manutenção."
+        required
+    ></textarea>
+
+    <p>
+        <input
+            type="submit"
+            name="salvar_resposta"
+            value="Salvar diagnóstico"
+        >
+    </p>
+</form>
+
+{% endblock %}

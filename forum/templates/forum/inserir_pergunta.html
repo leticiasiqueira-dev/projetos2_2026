@@ -1,0 +1,70 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+
+<h2>Registrar ocorrência IoT</h2>
+
+<p>
+    Informe uma situação detectada por sensores ou durante o
+    acompanhamento da operação.
+</p>
+
+<form name="form" method="post">
+    {% csrf_token %}
+
+    <p>
+        <label for="titulo">
+            Título da ocorrência:
+        </label>
+        <br>
+
+        <input
+            type="text"
+            name="titulo"
+            id="titulo"
+            size="50"
+            maxlength="200"
+            placeholder="Ex.: Superaquecimento na máquina de produção"
+            required
+        >
+    </p>
+
+    <p>
+        <label for="detalhe">
+            Descreva o problema detectado:
+        </label>
+        <br>
+
+        <textarea
+            rows="6"
+            cols="50"
+            id="detalhe"
+            name="detalhe"
+            placeholder="Informe o sensor, o valor registrado e o equipamento afetado."
+            required
+        ></textarea>
+    </p>
+
+    <p>
+        <label for="tentativa">
+            Ação já realizada:
+        </label>
+        <br>
+
+        <textarea
+            rows="6"
+            cols="50"
+            id="tentativa"
+            name="tentativa"
+            placeholder="Descreva o que já foi feito para controlar a ocorrência."
+        ></textarea>
+    </p>
+
+    <input
+        type="submit"
+        name="botao_inserir_pergunta"
+        value="Registrar ocorrência"
+    >
+</form>
+
+{% endblock %}

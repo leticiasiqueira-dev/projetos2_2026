@@ -1,0 +1,69 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+
+<h2>{{ pergunta.titulo }}</h2>
+
+<p>
+    <b>Descrição da ocorrência:</b>
+    {{ pergunta.detalhe }}
+</p>
+
+<p>
+    <b>Ação já realizada:</b>
+    {{ pergunta.tentativa }}
+</p>
+
+<p>
+    <b>Data do registro:</b>
+    {{ pergunta.data_criacao|date:"d/m/Y H:i" }}
+</p>
+
+<p>
+    <b>Responsável pelo registro:</b>
+    {{ pergunta.usuario }}
+</p>
+
+{% block respostas %}
+
+<h3>Diagnósticos e recomendações</h3>
+
+<ul>
+    {% for resposta in pergunta.resposta_set.all %}
+        <li>
+            {{ resposta.texto }}
+
+            <br>
+
+            <b>
+                {{ resposta.votos }} recomendação/recomendações úteis
+            </b>
+
+            <form
+                action="{% url 'forum:voto' resposta.id %}"
+                method="post"
+            >
+                {% csrf_token %}
+
+                <input
+                    type="submit"
+                    id="votar"
+                    value="Marcar como útil"
+                >
+            </form>
+        </li>
+    {% empty %}
+        <li>
+            Ainda não existem diagnósticos para esta ocorrência.
+        </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'forum:inserir_resposta' pergunta.id %}">
+    <button name="nova_resposta">
+        Adicionar diagnóstico
+    </button>
+</a>
+
+{% endblock %}
+{% endblock %}
