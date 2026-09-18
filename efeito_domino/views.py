@@ -23,3 +23,16 @@ def index(request):
             Explorar simulador
         </a>
     """)
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+
+
+def simulador(request):
+    caminho = os.path.join(
+        settings.BASE_DIR, "efeito_domino", "templates", "efeito_domino", "simulador.html"
+    )
+    with open(caminho, "r", encoding="utf-8") as arquivo:
+        conteudo = arquivo.read()
+    return HttpResponse(conteudo)
