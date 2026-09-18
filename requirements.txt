@@ -24,3 +24,8 @@ urllib3==2.8.0
 webdriver-manager==4.1.2
 websocket-client==1.9.2
 wsproto==1.3.2
+python-dotenv
+whitenoise
+dj-database-url
+psycopg2-binary
+gunicorn
