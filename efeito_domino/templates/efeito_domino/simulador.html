@@ -9,16 +9,17 @@
 
   <div id="root"></div>
 
-  <!-- React, ReactDOM e Babel prontos via CDN: sem npm, sem build -->
+ <!--OCORRENCIA_REAL-->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel" data-presets="react">
     const { useState, useRef, useEffect } = React;
+    const OCORRENCIA = window.OCORRENCIA || null;
 
     const STAGES = [
-      { id: "machine", label: "Máquina para", detail: "Vibração fora do padrão" },
+      { id: "machine", label: OCORRENCIA ? OCORRENCIA.titulo : "Máquina para", detail: OCORRENCIA ? OCORRENCIA.detalhe : "Vibração fora do padrão" },
       { id: "production", label: "Produção atrasa", detail: "Linha parada sem ninguém perceber" },
       { id: "order", label: "Pedido atrasa", detail: "Prazo combinado com o cliente é perdido" },
       { id: "cost", label: "Custo aumenta", detail: "Hora extra e retrabalho entram na conta" },

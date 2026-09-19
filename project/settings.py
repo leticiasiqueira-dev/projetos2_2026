@@ -29,6 +29,7 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/

@@ -2,6 +2,68 @@
 
 {% block content %}
 
+<style>
+  :root {
+    --bg: #14081f; --panel: #1f1033; --panel-2: #271340; --line: #3a2158;
+    --text: #f4eefb; --muted: #a996c4; --magenta: #d946c7; --danger: #f0546a; --safe: #2dd8ad;
+  }
+  body {
+    background: radial-gradient(120% 140% at 15% 0%, #24123f 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+  }
+  header {
+    background: linear-gradient(135deg, #4a1a63, #1f1033) !important;
+    border-bottom: 1px solid var(--line);
+  }
+  header h1, header p { color: var(--text) !important; }
+  header nav a { color: var(--magenta) !important; text-decoration: none; font-weight: 600; }
+  header nav a:hover { text-decoration: underline; }
+  main.container {
+    background: var(--panel) !important;
+    box-shadow: none !important;
+    border: 1px solid var(--line);
+  }
+  main.container h2, main.container h3 { color: var(--text); }
+  main.container p { color: var(--muted); }
+  main.container p b { color: var(--text); }
+  main.container ul { list-style: none; padding: 0; }
+  main.container ul li {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  main.container textarea {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: var(--text);
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+  }
+  main.container textarea::placeholder { color: var(--muted); }
+  main.container textarea:focus { outline: none; border-color: var(--magenta); }
+  main.container button,
+  main.container input[type=submit] {
+    background: linear-gradient(135deg, #b6349d, #7c3aed);
+    color: var(--text);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  main.container button:hover,
+  main.container input[type=submit]:hover { opacity: 0.9; }
+  main.container a { color: var(--magenta); }
+</style>
+
 <h2>{{ pergunta.titulo }}</h2>
 
 <p>
