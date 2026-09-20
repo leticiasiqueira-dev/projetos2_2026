@@ -103,27 +103,65 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
 - 🖼️ [Print do quadro da Sprint 04](#)
 
 ---
+ Deploy
+
+A aplicação está publicada em: **COLE_AQUI_A_URL_DO_DEPLOY**
+
+### Como acessar
+
+1. Abra a URL acima no navegador. A raiz (`/`) redireciona para a **Central de Ocorrências** (`/forum/`).
+2. Para registrar uma ocorrência, use **Registrar ocorrência** no menu (`/forum/inserir/`). Não é necessário criar conta: quem não está autenticado aparece como *anônimo*.
+3. Abra uma ocorrência para ver os diagnósticos, adicionar um novo ou marcar um como útil.
+4. Para ver o simulador, acesse **Sobre o projeto** (`/efeito_domino/`) e clique em **Explorar simulador**. Ele exibe a ocorrência mais recente registrada.
+5. A área administrativa fica em `/admin/` e exige um superusuário. As credenciais não são públicas e podem ser solicitadas à equipe.
+
+---
 
 ## ⚙️ Como rodar o projeto
 
+**Pré-requisitos:** Python 3.12 ou superior e Git.
+
 1. Clone o repositório:
 ```bash
-   git clone <url-do-repositorio>
+git clone https://github.com/leticiasiqueira-dev/projetos2_2026.git
+cd projetos2_2026
 ```
-2. Instale as dependências:
+2. Crie e ative um ambiente virtual:
 ```bash
-   # comando de instalação
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
 ```
-3. Configure as variáveis de ambiente necessárias:
+3. Instale as dependências:
 ```bash
-   # variáveis de ambiente
+pip install -r requirements.txt
 ```
-4. Execute o projeto:
+4. Configure as variáveis de ambiente. Copie o modelo e edite o `.env`:
 ```bash
-   # comando de execução
+cp .env.example .env            # Windows: copy .env.example .env
 ```
- 
+```env
+SECRET_KEY=troque-por-uma-chave-secreta
+ENVIRONMENT=development
+```
+5. Crie as tabelas do banco (SQLite local):
+```bash
+python manage.py migrate
+```
+6. Execute o projeto:
+```bash
+python manage.py runserver
+```
+Acesse http://127.0.0.1:8000/
+
+Opcional: para usar o `/admin/`, crie um superusuário com `python manage.py createsuperuser`.
+
 ---
+## 🐞 Bug tracker
+
+Bugs, melhorias e tarefas técnicas são registrados nas [Issues do GitHub](https://github.com/leticiasiqueira-dev/projetos2_2026/issues). Os commits são feitos diretamente na `main`, com frequência semanal no mínimo, e referenciam a issue correspondente (ex.: `Corrige XSS no simulador (fixes #1)`).
+
+---
+
 ## 👥 Membros da equipe
 
 ### Ciência da Computação
@@ -167,6 +205,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
 ## 📡 Painéis de Acompanhamento
  
 - 🗂️ **Jira:** [link do quadro](https://projetos2ccdsg.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=subtask)
+- 🐞 **Bug tracker:** [GitHub Issues](https://github.com/leticiasiqueira-dev/projetos2_2026/issues)
 - 🎨 **Figma:** [link do protótipo](#)
 
 ## 📄 Licença
