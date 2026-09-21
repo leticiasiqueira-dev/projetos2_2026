@@ -76,7 +76,7 @@ Implementação da infraestrutura básica da aplicação e deploy em produção.
 
 - 🎥 [Screencast do uso do sistema](#)
 - 🎥 [Screencast de explicação do código](#)
-- 🖼️ [Print do bug tracker](#)
+- 🖼️ Print do bug tracker: <p align="left"> <img width="2940" height="1534" alt="bug-tracker" src="https://github.com/user-attachments/assets/6275d35e-2d96-4da8-9c13-c5ad59eb7c23" /> </p>
 - 🖼️ [Print do quadro da Sprint 02](#)
 
 ### Entrega 03
