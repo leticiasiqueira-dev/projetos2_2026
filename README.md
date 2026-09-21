@@ -38,7 +38,7 @@ Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode 
  
 | Camada | Ferramentas |
 |---|---|
-| 🖥️ **Produto** | *[a definir]* |
+| 🖥️ **Produto** | *Simulador de "efeito dominó"* |
 | 🎨 **Design** | Figma (UI, protótipo e design system) · *[outras ferramentas a definir]* |
 | 🗂️ **Gestão & Versionamento** | Git / GitHub · Jira |
  
@@ -47,7 +47,7 @@ Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode 
 ## 🛠️ Tecnologias Usadas
  
 **Produto**
-- *[a definir]*
+- *Simulador de "efeito dominó"*
 **Design**
 - Figma (UI, protótipo e design system)
 - *[Outras ferramentas de pesquisa/design, a definir]*
