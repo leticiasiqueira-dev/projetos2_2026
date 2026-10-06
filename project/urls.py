@@ -22,6 +22,10 @@ urlpatterns = [
         include("forum.urls")
     ),
 
+    path(
+        "quem_somos/", 
+        include("quem_somos.urls")),
+
     # Ao acessar a raiz, redireciona para o fórum
     path(
         "",

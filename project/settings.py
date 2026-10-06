@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'efeito_domino',
     'forum',
+    'quem_somos',
 ]
 
 MIDDLEWARE = [
