@@ -38,7 +38,7 @@ Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode 
  
 | Camada | Ferramentas |
 |---|---|
-| 🖥️ **Produto** | *[a definir]* |
+| 🖥️ **Produto** | *a definir* |
 | 🎨 **Design** | Figma (UI, protótipo e design system) · *[outras ferramentas a definir]* |
 | 🗂️ **Gestão & Versionamento** | Git / GitHub · Jira |
  
@@ -47,7 +47,7 @@ Este projeto propõe explorar de que forma a **Internet das Coisas (IoT)** pode 
 ## 🛠️ Tecnologias Usadas
  
 **Produto**
-- *[a definir]*
+- *a definir*
 **Design**
 - Figma (UI, protótipo e design system)
 - *[Outras ferramentas de pesquisa/design, a definir]*
@@ -74,10 +74,12 @@ Implementação da infraestrutura básica da aplicação e deploy em produção.
 
 ### Artefatos
 
-- 🎥 [Screencast do uso do sistema](#)
-- 🎥 [Screencast de explicação do código](#)
-- 🖼️ [Print do bug tracker](#)
-- 🖼️ [Print do quadro da Sprint 02](#)
+- 🔗  [Render](https://iotech-projetos2.onrender.com)
+- 🎥 [Screencast do uso do sistema](https://www.youtube.com/watch?v=e45m0_coeNg)
+- 🎥 [Screencast de explicação do código](https://youtu.be/BgkTnfPnUxc)
+- 🖼️ Print do bug tracker: <p align="left"> <img width="2940" height="1534" alt="bug-tracker" src="https://github.com/user-attachments/assets/6275d35e-2d96-4da8-9c13-c5ad59eb7c23" /> </p>
+- 🖼️ Print do quadro da Sprint 02: <img width="2303" height="1439" alt="sprint-02-quadro" src="https://github.com/user-attachments/assets/2666ff18-4b32-48c8-80d4-abad7b266aca" />
+
 
 ### Entrega 03
 
