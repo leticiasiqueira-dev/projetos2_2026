@@ -12,7 +12,7 @@ Este documento apresenta o levantamento das **User Stories** para o sistema de m
 **Quero** cadastrar um novo nó sensor (dispositivo IoT) informando seu MAC Address e tipo de sensor  
 **Para que** o dispositivo possa transmitir dados telemétricos para a plataforma  
 
-### Cenários de Aceite (BDD)
+### Cenários de Validação (BDD)
 
 ```gherkin
 Cenário: Cadastro de nó sensor com sucesso
@@ -40,7 +40,7 @@ Cenário: Tentativa de cadastro com MAC Address duplicado
 **Quero** visualizar os gráficos de telemetria dos sensores atualizados em tempo real  
 **Para que** eu possa acompanhar as variações ambientais e operacionais sem recarregar a página manualmente  
 
-### Cenários de Aceite (BDD)
+### Cenários de Validação (BDD)
 
 ```gherkin
 Cenário: Atualização automática do gráfico de leitura
@@ -64,7 +64,7 @@ Cenário: Perda de sinal do dispositivo (Timeout)
 **Quero** configurar limiares de alerta (mínimo e máximo) para métricas de sensoriamento  
 **Para que** a equipe seja notificada instantaneamente quando uma leitura sair da faixa operacional segura  
 
-### Cenários de Aceite (BDD)
+### Cenários de Validação (BDD)
 
 ```gherkin
 Cenário: Disparo de alerta por temperatura elevada
@@ -89,7 +89,7 @@ Cenário: Retorno da métrica para a faixa normal
 **Quero** publicar ou abrir um tópico no fórum relacionado a um comportamento anômalo de um sensor  
 **Para que** outros especialistas da comunidade/equipe possam ajudar no diagnóstico técnico  
 
-### Cenários de Aceite (BDD)
+### Cenários de Validação (BDD)
 
 ```gherkin
 Cenário: Abertura de tópico de diagnóstico vinculado a um sensor
@@ -117,7 +117,7 @@ Cenário: Interação na resolução do problema
 **Quero** exportar o histórico de leituras telemétricas em formato CSV ou JSON por intervalo de datas  
 **Para que** eu possa realizar análises preditivas externas e auditorias de conformidade  
 
-### Cenários de Aceite (BDD)
+### Cenários de Validação (BDD)
 
 ```gherkin
 Cenário: Exportação de arquivo CSV dentro do período selecionado
@@ -143,7 +143,7 @@ Cenário: Solicitação de exportação sem registros no período
 **Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
 **Para que** eu possa intervir em tempo real após analisar o status dos sensores  
 
-### Cenários de Aceite (BDD)
+### Cenários de Validação (BDD)
 
 ```gherkin
 Cenário: Envio de comando de atuação com confirmação
