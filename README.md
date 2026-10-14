@@ -87,7 +87,7 @@ Definição das histórias de usuário e implementação das primeiras história
  
 **Artefatos / Screenshots:**
 
-- 📄 [Documento de histórias de usuário](#)
+- 📄 [Documento de histórias de usuário](https://github.com/leticiasiqueira-dev/projetos2_2026/blob/main/user_stories.md)
 - 🖼️ [Print do backlog (Jira)](#)
 - 🎥 [Screencast das histórias implementadas](#)
 - 🎥 [Screencast de explicação do código](#)
