@@ -2,7 +2,7 @@
 
 Este documento apresenta o levantamento das **User Stories** para o sistema de monitoramento IoT e telemetria de sensores, incluindo cenários de teste orientados a comportamento (BDD/Gherkin).
 
-**Módulo principal:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/) (Central de Discussões e Alertas da Comunidade IoT)
+**Módulo principal:** [http://127.0.0.1:8000/forum/](http://127.0.0.1:8000/forum/) (Central de Discussões e Alertas da Comunidade IoT)
 
 ---
 
