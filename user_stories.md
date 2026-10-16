@@ -145,7 +145,7 @@ Cenário: Perda de sinal do dispositivo (Timeout)
 ---
 
 
-## US08- Atuação Remota em Atuadores IoT (Comando de Saída)
+## US08 - Atuação Remota em Atuadores IoT (Comando de Saída)
 
 **Como** operador de campo autorizador  
 **Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
