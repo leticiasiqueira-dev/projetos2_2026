@@ -8,8 +8,8 @@ Este documento apresenta o levantamento das **User Stories** para o sistema de m
 
 ## US01 - Acesso e Início da Experiência do Simulador 
 
-**Como** operador de fábrica ou usuário da plataforma 
-**Quero** visualizar a página inicial do simulador com a apresentação dos conceitos e o botão de início 
+**Como** operador de fábrica ou usuário da plataforma  
+**Quero** visualizar a página inicial do simulador com a apresentação dos conceitos e o botão de início  
 **Para que** eu possa compreender o propósito do monitoramento IoT antes de iniciar a simulação  
 
 ### Cenários de Validação (BDD)
@@ -25,10 +25,9 @@ Cenário: Iniciar a experiência a partir da página inicial
 
 ## US02 - Execução da Simulação Sem Monitoramento
 
-**Como** usuário do simulador  
-**Quero** iniciar a primeira simulação sem o monitoramento IoT ativo
-
-**Para que** eu possa observar como uma falha em uma máquina afeta em cadeia toda a linha de produção
+**Como** usuário do simulador   
+**Quero** iniciar a primeira simulação sem o monitoramento IoT ativo  
+**Para que** eu possa observar como uma falha em uma máquina afeta em cadeia toda a linha de produção  
 
 ### Cenários de Validação (BDD)
 
@@ -47,8 +46,8 @@ Cenário: Induzir falha em linha de produção não monitorada
 ## US03 - Transição para o Cenário de Monitoramento
 
 **Como** usuário do simulador  
-**Quero** visualizar uma tela que demonstra os cenário do monitoramento com a BzuTech 
-**Para que** eu entenda como a tecnologia IoT e os alertas antecipados previnem danos e prejuízos 
+**Quero** visualizar uma tela que demonstra os cenário do monitoramento com a BzuTech  
+**Para que** eu entenda como a tecnologia IoT e os alertas antecipados previnem danos e prejuízos  
 
 ### Cenários de Validação (BDD)
 
@@ -64,8 +63,8 @@ Cenário: Avançar para simulação com monitoramento BZU
 ## US04 - Execução da Simulação Com Monitoramento
 
 **Como** gestor do sistema  
-**Quero** receber alertas de anomalia em tempo real com opções de decisões 
-**Para que** eu possa agir preventivamente antes que ocorra uma grave falha na máquina
+**Quero** receber alertas de anomalia em tempo real com opções de decisões  
+**Para que** eu possa agir preventivamente antes que ocorra uma grave falha na máquina  
 
 ### Cenários de Validação (BDD)
 
@@ -87,7 +86,7 @@ Cenário:  Identificação de anomalia e acionamento de manutenção
 
 **Como** pesquisador ou auditor de dados  
 **Quero** exportar o histórico de leituras telemétricas em formato CSV ou JSON por intervalo de datas  
-**Para que** eu possa realizar análises preditivas externas e auditorias de conformidade  
+**Para que** eu possa realizar análises preditivas externas e auditorias de conformidade    
 
 ### Cenários de Validação (BDD)
 
