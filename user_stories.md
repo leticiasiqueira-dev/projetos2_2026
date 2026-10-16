@@ -133,20 +133,14 @@ Cenário: Intervenção preventiva com sucesso na Simulação 2
 ```gherkin
 Cenário: Atualização automática do gráfico de leitura
   Dado que estou visualizando o painel do sensor em "/forum/dispositivos/15/telemetria"
-
   Quando o sensor envia uma nova leitura de temperatura via protocolo MQTT ou HTTP
-
   Então o gráfico de linha adiona o novo ponto de dados com o valor e horário correspondentes
-
   E o indicador de "Última atualização" é alterado para "Agora mesmo"
 
 Cenário: Perda de sinal do dispositivo (Timeout)
   Dado que o dispositivo "Sensor Estufa 01" está configurado para enviar dados a cada 30 segundos
-
   Quando o sistema não recebe nenhuma telemetria por um período superior a 3 minutos
-
   Então o indicador de status do dispositivo no painel muda automaticamente de "Online" para "Offline"
-
   E um alerta visual é exibido na lista de monitoramento
 ```
 
