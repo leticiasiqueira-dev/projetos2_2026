@@ -117,3 +117,54 @@ Cenário: Intervenção preventiva com sucesso na Simulação 2
   E o status da máquina muda para "Protegida" ou "Operação normalizada" 
   E o painel exibe o resumo do impacto evitado (tempo de parada reduzido e custo economizado) 
 ```
+
+---
+
+## US07 - Visualização de Telemetria em Tempo Real (Dashboard)
+
+**Como** analista de dados ou técnico de campo  
+**Quero** visualizar os gráficos de telemetria dos sensores atualizados em tempo real  
+**Para que** eu possa acompanhar as variações ambientais e operacionais sem recarregar a página manualmente  
+
+### Cenários de Validação (BDD)
+
+```gherkin
+Cenário: Atualização automática do gráfico de leitura
+  Dado que estou visualizando o painel do sensor em "/forum/dispositivos/15/telemetria"
+  Quando o sensor envia uma nova leitura de temperatura via protocolo MQTT ou HTTP
+  Então o gráfico de linha adiona o novo ponto de dados com o valor e horário correspondentes
+  E o indicador de "Última atualização" é alterado para "Agora mesmo"
+
+Cenário: Perda de sinal do dispositivo (Timeout)
+  Dado que o dispositivo "Sensor Estufa 01" está configurado para enviar dados a cada 30 segundos
+  Quando o sistema não recebe nenhuma telemetria por um período superior a 3 minutos
+  Então o indicador de status do dispositivo no painel muda automaticamente de "Online" para "Offline"
+  E um alerta visual é exibido na lista de monitoramento
+```
+
+---
+
+## US08- Atuação Remota em Atuadores IoT (Comando de Saída)
+
+**Como** operador de campo autorizador  
+**Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
+**Para que** eu possa intervir em tempo real após analisar o status dos sensores  
+
+### Cenários de Validação (BDD)
+
+```gherkin
+Cenário: Envio de comando de atuação com confirmação
+  Dado que estou autenticado com permissões de "Operador de Atuação"
+  E estou visualizando o painel do atuador "Válvula de Solenóide 02"
+  Quando aciono a chave seletora de estado para "LIGADO"
+  E confirmo a ação no modal de segurança
+  Então o sistema publica uma mensagem de comando no tópico MQTT correspondente
+  E aguarda a mensagem de confirmação (ACK) do dispositivo
+  E exibe o status "Comando executado com sucesso" quando o ACK é recebido
+
+Cenário: Falha na resposta do atuador (Timeout de Comando)
+  Dado que o operador enviou o comando "DESLIGAR" para a "Válvula de Solenóide 02"
+  Quando o dispositivo não retorna a confirmação de recebimento (ACK) em até 10 segundos
+  Então a interface exibe a mensagem de erro "Falha na comunicação com o atuador. Verifique a conexão do nó."
+  E o estado visual do atuador permanece como "Inalterado/Erro"
+```
