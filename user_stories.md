@@ -126,7 +126,7 @@ Cenário: Intervenção preventiva com sucesso na Simulação 2
 **Quero** visualizar os gráficos de telemetria dos sensores atualizados em tempo real  
 **Para que** eu possa acompanhar as variações ambientais e operacionais sem recarregar a página manualmente  
 
-### Cenários de Validação (BDD)
+### Cenários de Validação (BDD) 
 
 ```gherkin
 Cenário: Atualização automática do gráfico de leitura
