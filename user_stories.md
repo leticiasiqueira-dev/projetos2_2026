@@ -146,8 +146,8 @@ Cenário: Perda de sinal do dispositivo (Timeout)
 
 ## US08- Atuação Remota em Atuadores IoT (Comando de Saída)
 
-**Como** operador de campo autorizador  
-**Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
+**Como** operador de campo autorizador  
+**Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
 **Para que** eu possa intervir em tempo real após analisar o status dos sensores  
 
 ### Cenários de Validação (BDD)
@@ -168,3 +168,4 @@ Cenário: Falha na resposta do atuador (Timeout de Comando)
   Então a interface exibe a mensagem de erro "Falha na comunicação com o atuador. Verifique a conexão do nó."
   E o estado visual do atuador permanece como "Inalterado/Erro"
 ```
+
