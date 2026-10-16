@@ -8,8 +8,8 @@ Este documento apresenta o levantamento das **User Stories** para o sistema de m
 
 ## US01 - Acesso e Início da Experiência do Simulador 
 
-**Como** operador de fábrica ou usuário da plataforma
-**Quero** visualizar a página inicial do simulador com a apresentação dos conceitos e o botão de início  
+**Como** operador de fábrica ou usuário da plataforma 
+**Quero** visualizar a página inicial do simulador com a apresentação dos conceitos e o botão de início 
 **Para que** eu possa compreender o propósito do monitoramento IoT antes de iniciar a simulação  
 
 ### Cenários de Validação (BDD)
