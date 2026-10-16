@@ -1,6 +1,6 @@
 # Histórias de Usuário - Plataforma de IoT e Sensoriamento
 
-Este documento apresenta o levantamento das **User Stories** para o sistema de monitoramento IoT e telemetria de sensores, incluindo cenários de teste orientados a comportamento (BDD/Gherkin).
+Este documento apresenta o levantamento das **User Stories** para o sistema de monitoramento IoT e os sensores, incluindo cenários de teste orientados a comportamento (BDD/Gherkin).
 
 **Módulo principal:** [http://127.0.0.1:8000/forum/](http://127.0.0.1:8000/forum/) (Central de Discussões e Alertas da Comunidade IoT)
 
@@ -16,7 +16,7 @@ Este documento apresenta o levantamento das **User Stories** para o sistema de m
 
 ```gherkin
 Cenário: Iniciar a experiência a partir da página inicial
-  Dadoque estou na página inicial do simulador IoT
+  Dado que estou na página inicial do simulador IoT
   Quando visualizo o título da introdução e clico no botão "Começar experiência" 
   Então o sistema me redireciona para a tela da "Simulação 1 - Sem monitoramento" 
 ```
@@ -82,53 +82,38 @@ Cenário:  Identificação de anomalia e acionamento de manutenção
 
 ---
 
-## US05 - Exportação de Histórico de Dados de Sensoriamento
+## US05 - Inspeção de Telemetria e Linha do Tempo das Máquinas
 
-**Como** pesquisador ou auditor de dados  
-**Quero** exportar o histórico de leituras telemétricas em formato CSV ou JSON por intervalo de datas  
-**Para que** eu possa realizar análises preditivas externas e auditorias de conformidade    
+**Como** usuário do simulador  
+**Quero** selecionar uma máquina da linha de produção para visualizar seus dados de telemetria e o histórico da linha do tempo
+**Para que** eu possa acompanhar em tempo real as variações de temperatura, vibração e eficiência do equipamento 
 
 ### Cenários de Validação (BDD)
 
 ```gherkin
-Cenário: Exportação de arquivo CSV dentro do período selecionado
-  Dado que estou no painel de exportação do sensor "/forum/dispositivos/15/exportar"
-  Quando defino a data inicial como "2026-10-01" e a data final como "2026-10-10"
-  E escolho o formato de saída "CSV"
-  E clico em "Gerar Relatório"
-  Então o download do arquivo "telemetria_sensor_15_20261001_20261010.csv" é iniciado
-  E o conteúdo do arquivo contém os campos "timestamp", "sensor_id", "parametro", "valor" e "unidade"
-
-Cenário: Solicitação de exportação sem registros no período
-  Dado que seleciono um intervalo de datas em que o sensor esteve desligado/sem registros
-  Quando clico em "Gerar Relatório"
-  Então o sistema exibe o aviso "Nenhum dado de telemetria encontrado para o período selecionado"
-  E nenhum arquivo é gerado para download
+Cenário: Inspeção dos dados da máquina em tempo real
+  Dado que estou visualizando uma simulação em andamento
+  Quando clico sobre uma máquina na "Linha de Produção" (ex: "Máquina 02 — Processamento") 
+  Então o painel de dados exibe os indicadores atualizados da máquina (Temperatura em °C, Vibração em mm/s, Eficiência e Uptime) 
+  E a barra de progresso do indicador visual mostra se os valores estão dentro ou acima dos limites normais 
 ```
 
 ---
 
-## US06 - Atuação Remota em Atuadores IoT (Comando de Saída)
+## US06 - Tomada de Decisão Preventiva na Simulação Monitorada
 
-**Como** operador de campo autorizador  
-**Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
-**Para que** eu possa intervir em tempo real após analisar o status dos sensores  
+**Como** usuário ou operador do simulador  
+**Quero** selecionar a ação de intervenção ("Acionar manutenção") ao receber um alerta de anomalia  
+**Para que** eu possa evitar a parada total da linha de produção e reduzir os impactos operacionais
 
 ### Cenários de Validação (BDD)
 
 ```gherkin
-Cenário: Envio de comando de atuação com confirmação
-  Dado que estou autenticado com permissões de "Operador de Atuação"
-  E estou visualizando o painel do atuador "Válvula de Solenóide 02"
-  Quando aciono a chave seletora de estado para "LIGADO"
-  E confirmo a ação no modal de segurança
-  Então o sistema publica uma mensagem de comando no tópico MQTT correspondente
-  E aguarda a mensagem de confirmação (ACK) do dispositivo
-  E exibe o status "Comando executado com sucesso" quando o ACK é recebido
-
-Cenário: Falha na resposta do atuador (Timeout de Comando)
-  Dado que o operador enviou o comando "DESLIGAR" para a "Válvula de Solenóide 02"
-  Quando o dispositivo não retorna a confirmação de recebimento (ACK) em até 10 segundos
-  Então a interface exibe a mensagem de erro "Falha na comunicação com o atuador. Verifique a conexão do nó."
-  E o estado visual do atuador permanece como "Inalterado/Erro"
+Cenário: Intervenção preventiva com sucesso na Simulação 2
+  Dado que estou no ambiente da "Simulação 2" com o monitoramento BZU ativo 
+  E o sistema exibe um alerta de anomalia na "Máquina 02" com opções de ação 
+  Quando  clico na opção "Acionar manutenção" no painel de decisão 
+  Então o sistema atualiza a linha do tempo informando que a equipe de manutenção foi acionada 
+  E o status da máquina muda para "Protegida" ou "Operação normalizada" 
+  E o painel exibe o resumo do impacto evitado (tempo de parada reduzido e custo economizado) 
 ```
