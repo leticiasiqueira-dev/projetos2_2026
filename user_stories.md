@@ -85,8 +85,8 @@ Cenário:  Identificação de anomalia e acionamento de manutenção
 ## US05 - Inspeção de Telemetria e Linha do Tempo das Máquinas
 
 **Como** usuário do simulador  
-**Quero** selecionar uma máquina da linha de produção para visualizar seus dados de telemetria e o histórico da linha do tempo
-**Para que** eu possa acompanhar em tempo real as variações de temperatura, vibração e eficiência do equipamento 
+**Quero** selecionar uma máquina da linha de produção para visualizar seus dados de telemetria e o histórico da linha do tempo  
+**Para que** eu possa acompanhar em tempo real as variações de temperatura, vibração e eficiência do equipamento  
 
 ### Cenários de Validação (BDD)
 
@@ -104,7 +104,7 @@ Cenário: Inspeção dos dados da máquina em tempo real
 
 **Como** usuário ou operador do simulador  
 **Quero** selecionar a ação de intervenção ("Acionar manutenção") ao receber um alerta de anomalia  
-**Para que** eu possa evitar a parada total da linha de produção e reduzir os impactos operacionais
+**Para que** eu possa evitar a parada total da linha de produção e reduzir os impactos operacionais  
 
 ### Cenários de Validação (BDD)
 
