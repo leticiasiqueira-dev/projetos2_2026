@@ -27,6 +27,7 @@ Cenário: Iniciar a experiência a partir da página inicial
 
 **Como** usuário do simulador  
 **Quero** iniciar a primeira simulação sem o monitoramento IoT ativo
+
 **Para que** eu possa observar como uma falha em uma máquina afeta em cadeia toda a linha de produção
 
 ### Cenários de Validação (BDD)
