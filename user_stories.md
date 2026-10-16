@@ -6,107 +6,78 @@ Este documento apresenta o levantamento das **User Stories** para o sistema de m
 
 ---
 
-## US01 - Cadastro e Vinculação de Novo Dispositivo IoT
+## US01 - Acesso e Início da Experiência do Simulador 
 
-**Como** engenheiro de automação ou operador do sistema  
-**Quero** cadastrar um novo nó sensor (dispositivo IoT) informando seu MAC Address e tipo de sensor  
-**Para que** o dispositivo possa transmitir dados telemétricos para a plataforma  
+**Como** operador de fábrica ou usuário da plataforma
+**Quero** visualizar a página inicial do simulador com a apresentação dos conceitos e o botão de início  
+**Para que** eu possa compreender o propósito do monitoramento IoT antes de iniciar a simulação  
 
 ### Cenários de Validação (BDD)
 
 ```gherkin
-Cenário: Cadastro de nó sensor com sucesso
-  Dado que estou autenticado como operador e na página de dispositivos em "/forum/dispositivos/novo"
-  Quando preencho o campo "Nome do Dispositivo" com "Sensor Temperatura Estufa 01"
-  E preencho o "MAC Address / UUID" com "AA:BB:CC:11:22:33"
-  E seleciono o "Tipo de Sensor" como "Temperatura e Umidade (DHT22)"
-  E clico em "Cadastrar Dispositivo"
-  Então vejo a mensagem de sucesso "Dispositivo cadastrado com sucesso"
-  E o status inicial do dispositivo é exibido como "Aguardando Primeira Leitura"
-
-Cenário: Tentativa de cadastro com MAC Address duplicado
-  Dado que já existe um dispositivo cadastrado com o MAC Address "AA:BB:CC:11:22:33"
-  Quando tento cadastrar um novo dispositivo utilizando o mesmo MAC Address "AA:BB:CC:11:22:33"
-  E clico em "Cadastrar Dispositivo"
-  Então o sistema bloqueia a ação
-  E exibe a mensagem de erro "Este MAC Address já está registrado em outro nó sensor"
+Cenário: Iniciar a experiência a partir da página inicial
+  Dadoque estou na página inicial do simulador IoT
+  Quando visualizo o título da introdução e clico no botão "Começar experiência" 
+  Então o sistema me redireciona para a tela da "Simulação 1 - Sem monitoramento" 
 ```
 
 ---
 
-## US02 - Visualização de Telemetria em Tempo Real (Dashboard)
+## US02 - Execução da Simulação Sem Monitoramento
 
-**Como** analista de dados ou técnico de campo  
-**Quero** visualizar os gráficos de telemetria dos sensores atualizados em tempo real  
-**Para que** eu possa acompanhar as variações ambientais e operacionais sem recarregar a página manualmente  
+**Como** usuário do simulador  
+**Quero** iniciar a primeira simulação sem o monitoramento IoT ativo
+**Para que** eu possa observar como uma falha em uma máquina afeta em cadeia toda a linha de produção
 
 ### Cenários de Validação (BDD)
 
 ```gherkin
-Cenário: Atualização automática do gráfico de leitura
-  Dado que estou visualizando o painel do sensor em "/forum/dispositivos/15/telemetria"
-  Quando o sensor envia uma nova leitura de temperatura via protocolo MQTT ou HTTP
-  Então o gráfico de linha adiona o novo ponto de dados com o valor e horário correspondentes
-  E o indicador de "Última atualização" é alterado para "Agora mesmo"
-
-Cenário: Perda de sinal do dispositivo (Timeout)
-  Dado que o dispositivo "Sensor Estufa 01" está configurado para enviar dados a cada 30 segundos
-  Quando o sistema não recebe nenhuma telemetria por um período superior a 3 minutos
-  Então o indicador de status do dispositivo no painel muda automaticamente de "Online" para "Offline"
-  E um alerta visual é exibido na lista de monitoramento
+Cenário: Induzir falha em linha de produção não monitorada
+  Dado que estou na página da “Simulação 1” e o status do monitoramento é “INATIVO”
+  Quando clico no botão “iniciar falha”
+  Então o sistema executa a simulação mostrando a interrupção da máquina
+  E o impacto acumulado na linha do tempo
+  E exibe os indicadores dos impactos gerado
+  E habilita o botão de “Continuar para a próxima simulação”
 ```
 
 ---
 
-## US03 - Configuração de Limiares e Alertas de Limite Critico
+## US03 - Transição para o Cenário de Monitoramento
 
-**Como** gestor de monitoramento  
-**Quero** configurar limiares de alerta (mínimo e máximo) para métricas de sensoriamento  
-**Para que** a equipe seja notificada instantaneamente quando uma leitura sair da faixa operacional segura  
+**Como** usuário do simulador  
+**Quero** visualizar uma tela que demonstra os cenário do monitoramento com a BzuTech 
+**Para que** eu entenda como a tecnologia IoT e os alertas antecipados previnem danos e prejuízos 
 
 ### Cenários de Validação (BDD)
 
 ```gherkin
-Cenário: Disparo de alerta por temperatura elevada
-  Dado que o sensor "Sensor Estufa 01" possui o limiar máximo de temperatura configurado para 35.0 °C
-  Quando o dispositivo envia uma leitura de telemetria igual a 37.5 °C
-  Então o sistema registra uma ocorrência de alerta de nível "Crítico"
-  E cria automaticamente um tópico de incidente no fórum central em "/forum/" informando o desvio
-  E envia uma notificação push/e-mail para os responsáveis cadastrados
-
-Cenário: Retorno da métrica para a faixa normal
-  Dado que um dispositivo está em estado de "Alerta Ativo" por alta umidade
-  Quando o sensor envia uma nova leitura dentro da faixa considerada segura (entre 40% e 60%)
-  Então o status do alerta muda para "Normalizado"
-  E o histórico de eventos é atualizado com o horário de resolução
+Cenário: Avançar para simulação com monitoramento BZU
+  Dado que concluiu a simulação 1 - sem monitoramento
+  Quando clico em “Conhecer a simulação com a BZU”
+  Então o sistema vai me direcionar ao ambiente da simulação 2 com sensores IoT ativos
 ```
 
 ---
 
-## US04 - Discussão e Diagnóstico Colaborativo de Falhas no Fórum
+## US04 - Execução da Simulação Com Monitoramento
 
-**Como** técnico de manutenção  
-**Quero** publicar ou abrir um tópico no fórum relacionado a um comportamento anômalo de um sensor  
-**Para que** outros especialistas da comunidade/equipe possam ajudar no diagnóstico técnico  
+**Como** gestor do sistema  
+**Quero** receber alertas de anomalia em tempo real com opções de decisões 
+**Para que** eu possa agir preventivamente antes que ocorra uma grave falha na máquina
 
 ### Cenários de Validação (BDD)
 
 ```gherkin
-Cenário: Abertura de tópico de diagnóstico vinculado a um sensor
-  Dado que estou autenticado na página do fórum em "/forum/"
-  Quando clico no botão "Novo Tópico de Diagnóstico"
-  E seleciono o dispositivo associado "Sensor Pressão Tubulação B"
-  E preencho o título "Oscilações anômalas na leitura de pressão"
-  E descrevo o problema no campo de mensagem
-  E clico em "Publicar Tópico"
-  Então o tópico é criado em "/forum/" com uma tag vinculada ao ID do equipamento
-  E os dados recentes de telemetria do sensor são anexados automaticamente à publicação
-
-Cenário: Interação na resolução do problema
-  Dado que existe um tópico de diagnóstico aberto em "/forum/topico/88"
-  Quando um engenheiro publica uma resposta sugerindo "Verificar recalibração do sensor piezoelétrico"
-  E o autor do tópico confirma a solução clicando em "Marcar como Solução Aceita"
-  Então o tópico é marcado como "Diagnóstico Concluído"
+Cenário:  Identificação de anomalia e acionamento de manutenção
+  Dado que estou na página da “Simulação 2” e o status do monitoramento é “ATIVO”
+  E o sensor detecta uma anomalia na Máquina 2
+  Quando clico em “Iniciar simulação com BZU”
+  E o painel exibe o alerta com as opções de tomada de decisão (“Ignorar alerta”, “Verificar dados”, “Acionar manutenção”)
+  E seleciono a opção “Acionar manutenção”
+  Então o sistema registra a intervenção preventiva e estabiliza a operação da máquina
+  E exibe o impacto reduzido e o tempo/custo economizados
+  E habilita o botão “Ver comparativo final”
 ```
 
 ---
