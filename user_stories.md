@@ -122,8 +122,8 @@ Cenário: Intervenção preventiva com sucesso na Simulação 2
 
 ## US07 - Visualização de Telemetria em Tempo Real (Dashboard)
 
-**Como** analista de dados ou técnico de campo  
-**Quero** visualizar os gráficos de telemetria dos sensores atualizados em tempo real  
+**Como** analista de dados ou técnico de campo  
+**Quero** visualizar os gráficos de telemetria dos sensores atualizados em tempo real  
 **Para que** eu possa acompanhar as variações ambientais e operacionais sem recarregar a página manualmente  
 
 ### Cenários de Validação (BDD)
@@ -146,8 +146,8 @@ Cenário: Perda de sinal do dispositivo (Timeout)
 
 ## US08- Atuação Remota em Atuadores IoT (Comando de Saída)
 
-**Como** operador de campo autorizador  
-**Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
+**Como** operador de campo autorizador  
+**Quero** enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma  
 **Para que** eu possa intervir em tempo real após analisar o status dos sensores  
 
 ### Cenários de Validação (BDD)
