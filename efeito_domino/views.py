@@ -103,3 +103,42 @@ def simulador(request):
     conteudo = conteudo.replace("<!--OCORRENCIA_REAL-->", script_dados)
  
     return HttpResponse(conteudo)
+
+
+
+import random
+from django.http import JsonResponse, Http404
+
+MAQUINAS = {
+    1: {"nome": "Máquina 01 — Recepção",       "temp": 58, "vib": 2.0, "efi": 94},
+    2: {"nome": "Máquina 02 — Processamento",  "temp": 74, "vib": 3.8, "efi": 88},
+    3: {"nome": "Máquina 03 — Montagem",       "temp": 64, "vib": 2.8, "efi": 92},
+    4: {"nome": "Máquina 04 — Expedição",      "temp": 55, "vib": 1.8, "efi": 95},
+}
+
+LIMITE_TEMP = 80      # °C (máximo)
+LIMITE_VIB = 5.0      # mm/s (máximo)
+LIMITE_EFI = 85       # % (mínimo)
+
+
+def telemetria_maquina(request, maquina_id):
+    base = MAQUINAS.get(maquina_id)
+    if base is None:
+        raise Http404("Máquina não encontrada")
+
+    temp = round(base["temp"] + random.uniform(-3, 8), 1)
+    vib = round(base["vib"] + random.uniform(-0.6, 2.0), 2)
+    efi = round(base["efi"] + random.uniform(-6, 4), 1)
+    uptime = round(random.uniform(98.5, 99.9), 1)
+
+    return JsonResponse({
+        "nome": base["nome"],
+        "temperatura": {"valor": temp, "unidade": "°C", "escala": 100,
+                        "acima": temp > LIMITE_TEMP, "regra": f"máx. {LIMITE_TEMP} °C"},
+        "vibracao": {"valor": vib, "unidade": "mm/s", "escala": 8,
+                     "acima": vib > LIMITE_VIB, "regra": f"máx. {LIMITE_VIB} mm/s"},
+        "eficiencia": {"valor": efi, "unidade": "%", "escala": 100,
+                       "acima": efi < LIMITE_EFI, "regra": f"mín. {LIMITE_EFI}%"},
+        "uptime": {"valor": uptime, "unidade": "%", "escala": 100,
+                   "acima": False, "regra": "meta 99%"},
+    })
