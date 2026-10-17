@@ -33,10 +33,10 @@
     ];
 
     const MACHINES = [
-      { id: 1, nome: "Máquina 01 — Recepção" },
-      { id: 2, nome: "Máquina 02 — Processamento" },
-      { id: 3, nome: "Máquina 03 — Montagem" },
-      { id: 4, nome: "Máquina 04 — Expedição" },
+      { id: 1, nome: "Máquina 01 - Recepção" },
+      { id: 2, nome: "Máquina 02 - Processamento" },
+      { id: 3, nome: "Máquina 03 - Montagem" },
+      { id: 4, nome: "Máquina 04 - Expedição" },
     ];
 
     function Indicador({ rotulo, item }) {
@@ -97,7 +97,7 @@
 
       return (
         <div>
-          <div className="pl-title">Linha de Produção</div>
+          <div className="pl-title">Informações:</div>
           <div className="pl-line">
             {MACHINES.map(m => (
               <button key={m.id} className={`pl-machine ${selecionada === m.id ? "active" : ""}`}
@@ -135,6 +135,7 @@
       const [phase, setPhase] = useState("idle");
       const [running, setRunning] = useState(false);
       const [done, setDone] = useState(false);
+      const [aba, setAba] = useState("simulador");
       const timers = useRef([]);
 
       const clearTimers = () => {
@@ -270,12 +271,27 @@
             .pl-hist { font-size: 12px; color: var(--muted); }
             .pl-hist li { margin: 2px 0; }
             .pl-hint { font-size: 13px; color: var(--muted); margin-top: 12px; }
+            .dfs-tabs { display: flex; gap: 8px; margin: 22px 0 0; border-bottom: 1px solid var(--line); }
+            .dfs-tab { background: transparent; border: none; color: var(--muted); padding: 10px 16px;
+              font-size: 14px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+            .dfs-tab:hover { color: var(--text); }
+            .dfs-tab.active { color: var(--text); font-weight: 600; border-bottom-color: var(--magenta); }
           `}</style>
 
           <div className="dfs-head">
             <h2>Simulador de efeito dominó de uma parada</h2>
             <p>A falha em uma única máquina pode se propagar por toda a operação. Rode os dois cenários e veja a diferença que a detecção antecipada faz.</p>
           </div>
+          <div className="dfs-tabs">
+            <button className={`dfs-tab ${aba === "simulador" ? "active" : ""}`} onClick={() => setAba("simulador")}>
+              Efeito dominó
+            </button>
+            <button className={`dfs-tab ${aba === "linha" ? "active" : ""}`} onClick={() => setAba("linha")}>
+              Linha de Produção
+            </button>
+          </div>
+          {aba === "simulador" && (
+            <>
 
           <div className="dfs-controls">
             <button className="dfs-btn" disabled={running} onClick={() => run("no-bzu")}>Simular sem BZU</button>
@@ -339,8 +355,10 @@
               </div>
             </div>
           )}
+          </>
+        )}
 
-          <ProductionLine />
+          {aba === "linha" && <ProductionLine />}
         </div>
       );
     }
