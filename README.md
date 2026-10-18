@@ -108,8 +108,7 @@ Definição das histórias de usuário e implementação das primeiras história
 - O sistema exibe o impacto reduzido e o tempo/custo economizados
 - O botão "Ver comparativo final" é habilitado
 
-**Responsável:** _nome_  
-**Issue:** #_
+
 
 </td>
 <td width="33%" valign="top">
@@ -125,8 +124,7 @@ Definição das histórias de usuário e implementação das primeiras história
 - Os indicadores são Temperatura (°C), Vibração (mm/s), Eficiência e Uptime
 - A barra de progresso mostra se os valores estão dentro ou acima dos limites normais
 
-**Responsável:** _nome_  
-**Issue:** #_
+
 
 </td>
 <td width="33%" valign="top">
@@ -142,8 +140,7 @@ Definição das histórias de usuário e implementação das primeiras história
 - O status da máquina muda para "Protegida" ou "Operação normalizada"
 - O painel exibe o resumo do impacto evitado (tempo de parada reduzido e custo economizado)
 
-**Responsável:** _nome_  
-**Issue:** #_
+
 
 </td>
 </tr>
