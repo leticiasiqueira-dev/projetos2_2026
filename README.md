@@ -147,7 +147,8 @@ Definição das histórias de usuário e implementação das primeiras história
 
 </td>
 </tr>
-</table>  
+</table>
+
 - 🖼️ [Print do backlog (Jira)](#)  
 - 🎥 [Screencast das histórias implementadas](#)  
 - 🎥 [Screencast de explicação do código](#)  
