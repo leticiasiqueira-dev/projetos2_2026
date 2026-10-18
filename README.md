@@ -88,6 +88,66 @@ Definição das histórias de usuário e implementação das primeiras história
 **Artefatos / Screenshots:**
 
 - 📄 [Documento de histórias de usuário](https://github.com/leticiasiqueira-dev/projetos2_2026/blob/main/user_stories.md)
+- 🔁 [Histórias implementadas]
+  #### 📝 Histórias implementadas
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+**US04 – Execução da Simulação Com Monitoramento**
+
+**Como** gestor do sistema,
+**quero** receber alertas de anomalia em tempo real com opções de decisões,
+**para que** eu possa agir preventivamente antes que ocorra uma grave falha na máquina.
+
+**Critérios de aceite:**
+- Na "Simulação 2" com monitoramento "ATIVO", ao clicar em "Iniciar simulação com BZU" e o sensor detectar anomalia na Máquina 2, o painel exibe o alerta
+- O alerta traz as opções "Ignorar alerta", "Verificar dados" e "Acionar manutenção"
+- Ao acionar manutenção, o sistema registra a intervenção preventiva e estabiliza a máquina
+- O sistema exibe o impacto reduzido e o tempo/custo economizados
+- O botão "Ver comparativo final" é habilitado
+
+**Responsável:** _nome_
+**Issue:** #_
+
+</td>
+<td width="33%" valign="top">
+
+**US05 – Inspeção de Telemetria e Linha do Tempo das Máquinas**
+
+**Como** usuário do simulador,
+**quero** selecionar uma máquina da linha de produção para visualizar seus dados de telemetria e o histórico da linha do tempo,
+**para que** eu possa acompanhar em tempo real as variações de temperatura, vibração e eficiência do equipamento.
+
+**Critérios de aceite:**
+- Com uma simulação em andamento, ao clicar em uma máquina da "Linha de Produção" (ex: "Máquina 02 — Processamento"), o painel exibe os indicadores atualizados
+- Os indicadores são Temperatura (°C), Vibração (mm/s), Eficiência e Uptime
+- A barra de progresso mostra se os valores estão dentro ou acima dos limites normais
+
+**Responsável:** _nome_
+**Issue:** #_
+
+</td>
+<td width="33%" valign="top">
+
+**US06 – Tomada de Decisão Preventiva na Simulação Monitorada**
+
+**Como** usuário ou operador do simulador,
+**quero** selecionar a ação de intervenção ("Acionar manutenção") ao receber um alerta de anomalia,
+**para que** eu possa evitar a parada total da linha de produção e reduzir os impactos operacionais.
+
+**Critérios de aceite:**
+- Na "Simulação 2" com monitoramento BZU ativo e alerta na "Máquina 02", ao clicar em "Acionar manutenção" a linha do tempo informa que a equipe de manutenção foi acionada
+- O status da máquina muda para "Protegida" ou "Operação normalizada"
+- O painel exibe o resumo do impacto evitado (tempo de parada reduzido e custo economizado)
+
+**Responsável:** _nome_
+**Issue:** #_
+
+</td>
+</tr>
+</table>
 - 🖼️ [Print do backlog (Jira)](#)
 - 🎥 [Screencast das histórias implementadas](#)
 - 🎥 [Screencast de explicação do código](#)
