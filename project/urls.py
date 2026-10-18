@@ -22,6 +22,7 @@ urlpatterns = [
         include("forum.urls")
     ),
 
+    #Aplicativo quem somos
     path(
         "quem_somos/", 
         include("quem_somos.urls")),
