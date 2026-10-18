@@ -138,6 +138,29 @@
       const [aba, setAba] = useState("simulador");
       const timers = useRef([]);
 
+      
+     const [manutencaoAcionada, setManutencaoAcionada] = useState(false);
+     const [historicoDecisao, setHistoricoDecisao] = useState([]);
+
+    function acionarManutencao() {
+      if (manutencaoAcionada) return;
+
+      const hora = new Date().toLocaleTimeString("pt-BR");
+
+      setManutencaoAcionada(true);
+      setHistoricoDecisao([
+        {
+          hora,
+          texto: "Anomalia detectada na Máquina 02."
+        },
+        {
+          hora,
+          texto: "Equipe de manutenção acionada. Máquina 02 protegida."
+        }
+      ]);
+    }
+
+
       const clearTimers = () => {
         timers.current.forEach(clearTimeout);
         timers.current = [];
@@ -289,6 +312,10 @@
             <button className={`dfs-tab ${aba === "linha" ? "active" : ""}`} onClick={() => setAba("linha")}>
               Linha de Produção
             </button>
+             <button className={`dfs-tab ${aba === "decisao" ? "active" : ""}`} onClick={() => setAba("decisao")}>
+              Tomar decisão
+            </button>
+
           </div>
           {aba === "simulador" && (
             <>
@@ -359,6 +386,88 @@
         )}
 
           {aba === "linha" && <ProductionLine />}
+
+          
+{aba === "decisao" && (
+  <div style={{ marginTop: "24px" }}>
+    <h2>Tomada de decisão preventiva</h2>
+
+    <p style={{ color: "#a996c4", fontSize: "14px" }}>
+      Simulação 2 — Monitoramento BZU ativo
+    </p>
+
+    <div style={{
+      background: "#271340",
+      border: "1px solid #f0546a",
+      borderRadius: "14px",
+      padding: "20px",
+      marginTop: "20px"
+    }}>
+      <h3 style={{ marginTop: 0 }}>
+        ⚠️ Anomalia detectada — Máquina 02
+      </h3>
+
+      <p>
+        A eficiência da máquina está abaixo do limite normal.
+        Uma intervenção preventiva pode evitar a propagação da falha.
+      </p>
+
+      <p>
+        <b>Status: </b>
+        <span style={{
+          color: manutencaoAcionada ? "#2dd8ad" : "#f5a36c"
+        }}>
+          {manutencaoAcionada
+            ? "Protegida"
+            : "Aguardando decisão do operador"}
+        </span>
+      </p>
+
+      <button
+        className="dfs-btn primary"
+        onClick={acionarManutencao}
+        disabled={manutencaoAcionada}
+      >
+        {manutencaoAcionada
+          ? "Manutenção acionada"
+          : "Acionar manutenção"}
+      </button>
+    </div>
+
+    <div style={{
+      background: "#1f1033",
+      border: "1px solid #3a2158",
+      borderRadius: "14px",
+      padding: "20px",
+      marginTop: "20px"
+    }}>
+      <h3 style={{ marginTop: 0 }}>
+        Linha do tempo da intervenção
+      </h3>
+
+      <p>✓ Monitoramento BZU ativo.</p>
+      <p>✓ Anomalia identificada na Máquina 02.</p>
+
+      {manutencaoAcionada ? (
+        <>
+          {historicoDecisao.map((evento, i) => (
+            <p key={i}>
+              <span style={{ color: "#2dd8ad" }}>✓</span>{" "}
+              {evento.hora} — {evento.texto}
+            </p>
+          ))}
+
+       
+        </>
+      ) : (
+        <p style={{ color: "#a996c4" }}>
+          Aguardando o operador acionar a manutenção.
+        </p>
+      )}
+    </div>
+  </div>
+)}
+
         </div>
       );
     }
