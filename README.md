@@ -265,7 +265,7 @@ Bugs, melhorias e tarefas técnicas são registrados nas [Issues do GitHub](http
  
 ## 📡 Painéis de Acompanhamento
  
-- 🗂️ **Jira:** [link do quadro](https://cesar-team-qchgyaex.atlassian.net/jira/software/projects/FP2/boards/2?filter=&groupBy=none)
+- 🗂️ **Jira:** [link do quadro]([https://cesar-team-qchgyaex.atlassian.net/jira/software/projects/FP2/boards/2?filter=&groupBy=none](https://cesar-team-qchgyaex.atlassian.net/jira/software/projects/FP2/boards/2?filter=&groupBy=none&atlOrigin=eyJpIjoiNWMyN2UzNWY5Y2M4NDFkMjkwNGI0YzU4NTA1ODI2NzciLCJwIjoiaiJ9))
 - 🐞 **Bug tracker:** [GitHub Issues](https://github.com/leticiasiqueira-dev/projetos2_2026/issues)
 - 🎨 **Figma:** [link do protótipo](#)
 
