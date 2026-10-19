@@ -39,6 +39,12 @@
       { id: 4, nome: "Máquina 04 - Expedição" },
     ];
 
+    // US04 - valores ilustrativos da simulação (ajuste com a BZU)
+    const ECONOMIA = {
+      tempo: "4 h de parada evitadas",
+      custo: "R$ 12.000 em prejuízo evitado",
+    };
+
     function Indicador({ rotulo, item }) {
       if (!item) return null;
       const pct = Math.min((item.valor / item.escala) * 100, 100);
@@ -138,28 +144,57 @@
       const [aba, setAba] = useState("simulador");
       const timers = useRef([]);
 
-      
-     const [manutencaoAcionada, setManutencaoAcionada] = useState(false);
-     const [historicoDecisao, setHistoricoDecisao] = useState([]);
+      // ===== US04 - Execução da simulação com monitoramento =====
+      // simFase: "inativa" | "alerta" | "resolvida" | "ignorada"
+      const [simFase, setSimFase] = useState("inativa");
+      const [dadosM2, setDadosM2] = useState(null);
+      const [historicoDecisao, setHistoricoDecisao] = useState([]);
+      const [verComparativo, setVerComparativo] = useState(false);
 
-    function acionarManutencao() {
-      if (manutencaoAcionada) return;
+      function registrar(texto) {
+        const hora = new Date().toLocaleTimeString("pt-BR");
+        setHistoricoDecisao(h => [...h, { hora, texto }]);
+      }
 
-      const hora = new Date().toLocaleTimeString("pt-BR");
+      function iniciarSimulacaoBzu() {
+        setSimFase("alerta");
+        setDadosM2(null);
+        setVerComparativo(false);
+        setHistoricoDecisao([]);
+        registrar("Monitoramento BZU ativo.");
+        registrar("Sensor detectou anomalia na Máquina 02.");
+      }
 
-      setManutencaoAcionada(true);
-      setHistoricoDecisao([
-        {
-          hora,
-          texto: "Anomalia detectada na Máquina 02."
-        },
-        {
-          hora,
-          texto: "Equipe de manutenção acionada. Máquina 02 protegida."
+      async function verificarDados() {
+        registrar("Operador consultou os dados da Máquina 02.");
+        try {
+          const r = await fetch("/efeito_domino/api/maquinas/2/telemetria/");
+          if (!r.ok) throw new Error("falha");
+          setDadosM2(await r.json());
+        } catch (e) {
+          registrar("Não foi possível carregar a telemetria.");
         }
-      ]);
-    }
+      }
 
+      function ignorarAlerta() {
+        setSimFase("ignorada");
+        registrar("Alerta ignorado pelo operador.");
+        registrar("A falha se propagou: produção, pedido e custo foram afetados.");
+      }
+
+      function acionarManutencao() {
+        setSimFase("resolvida");
+        registrar("Manutenção preventiva acionada na Máquina 02.");
+        registrar("Intervenção registrada. Operação da máquina estabilizada.");
+      }
+
+      function reiniciarSimulacao() {
+        setSimFase("inativa");
+        setDadosM2(null);
+        setHistoricoDecisao([]);
+        setVerComparativo(false);
+      }
+      // ===== fim US04 =====
 
       const clearTimers = () => {
         timers.current.forEach(clearTimeout);
@@ -265,13 +300,14 @@
             .dfs-result.danger { border-color: rgba(240,84,106,.4); background: rgba(240,84,106,.07); }
             .dfs-result.safe { border-color: rgba(45,216,173,.4); background: rgba(45,216,173,.08); }
             .dfs-result b { font-weight: 700; }
+            .dfs-result ul { margin: 10px 0 0; padding-left: 18px; }
             .dfs-compare { margin-top: 18px; display: grid; gap: 16px; }
             .dfs-crow-head { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
             .dfs-bar-track { height: 10px; border-radius: 6px; background: var(--panel-2); overflow: hidden; margin-bottom: 4px; }
             .dfs-bar-fill { height: 100%; border-radius: 6px; width: 0%; transition: width 1s cubic-bezier(.22,.61,.36,1) .1s; }
             .dfs-bar-fill.red { background: var(--danger); }
             .dfs-bar-fill.green { background: var(--safe); }
-            .dfs-crow-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+            .dfs-crow-labels { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); }
             .dfs-crow-labels b { color: var(--text); }
 
             .pl-title { margin: 36px 0 12px; font-size: 16px; font-weight: 700; }
@@ -299,6 +335,13 @@
               font-size: 14px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
             .dfs-tab:hover { color: var(--text); }
             .dfs-tab.active { color: var(--text); font-weight: 600; border-bottom-color: var(--magenta); }
+
+            .us4-box { margin-top: 20px; padding: 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+            .us4-box.alerta { background: var(--panel-2); border-color: var(--danger); }
+            .us4-box h3 { margin-top: 0; }
+            .us4-acoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+            .us4-status { color: var(--muted); font-size: 14px; }
+            .us4-tl p { margin: 6px 0; font-size: 14px; }
           `}</style>
 
           <div className="dfs-head">
@@ -312,162 +355,195 @@
             <button className={`dfs-tab ${aba === "linha" ? "active" : ""}`} onClick={() => setAba("linha")}>
               Linha de Produção
             </button>
-             <button className={`dfs-tab ${aba === "decisao" ? "active" : ""}`} onClick={() => setAba("decisao")}>
+            <button className={`dfs-tab ${aba === "decisao" ? "active" : ""}`} onClick={() => setAba("decisao")}>
               Tomar decisão
             </button>
-
           </div>
+
           {aba === "simulador" && (
             <>
+              <div className="dfs-controls">
+                <button className="dfs-btn" disabled={running} onClick={() => run("no-bzu")}>Simular sem BZU</button>
+                <button className="dfs-btn primary" disabled={running} onClick={() => run("bzu")}>Simular com BZU</button>
+                <button className="dfs-btn ghost" onClick={reset}>Reiniciar</button>
+              </div>
 
-          <div className="dfs-controls">
-            <button className="dfs-btn" disabled={running} onClick={() => run("no-bzu")}>Simular sem BZU</button>
-            <button className="dfs-btn primary" disabled={running} onClick={() => run("bzu")}>Simular com BZU</button>
-            <button className="dfs-btn ghost" onClick={reset}>Reiniciar</button>
-          </div>
+              <div className="dfs-track">
+                {STAGES.map((stage, i) => {
+                  const isFirst = i === 0;
+                  const fell = mode === "no-bzu" && fallen > i;
+                  const sensing = mode === "bzu" && isFirst && phase === "sensing";
+                  const caught = mode === "bzu" && isFirst && (phase === "alert" || phase === "resolved");
+                  const tileClass = fell ? "fell" : sensing ? "sensing" : caught ? "caught" : "";
+                  return (
+                    <React.Fragment key={stage.id}>
+                      <div className="dfs-domino">
+                        <div className="dfs-tile-wrap"><div className={`dfs-tile ${tileClass}`} /></div>
+                        <div className={`dfs-label ${fell ? "hit" : caught ? "caught" : ""}`}>{stage.label}</div>
+                        <div className="dfs-detail">{stage.detail}</div>
+                      </div>
+                      {i < STAGES.length - 1 && <span className="dfs-arrow">→</span>}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
 
-          <div className="dfs-track">
-            {STAGES.map((stage, i) => {
-              const isFirst = i === 0;
-              const fell = mode === "no-bzu" && fallen > i;
-              const sensing = mode === "bzu" && isFirst && phase === "sensing";
-              const caught = mode === "bzu" && isFirst && (phase === "alert" || phase === "resolved");
-              const tileClass = fell ? "fell" : sensing ? "sensing" : caught ? "caught" : "";
-              return (
-                <React.Fragment key={stage.id}>
-                  <div className="dfs-domino">
-                    <div className="dfs-tile-wrap"><div className={`dfs-tile ${tileClass}`} /></div>
-                    <div className={`dfs-label ${fell ? "hit" : caught ? "caught" : ""}`}>{stage.label}</div>
-                    <div className="dfs-detail">{stage.detail}</div>
+              {mode === "bzu" && phase !== "idle" && (
+                <div className={`dfs-alert ${phase === "alert" || phase === "resolved" ? "show" : ""}`}>
+                  <span className="dfs-alert-icon">{phase === "resolved" ? "✅" : "⚠️"}</span>
+                  <div>
+                    <p className="dfs-alert-title">{phase === "resolved" ? "Manutenção acionada" : "BZU detectou uma anomalia na máquina"}</p>
+                    <p className="dfs-alert-sub">{phase === "resolved" ? "A equipe foi avisada e a cascata foi interrompida na origem." : "Vibração fora do padrão identificada pelo sensor."}</p>
+                    <div className="dfs-progress"><div className={`dfs-progress-fill ${phase === "resolved" ? "go" : ""}`} /></div>
+                    <div className="dfs-progress-label">{phase === "resolved" ? "Alerta resolvido" : "Enviando alerta para a manutenção..."}</div>
                   </div>
-                  {i < STAGES.length - 1 && <span className="dfs-arrow">→</span>}
-                </React.Fragment>
-              );
-            })}
-          </div>
+                </div>
+              )}
 
-          {mode === "bzu" && phase !== "idle" && (
-            <div className={`dfs-alert ${phase === "alert" || phase === "resolved" ? "show" : ""}`}>
-              <span className="dfs-alert-icon">{phase === "resolved" ? "✅" : "⚠️"}</span>
-              <div>
-                <p className="dfs-alert-title">{phase === "resolved" ? "Manutenção acionada" : "BZU detectou uma anomalia na máquina"}</p>
-                <p className="dfs-alert-sub">{phase === "resolved" ? "A equipe foi avisada e a cascata foi interrompida na origem." : "Vibração fora do padrão identificada pelo sensor."}</p>
-                <div className="dfs-progress"><div className={`dfs-progress-fill ${phase === "resolved" ? "go" : ""}`} /></div>
-                <div className="dfs-progress-label">{phase === "resolved" ? "Alerta resolvido" : "Enviando alerta para a manutenção..."}</div>
-              </div>
-            </div>
-          )}
+              {mode === "no-bzu" && done && (
+                <div className="dfs-result danger">Sem monitoramento, o problema só foi percebido depois que <b>toda a cadeia</b> já tinha sido afetada — da máquina até o custo final.</div>
+              )}
 
-          {mode === "no-bzu" && done && (
-            <div className="dfs-result danger">Sem monitoramento, o problema só foi percebido depois que <b>toda a cadeia</b> já tinha sido afetada — da máquina até o custo final.</div>
-          )}
+              {mode === "bzu" && phase === "resolved" && (
+                <div className="dfs-result safe">Com a BZU, o problema foi resolvido <b>ainda na máquina</b>. Produção, pedido e custo nunca chegaram a ser impactados.</div>
+              )}
 
-          {mode === "bzu" && phase === "resolved" && (
-            <div className="dfs-result safe">Com a BZU, o problema foi resolvido <b>ainda na máquina</b>. Produção, pedido e custo nunca chegaram a ser impactados.</div>
+              {done && (
+                <div className="dfs-compare">
+                  <div>
+                    <div className="dfs-crow-head">Etapas da cadeia afetadas</div>
+                    <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
+                    <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "0%" }} /></div>
+                    <div className="dfs-crow-labels"><span>Sem BZU: <b>4 de 4</b></span><span>Com BZU: <b>0 de 4</b></span></div>
+                  </div>
+                  <div>
+                    <div className="dfs-crow-head">Momento da detecção</div>
+                    <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
+                    <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "8%" }} /></div>
+                    <div className="dfs-crow-labels"><span>Sem BZU: <b>Tardia</b></span><span>Com BZU: <b>Imediata</b></span></div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
-
-          {done && (
-            <div className="dfs-compare">
-              <div>
-                <div className="dfs-crow-head">Etapas da cadeia afetadas</div>
-                <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
-                <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "0%" }} /></div>
-                <div className="dfs-crow-labels"><span>Sem BZU: <b>4 de 4</b></span><span>Com BZU: <b>0 de 4</b></span></div>
-              </div>
-              <div>
-                <div className="dfs-crow-head">Momento da detecção</div>
-                <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
-                <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "8%" }} /></div>
-                <div className="dfs-crow-labels"><span>Sem BZU: <b>Tardia</b></span><span>Com BZU: <b>Imediata</b></span></div>
-              </div>
-            </div>
-          )}
-          </>
-        )}
 
           {aba === "linha" && <ProductionLine />}
 
-          
-{aba === "decisao" && (
-  <div style={{ marginTop: "24px" }}>
-    <h2>Tomada de decisão preventiva</h2>
+          {/* ===== US04 - Execução da Simulação Com Monitoramento ===== */}
+          {aba === "decisao" && (
+            <div style={{ marginTop: "24px" }}>
+              <h2>Tomada de decisão preventiva</h2>
+              <p style={{ color: "#a996c4", fontSize: "14px" }}>
+                Simulação 2 — Status do monitoramento:{" "}
+                <b style={{ color: "#2dd8ad" }}>ATIVO</b>
+              </p>
 
-    <p style={{ color: "#a996c4", fontSize: "14px" }}>
-      Simulação 2 — Monitoramento BZU ativo
-    </p>
+              {/* Passo 1: iniciar a simulação */}
+              {simFase === "inativa" && (
+                <button className="dfs-btn primary" onClick={iniciarSimulacaoBzu}>
+                  Iniciar simulação com BZU
+                </button>
+              )}
 
-    <div style={{
-      background: "#271340",
-      border: "1px solid #f0546a",
-      borderRadius: "14px",
-      padding: "20px",
-      marginTop: "20px"
-    }}>
-      <h3 style={{ marginTop: 0 }}>
-        ⚠️ Anomalia detectada — Máquina 02
-      </h3>
+              {/* Passo 2: alerta com as opções de decisão */}
+              {simFase === "alerta" && (
+                <div className="us4-box alerta">
+                  <h3>⚠️ Anomalia detectada — Máquina 02</h3>
+                  <p>
+                    O sensor detectou uma anomalia. Uma intervenção preventiva pode evitar
+                    a propagação da falha. O que você deseja fazer?
+                  </p>
+                  <p className="us4-status">
+                    <b>Status: </b>
+                    <span style={{ color: "#f5a36c" }}>Aguardando decisão do operador</span>
+                  </p>
+                  <div className="us4-acoes">
+                    <button className="dfs-btn" onClick={ignorarAlerta}>Ignorar alerta</button>
+                    <button className="dfs-btn" onClick={verificarDados}>Verificar dados</button>
+                    <button className="dfs-btn primary" onClick={acionarManutencao}>Acionar manutenção</button>
+                  </div>
 
-      <p>
-        A eficiência da máquina está abaixo do limite normal.
-        Uma intervenção preventiva pode evitar a propagação da falha.
-      </p>
+                  {dadosM2 && (
+                    <div className="pl-panel">
+                      <h3>{dadosM2.nome}</h3>
+                      <Indicador rotulo="Temperatura" item={dadosM2.temperatura} />
+                      <Indicador rotulo="Vibração" item={dadosM2.vibracao} />
+                      <Indicador rotulo="Eficiência" item={dadosM2.eficiencia} />
+                    </div>
+                  )}
+                </div>
+              )}
 
-      <p>
-        <b>Status: </b>
-        <span style={{
-          color: manutencaoAcionada ? "#2dd8ad" : "#f5a36c"
-        }}>
-          {manutencaoAcionada
-            ? "Protegida"
-            : "Aguardando decisão do operador"}
-        </span>
-      </p>
+              {/* Resultado: alerta ignorado */}
+              {simFase === "ignorada" && (
+                <div className="dfs-result danger">
+                  O alerta foi ignorado e a falha se espalhou por <b>toda a cadeia</b>:
+                  produção, pedido e custo foram afetados.{" "}
+                  <button className="dfs-btn ghost" onClick={reiniciarSimulacao}>Tentar novamente</button>
+                </div>
+              )}
 
-      <button
-        className="dfs-btn primary"
-        onClick={acionarManutencao}
-        disabled={manutencaoAcionada}
-      >
-        {manutencaoAcionada
-          ? "Manutenção acionada"
-          : "Acionar manutenção"}
-      </button>
-    </div>
+              {/* Resultado: manutenção acionada */}
+              {simFase === "resolvida" && (
+                <div className="dfs-result safe">
+                  <b>Intervenção preventiva registrada. Máquina 02 estabilizada.</b>
+                  <br />
+                  Impacto reduzido: produção, pedido e custo não foram afetados.
+                  <ul>
+                    <li><b>Tempo economizado:</b> {ECONOMIA.tempo}</li>
+                    <li><b>Custo economizado:</b> {ECONOMIA.custo}</li>
+                  </ul>
+                </div>
+              )}
 
-    <div style={{
-      background: "#1f1033",
-      border: "1px solid #3a2158",
-      borderRadius: "14px",
-      padding: "20px",
-      marginTop: "20px"
-    }}>
-      <h3 style={{ marginTop: 0 }}>
-        Linha do tempo da intervenção
-      </h3>
+              {/* Botão do comparativo: só habilita após a manutenção */}
+              {simFase !== "inativa" && (
+                <div style={{ marginTop: "16px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <button
+                    className="dfs-btn primary"
+                    disabled={simFase !== "resolvida"}
+                    onClick={() => setVerComparativo(true)}
+                  >
+                    Ver comparativo final
+                  </button>
+                  <button className="dfs-btn ghost" onClick={reiniciarSimulacao}>Reiniciar simulação</button>
+                </div>
+              )}
 
-      <p>✓ Monitoramento BZU ativo.</p>
-      <p>✓ Anomalia identificada na Máquina 02.</p>
+              {verComparativo && (
+                <div className="dfs-compare">
+                  <div>
+                    <div className="dfs-crow-head">Etapas da cadeia afetadas</div>
+                    <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
+                    <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "0%" }} /></div>
+                    <div className="dfs-crow-labels">
+                      <span>Sem BZU: <b>4 de 4</b></span>
+                      <span>Com BZU: <b>0 de 4</b></span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="dfs-crow-head">Tempo e custo</div>
+                    <div className="dfs-crow-labels">
+                      <span>Sem BZU: <b>perda total</b></span>
+                      <span>Com BZU: <b>{ECONOMIA.tempo}; {ECONOMIA.custo}</b></span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-      {manutencaoAcionada ? (
-        <>
-          {historicoDecisao.map((evento, i) => (
-            <p key={i}>
-              <span style={{ color: "#2dd8ad" }}>✓</span>{" "}
-              {evento.hora} — {evento.texto}
-            </p>
-          ))}
-
-       
-        </>
-      ) : (
-        <p style={{ color: "#a996c4" }}>
-          Aguardando o operador acionar a manutenção.
-        </p>
-      )}
-    </div>
-  </div>
-)}
-
+              {/* Linha do tempo da intervenção */}
+              {historicoDecisao.length > 0 && (
+                <div className="us4-box us4-tl">
+                  <h3>Linha do tempo da intervenção</h3>
+                  {historicoDecisao.map((e, i) => (
+                    <p key={i}>
+                      <span style={{ color: "#2dd8ad" }}>✓</span> {e.hora} — {e.texto}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       );
     }
