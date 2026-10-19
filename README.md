@@ -150,6 +150,7 @@ Definição das histórias de usuário e implementação das primeiras história
 - 🎥 [Screencast das histórias implementadas](#)  
 - 🎥 [Screencast de explicação do código](#)  
 - 🖼️ [Print do quadro da Sprint 03](#)
+- 🖼️ [Print do bug tracker](#)
   
 ### Entrega 04
  
