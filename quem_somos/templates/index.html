@@ -1,24 +1,334 @@
-
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quem Somos — BZU</title>
-    <link rel="stylesheet" href="{% static 'css/quem_somos.css' %}">
+
+    <style>
+        :root {
+            --bg: #14081f;
+            --panel: #1f1033;
+            --panel-2: #271340;
+            --line: #3a2158;
+            --text: #f4eefb;
+            --muted: #a996c4;
+            --magenta: #d946c7;
+            --magenta-soft: rgba(217, 70, 199, 0.18);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+            background: radial-gradient(120% 140% at 15% 0%, #24123f 0%, var(--bg) 55%);
+            color: var(--text);
+            font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+        }
+
+        .pagina-quem-somos {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            gap: 28px;
+        }
+
+        /* Apresentação */
+        .apresentacao {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 40px;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            background: var(--magenta-soft);
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        .apresentacao h1 {
+            margin: 0 0 14px;
+            font-size: 32px;
+            letter-spacing: -0.01em;
+        }
+
+        .apresentacao p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15.5px;
+            line-height: 1.65;
+            max-width: 64ch;
+        }
+
+        /* Seções */
+        .secao h2 {
+            margin: 0 0 14px;
+            font-size: 18px;
+            color: var(--magenta);
+        }
+
+        .missao {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--magenta);
+            border-radius: 14px;
+            padding: 20px 24px;
+        }
+
+        .missao p {
+            margin: 0;
+            font-size: 15.5px;
+            line-height: 1.65;
+        }
+
+        .grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .cartao {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 20px;
+            transition: border-color 0.15s;
+        }
+
+        .cartao:hover { border-color: #6a3f96; }
+
+        .cartao h3 {
+            margin: 0 0 8px;
+            font-size: 15.5px;
+        }
+
+        .cartao p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13.5px;
+            line-height: 1.55;
+        }
+
+        /* Equipe */
+        .membro {
+            text-align: center;
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            background: linear-gradient(135deg, #b6349d, #7c3aed);
+        }
+
+        .foto {
+            display: block;
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--magenta);
+            box-shadow: 0 0 0 5px var(--magenta-soft);
+        }
+
+        .membro h3 { margin: 0 0 4px; font-size: 15px; }
+        .membro p { margin: 0; color: var(--muted); font-size: 13px; }
+
+        /* Botões */
+        .acoes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .botao {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 12px 22px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            transition: opacity 0.15s, border-color 0.15s;
+        }
+
+        .botao:hover { border-color: #6a3f96; }
+
+        .botao.principal {
+            background: linear-gradient(135deg, #b6349d, #7c3aed);
+            border-color: transparent;
+        }
+
+        .botao.principal:hover { opacity: 0.9; }
+
+        .botao:focus-visible {
+            outline: 2px solid var(--magenta);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 14px; }
+            .apresentacao { padding: 26px 20px; }
+            .apresentacao h1 { font-size: 26px; }
+        }
+    </style>
 </head>
 <body>
     <main class="pagina-quem-somos">
-        <section class="apresentacao">
-            <h1>Quem Somos</h1>
 
+        <section class="apresentacao">
+            <span class="etiqueta">BZU · Projetos 2</span>
+            <h1>Quem Somos</h1>
             <p>
                 Somos uma equipe de estudantes dedicada ao desenvolvimento de
                 soluções tecnológicas para a BZU, utilizando inovação e tecnologia
                 para transformar dados em informações úteis para a tomada de decisões.
             </p>
         </section>
+
+        <section class="secao" aria-labelledby="titulo-missao">
+            <h2 id="titulo-missao">Nosso desafio</h2>
+            <div class="missao">
+                <p>
+                    Educar empresas sobre a importância de coletar dados operacionais
+                    por meio de IoT para melhorar a gestão e a tomada de decisão.
+                </p>
+            </div>
+        </section>
+
+        <section class="secao" aria-labelledby="titulo-entregas">
+            <h2 id="titulo-entregas">O que construímos</h2>
+            <div class="grade">
+                <article class="cartao">
+                    <h3>Simulador do efeito dominó</h3>
+                    <p>
+                        Mostra como a falha em uma única máquina se espalha pela
+                        operação e como a detecção antecipada interrompe a cascata.
+                    </p>
+                </article>
+                <article class="cartao">
+                    <h3>Linha de Produção</h3>
+                    <p>
+                        Acompanha temperatura, vibração, eficiência e uptime de cada
+                        máquina, com alerta quando os valores passam do limite normal.
+                    </p>
+                </article>
+                <article class="cartao">
+                    <h3>Fórum de ocorrências</h3>
+                    <p>
+                        Espaço para registrar e discutir ocorrências da operação,
+                        aproximando a simulação da realidade das empresas.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="secao" aria-labelledby="titulo-equipe">
+            <h2 id="titulo-equipe">Nossa equipe</h2>
+            <div class="grade">
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/artur.jpg' %}" alt="Foto de Artur" width="84" height="84" loading="lazy">
+                    <h3>Artur Henrique Ribeiro</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/cora.jpg' %}" alt="Foto de Cora" width="84" height="84" loading="lazy">
+                    <h3>Cora Jordão Magri</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/leticia_a.jpg' %}" alt="Foto de Letícia" width="84" height="84" loading="lazy">
+                    <h3>Letícia Almeida</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/leticia_d.jpg' %}" alt="Foto de Letícia Dornas" width="84" height="84" loading="lazy">
+                    <h3>Letícia Dornas de Araújo</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/luana.jpg' %}" alt="Foto de Luana" width="84" height="84" loading="lazy">
+                    <h3>Luana Malinconico Pereira</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/manuela.jpg' %}" alt="Foto de Manuela" width="84" height="84" loading="lazy">
+                    <h3>Manuela Brayner Medeiros</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/mjulia.jpg' %}" alt="Foto de Maria Júlia" width="84" height="84" loading="lazy">
+                    <h3>Maria Júlia Dionísio</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/monalysa.jpg' %}" alt="Foto de Monalysa" width="84" height="84" loading="lazy">
+                    <h3>Maria Monalysa da Silva</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/matheus.jpg' %}" alt="Foto de Matheus" width="84" height="84" loading="lazy">
+                    <h3>Matheus Araújo Guilhermino</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/mateus.jpg' %}" alt="Foto de Mateus" width="84" height="84" loading="lazy">
+                    <h3>Mateus Rodrigues de Lira</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/milena.jpg' %}" alt="Foto de Milena" width="84" height="84" loading="lazy">
+                    <h3>Milena Siqueira Araújo</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+                <article class="cartao membro">
+                    <img class="foto" src="{% static 'img/equipe/rafaela.jpg' %}" alt="Foto de Rafaela" width="84" height="84" loading="lazy">
+                    <h3>Rafaela Dubeux Godoy</h3>
+                    <p>Função na equipe</p>
+                </article>
+
+
+            </div>
+        </section>
+
+        <div class="acoes">
+            <a class="botao principal" href="/efeito_domino/simulador/">Explorar o simulador</a>
+            <a class="botao" href="/forum/">Ver o fórum</a>
+        </div>
+
     </main>
 </body>
 </html>
+    
