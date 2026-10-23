@@ -130,8 +130,8 @@ Definição das histórias de usuário e implementação das primeiras história
 </table>
 
 - 🖼️ Print do backlog (Jira): 
-- 🎥 [Screencast das histórias implementadas](https://youtu.be/p6mbTfHfLQc)  
-- 🎥 [Screencast de explicação do código](https://youtu.be/3T8cKK7rjFQ)  
+- 🎥 [Screencast das histórias implementadas](#)  
+- 🎥 [Screencast de explicação do código](#)  
 - 🖼️ Print do quadro da Sprint 03:
 - 🖼️ Print do bug tracker: <img width="1527" height="742" alt="Captura de tela 2026-10-23 105158" src="https://github.com/user-attachments/assets/c45167fd-026a-4711-911e-d8133abbcdd6" />
 
