@@ -129,10 +129,14 @@ Definição das histórias de usuário e implementação das primeiras história
 </tr>
 </table>
 
-- 🖼️ Print do backlog (Jira): 
+- 🖼️ Print do backlog (Jira): <img width="838" height="505" alt="{1DAFFE0D-927E-49A9-A038-D808289C7A94}" src="https://github.com/user-attachments/assets/c3eed74d-4a40-4cd6-b780-90a55c052743" />
+  <img width="840" height="505" alt="{DD5B7E0D-79E2-46E1-8D58-3F065D9E3056}" src="https://github.com/user-attachments/assets/f9aee01d-79ba-4070-af73-fe508c3e58b0" />
+
+
 - 🎥 [Screencast das histórias implementadas](https://youtu.be/OPT_XVG1iSc)  
 - 🎥 [Screencast de explicação do código](https://youtu.be/62zF7rvr2Rk)  
-- 🖼️ Print do quadro da Sprint 03:
+- 🖼️ Print do quadro da Sprint 03: <img width="839" height="504" alt="{800DE36E-1D98-4CF2-AFDC-C37B74829BE8}" src="https://github.com/user-attachments/assets/cd0c7a62-c30d-4378-82c1-241b81ed6b20" />
+
 - 🖼️ Print do bug tracker: <img width="1527" height="742" alt="Captura de tela 2026-10-23 105158" src="https://github.com/user-attachments/assets/c45167fd-026a-4711-911e-d8133abbcdd6" />
 
   
