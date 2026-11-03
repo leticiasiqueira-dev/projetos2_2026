@@ -154,7 +154,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
 ---
  Deploy
 
-A aplicação está publicada em: **COLE_AQUI_A_URL_DO_DEPLOY**
+A aplicação está publicada em: https://iotech-projetos2.onrender.com
 
 ### Como acessar
 
