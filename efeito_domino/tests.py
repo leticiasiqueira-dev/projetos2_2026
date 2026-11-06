@@ -15,6 +15,20 @@ class EfeitoDominoTests(TestCase):
         resposta = self.client.get('/efeito_domino/simulador/')
 
         self.assertEqual(resposta.status_code, 200)
+    
+    def test_telemetria_maquina_retorna_dados(self):
+        resposta = self.client.get(
+            '/efeito_domino/api/maquinas/1/telemetria/'
+        )
+
+        self.assertEqual(resposta.status_code, 200)
+
+        dados = resposta.json()
+
+        self.assertIn('temperatura', dados)
+        self.assertIn('vibracao', dados)
+        self.assertIn('eficiencia', dados)
+
 
 
 
