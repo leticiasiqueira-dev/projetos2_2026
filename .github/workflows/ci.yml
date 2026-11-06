@@ -35,3 +35,8 @@ jobs:
           SECRET_KEY: ci-test-secret-key
           ENVIRONMENT: development
         run: python manage.py test
+
+      - name: Publicar no Render
+        run: curl --fail --silent --show-error --request POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+        
