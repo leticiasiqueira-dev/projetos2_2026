@@ -111,7 +111,7 @@ class Teste_01_PaginaInicial(BaseTestCase):
         )
 
           # verifica se aparece a mensagem de nenhuma pergunta disponível
-        self.assertIn("Nenhuma pergunta disponível", body.text)
+        self.assertIn("Nenhuma ocorrência registrada.", body.text)
        
       
         time.sleep(3)  # Apenas para visualizar o teste, pode ser removido
