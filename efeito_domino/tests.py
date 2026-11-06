@@ -11,4 +11,11 @@ class EfeitoDominoTests(TestCase):
         self.assertContains(resposta, 'Quando uma máquina para')
 
 
+    def test_simulador_carrega(self):
+        resposta = self.client.get('/efeito_domino/simulador/')
+
+        self.assertEqual(resposta.status_code, 200)
+
+
+
 # Create your tests here.
