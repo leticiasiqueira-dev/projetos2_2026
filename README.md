@@ -149,8 +149,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
 - 🧪 [Screencast dos testes E2E (Selenium)](#)
 - 🔁 [Screencast do processo de CI/CD](#)
 - 🎥 [Screencast de explicação do código](#)
-- 🖼️ [Print do quadro da Sprint 04](<img width="839" height="503" alt="{2B2C8AF7-D5E1-433D-B696-F87190EF07F0}" src="https://github.com/user-attachments/assets/35e8a9ee-0817-48c6-888d-6f93dc03bf42" />
-)
+- 🖼️ [Print do quadro da Sprint 04] <img width="839" height="503" alt="{2B2C8AF7-D5E1-433D-B696-F87190EF07F0}" src="https://github.com/user-attachments/assets/35e8a9ee-0817-48c6-888d-6f93dc03bf42" />
 
 ---
  Deploy
