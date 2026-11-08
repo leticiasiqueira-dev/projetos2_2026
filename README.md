@@ -145,6 +145,40 @@ Definição das histórias de usuário e implementação das primeiras história
 Implementação das histórias restantes, testes automatizados e pipeline de CI/CD.
  
 **Artefatos / Screenshots:**
+- 🔁 Histórias implementadas
+  #### 📝 Histórias implementadas
+
+### 📝 Histórias implementadas
+
+<table>
+  <tr>
+    <td valign="top">
+      <b>US01 – Acesso e Início da Experiência do Simulador</b><br><br>
+      <b>Como</b> operador de fábrica ou usuário da plataforma, <b>quero</b> visualizar a página inicial do simulador com a apresentação dos conceitos e o botão de início, <b>para que</b> eu possa compreender o propósito do monitoramento IoT antes de iniciar a simulação.
+    </td>
+    <td valign="top">
+      <b>US02 – Execução da Simulação Sem Monitoramento</b><br><br>
+      <b>Como</b> usuário do simulador, <b>quero</b> iniciar a primeira simulação sem o monitoramento IoT ativo, <b>para que</b> eu possa observar como uma falha em uma máquina afeta em cadeia toda a linha de produção.
+    </td>
+    <td valign="top">
+      <b>US03 – Transição para o Cenário de Monitoramento</b><br><br>
+      <b>Como</b> usuário do simulador, <b>quero</b> visualizar uma tela que demonstra os cenários do monitoramento com a BzuTech, <b>para que</b> eu entenda como a tecnologia IoT e os alertas antecipados previnem danos e prejuízos.
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td valign="top">
+      <b>US07 – Visualização de Telemetria em Tempo Real (Dashboard)</b><br><br>
+      <b>Como</b> analista de dados ou técnico de campo, <b>quero</b> visualizar os gráficos de telemetria dos sensores atualizados em tempo real, <b>para que</b> eu possa acompanhar as variações ambientais e operacionais sem recarregar a página manualmente.
+    </td>
+    <td valign="top">
+      <b>US08 – Atuação Remota em Atuadores IoT (Comando de Saída)</b><br><br>
+      <b>Como</b> operador de campo autorizado, <b>quero</b> enviar comandos remotos de atuação (ex: ligar exaustor, fechar válvula) através da plataforma, <b>para que</b> eu possa intervir em tempo real após analisar o status dos sensores.
+    </td>
+  </tr>
+</table>
 - 🎥 [Screencast do deployment das novas histórias](#)
 - 🧪 [Screencast dos testes E2E (Selenium)](#)
 - 🔁 [Screencast do processo de CI/CD](#)
