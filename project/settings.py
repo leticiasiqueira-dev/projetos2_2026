@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'efeito_domino',
     'forum',
     'quem_somos',
+    'telemetria',
 ]
 
 MIDDLEWARE = [
