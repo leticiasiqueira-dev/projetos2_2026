@@ -139,7 +139,13 @@ Cenário: Perda de sinal do dispositivo (Timeout)
   Dado que o dispositivo "Sensor Estufa 01" está configurado para enviar dados a cada 30 segundos
   Quando o sistema não recebe nenhuma telemetria por um período superior a 3 minutos
   Então o indicador de status do dispositivo no painel muda automaticamente de "Online" para "Offline"
-  E um alerta visual é exibido na lista de monitoramento 
+  E um alerta visual é exibido na lista de monitoramento
+
+Cenário: Acesso ao painel de um dispositivo inexistente
+  Dado que estou autenticado no sistema
+  Quando acesso "/forum/dispositivos/99999/telemetria" e o dispositivo não existe
+  Então o sistema exibe a mensagem "Dispositivo não encontrado"
+  E nenhum gráfico é renderizado
 ```
 
 ---
