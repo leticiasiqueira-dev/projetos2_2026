@@ -178,6 +178,7 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
     </td>
   </tr>
 </table>
+
 - 🎥 [Screencast do deployment das novas histórias](#)
 - 🧪 [Screencast dos testes E2E (Selenium)](#)
 - 🔁 [Screencast do processo de CI/CD](#)
