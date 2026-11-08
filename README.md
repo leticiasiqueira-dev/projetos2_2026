@@ -146,7 +146,6 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
  
 **Artefatos / Screenshots:**
 - 🔁 Histórias implementadas
-  #### 📝 Histórias implementadas
 
 ### 📝 Histórias implementadas
 
