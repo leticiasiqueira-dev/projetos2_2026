@@ -179,6 +179,15 @@ Implementação das histórias restantes, testes automatizados e pipeline de CI/
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td valign="top">
+      <b>US09 – Comparação dos Resultados das Simulações</b><br><br>
+      <b>Como</b> usuário do simulador, <b>quero</b> visualizar um comparativo entre os cenários com e sem monitoramento IoT da BzuTech, <b>para que</b> eu possa compreender como a detecção antecipada de falhas contribui para reduzir os impactos na produção e melhorar a tomada de decisões.
+    </td>
+  </tr>
+</table>
+
 - 🎥 [Screencast do deployment das novas histórias](#)
 - 🧪 [Screencast dos testes E2E (Selenium)](#)
 - 🔁 [Screencast do processo de CI/CD](#)
