@@ -48,4 +48,9 @@ urlpatterns = [
         ),
         name="home"
     ),
+
+    #Aplicativo atuadores
+    path(
+        'atuadores/',
+        include('atuadores.urls')),
 ]
