@@ -1,7 +1,6 @@
 import json
 from django.shortcuts import render
-
-# Create your views here.
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse
 
 def index(request):
@@ -82,6 +81,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from forum.models import Pergunta
 
+@ensure_csrf_cookie
 def simulador(request):
     ocorrencia = Pergunta.objects.order_by("-data_criacao").first()
  

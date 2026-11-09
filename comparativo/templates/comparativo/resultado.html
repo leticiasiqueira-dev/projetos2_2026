@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US09 - Comparativo BZU</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #14081f;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #241432;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #d58cff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #705080;
+        }
+
+        th {
+            background-color: #512b70;
+        }
+
+        .erro {
+            color: #ff9999;
+            background-color: #51202b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .sucesso {
+            color: #8affc1;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Comparativo das Simulações</h1>
+        <p>Monitoramento Industrial BZU</p>
+
+        {% if erro %}
+
+            <div class="erro">
+                <h2>Comparativo indisponível</h2>
+                <p>{{ erro }}</p>
+            </div>
+
+        {% else %}
+
+            <h2>Resultados das Simulações</h2>
+
+            <table>
+                <tr>
+                    <th>Indicador</th>
+                    <th>Sem BZU</th>
+                    <th>Com BZU</th>
+                </tr>
+
+                <tr>
+                    <td>Tempo de parada</td>
+                    <td>{{ simulacao1.tempo }} min</td>
+                    <td>{{ simulacao2.tempo }} min</td>
+                </tr>
+
+               <tr>
+                   <td>Impacto na produtividade</td>
+                   <td>Produtividade comprometida</td>
+                   <td>Impacto reduzido pela intervenção preventiva</td>
+              </tr>
+            </table>
+
+            <p class="sucesso">
+                Comparação realizada com sucesso!
+            </p>
+
+        {% endif %}
+    </div>
+</body>
+</html>

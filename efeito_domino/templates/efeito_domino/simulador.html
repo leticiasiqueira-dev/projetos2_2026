@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,59 +6,94 @@
   <title>Simulador de efeito dominó — BZU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body style="margin:0; background:#14081f; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box;">
 
   <div id="root"></div>
+
   <script>
     window.addEventListener("error", function (e) {
-      document.body.insertAdjacentHTML("beforeend",
+      document.body.insertAdjacentHTML(
+        "beforeend",
         '<pre style="color:#ff8da1;white-space:pre-wrap;max-width:800px">ERRO: ' +
-        e.message + "\nLinha: " + e.lineno + "</pre>");
+        e.message + "\nLinha: " + e.lineno + "</pre>"
+      );
     });
   </script>
 
   <!--OCORRENCIA_REAL-->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 
   <script type="text/babel" data-presets="react">
     const { useState, useRef, useEffect } = React;
+
     const OCORRENCIA = window.OCORRENCIA || null;
 
     const STAGES = [
-      { id: "machine", label: OCORRENCIA ? OCORRENCIA.titulo : "Máquina para", detail: OCORRENCIA ? OCORRENCIA.detalhe : "Vibração fora do padrão" },
-      { id: "production", label: "Produção atrasa", detail: "Linha parada sem ninguém perceber" },
-      { id: "order", label: "Pedido atrasa", detail: "Prazo combinado com o cliente é perdido" },
-      { id: "cost", label: "Custo aumenta", detail: "Hora extra e retrabalho entram na conta" },
+      {
+        id: "machine",
+        label: OCORRENCIA ? OCORRENCIA.titulo : "Máquina para",
+        detail: OCORRENCIA ? OCORRENCIA.detalhe : "Vibração fora do padrão"
+      },
+      {
+        id: "production",
+        label: "Produção atrasa",
+        detail: "Linha parada sem ninguém perceber"
+      },
+      {
+        id: "order",
+        label: "Pedido atrasa",
+        detail: "Prazo combinado com o cliente é perdido"
+      },
+      {
+        id: "productivity",
+        label: "Produtividade cai",
+        detail: "A operação perde eficiência devido aos atrasos acumulados"
+      }
     ];
 
     const MACHINES = [
       { id: 1, nome: "Máquina 01 - Recepção" },
       { id: 2, nome: "Máquina 02 - Processamento" },
       { id: 3, nome: "Máquina 03 - Montagem" },
-      { id: 4, nome: "Máquina 04 - Expedição" },
+      { id: 4, nome: "Máquina 04 - Expedição" }
     ];
 
-    // US04 - valores ilustrativos da simulação (ajuste com a BZU)
+    // Valores ilustrativos da simulação
     const ECONOMIA = {
-      tempo: "4 h de parada evitadas",
-      custo: "R$ 12.000 em prejuízo evitado",
+      tempo: "Redução potencial do tempo de parada",
+      custo: "Propagação de falha evitada"
     };
 
     function Indicador({ rotulo, item }) {
       if (!item) return null;
+
       const pct = Math.min((item.valor / item.escala) * 100, 100);
       const cls = item.acima ? "alerta" : "";
+
       return (
         <div>
           <div className="pl-ind-head">
             <span>{rotulo}</span>
-            <b className={cls}>{item.valor} {item.unidade}</b>
+            <b className={cls}>
+              {item.valor} {item.unidade}
+            </b>
           </div>
-          <div className="pl-bar"><div className={`pl-fill ${cls}`} style={{ width: pct + "%" }} /></div>
+
+          <div className="pl-bar">
+            <div
+              className={`pl-fill ${cls}`}
+              style={{ width: pct + "%" }}
+            />
+          </div>
+
           <div className={`pl-ind-foot ${cls}`}>
-            {item.acima ? "Acima do limite normal" : "Dentro do normal"} · {item.regra}
+            {item.acima
+              ? "Acima do limite normal"
+              : "Dentro do normal"} · {item.regra}
           </div>
         </div>
       );
@@ -71,31 +107,60 @@
 
       useEffect(() => {
         if (!selecionada) return;
+
         let ativo = true;
 
         async function carregar() {
           try {
-            const r = await fetch(`/efeito_domino/api/maquinas/${selecionada}/telemetria/`);
+            const r = await fetch(
+              `/efeito_domino/api/maquinas/${selecionada}/telemetria/`
+            );
+
             if (!r.ok) throw new Error("falha");
+
             const d = await r.json();
+
             if (!ativo) return;
+
             setDados(d);
             setErro(false);
+
             const hora = new Date().toLocaleTimeString("pt-BR");
-            const alerta = d.temperatura?.acima || d.vibracao?.acima || d.eficiencia?.acima;
-            setHistorico(h => [{ hora, texto: alerta ? "Valores acima do limite" : "Operação normal" }, ...h].slice(0, 5));
+
+            const alerta =
+              d.temperatura?.acima ||
+              d.vibracao?.acima ||
+              d.eficiencia?.acima;
+
+            setHistorico(h => [
+              {
+                hora,
+                texto: alerta
+                  ? "Valores acima do limite"
+                  : "Operação normal"
+              },
+              ...h
+            ].slice(0, 5));
+
           } catch (e) {
             if (ativo) setErro(true);
           }
         }
 
         carregar();
+
         const timer = setInterval(carregar, 2000);
-        return () => { ativo = false; clearInterval(timer); };
+
+        return () => {
+          ativo = false;
+          clearInterval(timer);
+        };
+
       }, [selecionada]);
 
       function escolher(id) {
         if (id === selecionada) return;
+
         setDados(null);
         setHistorico([]);
         setSelecionada(id);
@@ -104,29 +169,67 @@
       return (
         <div>
           <div className="pl-title">Informações:</div>
+
           <div className="pl-line">
             {MACHINES.map(m => (
-              <button key={m.id} className={`pl-machine ${selecionada === m.id ? "active" : ""}`}
-                      onClick={() => escolher(m.id)}>
+              <button
+                key={m.id}
+                className={`pl-machine ${
+                  selecionada === m.id ? "active" : ""
+                }`}
+                onClick={() => escolher(m.id)}
+              >
                 {m.nome}
               </button>
             ))}
           </div>
 
-          {!selecionada && <div className="pl-hint">Clique em uma máquina para ver os dados de telemetria.</div>}
-          {erro && <div className="pl-hint">Não foi possível carregar a telemetria. Tentando novamente...</div>}
+          {!selecionada && (
+            <div className="pl-hint">
+              Clique em uma máquina para ver os dados de telemetria.
+            </div>
+          )}
+
+          {erro && (
+            <div className="pl-hint">
+              Não foi possível carregar a telemetria.
+              Tentando novamente...
+            </div>
+          )}
 
           {dados && (
             <div className="pl-panel">
               <h3>{dados.nome}</h3>
-              <Indicador rotulo="Temperatura" item={dados.temperatura} />
-              <Indicador rotulo="Vibração" item={dados.vibracao} />
-              <Indicador rotulo="Eficiência" item={dados.eficiencia} />
-              <Indicador rotulo="Uptime" item={dados.uptime} />
+
+              <Indicador
+                rotulo="Temperatura"
+                item={dados.temperatura}
+              />
+
+              <Indicador
+                rotulo="Vibração"
+                item={dados.vibracao}
+              />
+
+              <Indicador
+                rotulo="Eficiência"
+                item={dados.eficiencia}
+              />
+
+              <Indicador
+                rotulo="Uptime"
+                item={dados.uptime}
+              />
+
               <div className="pl-hist">
                 Linha do tempo (últimas leituras)
+
                 <ul>
-                  {historico.map((h, i) => <li key={i}>{h.hora} — {h.texto}</li>)}
+                  {historico.map((h, i) => (
+                    <li key={i}>
+                      {h.hora} — {h.texto}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -142,18 +245,30 @@
       const [running, setRunning] = useState(false);
       const [done, setDone] = useState(false);
       const [aba, setAba] = useState("simulador");
+
       const timers = useRef([]);
 
-      // ===== US04 - Execução da simulação com monitoramento =====
-      // simFase: "inativa" | "alerta" | "resolvida" | "ignorada"
+      // US04 - Simulação com monitoramento
       const [simFase, setSimFase] = useState("inativa");
       const [dadosM2, setDadosM2] = useState(null);
       const [historicoDecisao, setHistoricoDecisao] = useState([]);
       const [verComparativo, setVerComparativo] = useState(false);
 
+      // US09 - Controle do comparativo
+      const [simulacoesSalvas, setSimulacoesSalvas] = useState({
+        simulacao1: false,
+        simulacao2: false
+      });
+
+      const [erroSalvamento, setErroSalvamento] = useState("");
+
       function registrar(texto) {
         const hora = new Date().toLocaleTimeString("pt-BR");
-        setHistoricoDecisao(h => [...h, { hora, texto }]);
+
+        setHistoricoDecisao(h => [
+          ...h,
+          { hora, texto }
+        ]);
       }
 
       function iniciarSimulacaoBzu() {
@@ -161,16 +276,23 @@
         setDadosM2(null);
         setVerComparativo(false);
         setHistoricoDecisao([]);
+
         registrar("Monitoramento BZU ativo.");
         registrar("Sensor detectou anomalia na Máquina 02.");
       }
 
       async function verificarDados() {
         registrar("Operador consultou os dados da Máquina 02.");
+
         try {
-          const r = await fetch("/efeito_domino/api/maquinas/2/telemetria/");
+          const r = await fetch(
+            "/efeito_domino/api/maquinas/2/telemetria/"
+          );
+
           if (!r.ok) throw new Error("falha");
+
           setDadosM2(await r.json());
+
         } catch (e) {
           registrar("Não foi possível carregar a telemetria.");
         }
@@ -178,14 +300,20 @@
 
       function ignorarAlerta() {
         setSimFase("ignorada");
+
         registrar("Alerta ignorado pelo operador.");
-        registrar("A falha se propagou: produção, pedido e custo foram afetados.");
+        registrar(
+          "A falha se propagou: produção, pedido e custo foram afetados."
+        );
       }
 
       function acionarManutencao() {
         setSimFase("resolvida");
+
         registrar("Manutenção preventiva acionada na Máquina 02.");
-        registrar("Intervenção registrada. Operação da máquina estabilizada.");
+        registrar(
+          "Intervenção registrada. Operação da máquina estabilizada."
+        );
       }
 
       function reiniciarSimulacao() {
@@ -194,40 +322,125 @@
         setHistoricoDecisao([]);
         setVerComparativo(false);
       }
-      // ===== fim US04 =====
 
       const clearTimers = () => {
         timers.current.forEach(clearTimeout);
         timers.current = [];
       };
+
       useEffect(() => clearTimers, []);
+
+      // ==========================================
+      // US09 - SALVAR RESULTADOS NO DJANGO
+      // ==========================================
+
+      async function salvarResultado(tipo, tempo, custo) {
+        const cookie = document.cookie
+          .split("; ")
+          .find(item => item.startsWith("csrftoken="));
+
+        const csrfToken = cookie
+          ? decodeURIComponent(cookie.split("=")[1])
+          : "";
+
+        const resposta = await fetch("/comparativo/salvar/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken
+          },
+          credentials: "same-origin",
+          body: JSON.stringify({
+            tipo: tipo,
+            tempo: tempo,
+            custo: custo
+          })
+        });
+
+        if (!resposta.ok) {
+          throw new Error(
+            "Não foi possível salvar a simulação. HTTP " +
+            resposta.status
+          );
+        }
+
+        setSimulacoesSalvas(anterior => ({
+          ...anterior,
+          [tipo]: true
+        }));
+
+        setErroSalvamento("");
+      }
+
+      // ==========================================
+      // EXECUTAR SIMULAÇÕES
+      // ==========================================
 
       function run(selected) {
         clearTimers();
+
         setMode(selected);
         setFallen(0);
         setPhase("idle");
         setDone(false);
         setRunning(true);
+        setErroSalvamento("");
 
         if (selected === "no-bzu") {
+
           STAGES.forEach((_, i) => {
-            timers.current.push(setTimeout(() => setFallen(i + 1), 650 * (i + 1)));
+            timers.current.push(
+              setTimeout(
+                () => setFallen(i + 1),
+                650 * (i + 1)
+              )
+            );
           });
+
           timers.current.push(
             setTimeout(() => {
               setRunning(false);
               setDone(true);
+
+              // US09 - Simulação sem BZU
+              salvarResultado("simulacao1", "Potencialmente prolongado", 240, 12000)
+                .catch(erro => {
+                  console.error(erro);
+                  setErroSalvamento(erro.message);
+                });
+
             }, 650 * (STAGES.length + 1))
           );
+
         } else {
-          timers.current.push(setTimeout(() => setPhase("sensing"), 150));
-          timers.current.push(setTimeout(() => setPhase("alert"), 900));
+
+          timers.current.push(
+            setTimeout(
+              () => setPhase("sensing"),
+              150
+            )
+          );
+
+          timers.current.push(
+            setTimeout(
+              () => setPhase("alert"),
+              900
+            )
+          );
+
           timers.current.push(
             setTimeout(() => {
               setPhase("resolved");
               setRunning(false);
               setDone(true);
+
+              // US09 - Simulação com BZU
+              salvarResultado("simulacao2", "Potencialmente reduzido", 0, 0)
+                .catch(erro => {
+                  console.error(erro);
+                  setErroSalvamento(erro.message);
+                });
+
             }, 2000)
           );
         }
@@ -235,6 +448,7 @@
 
       function reset() {
         clearTimers();
+
         setMode(null);
         setFallen(0);
         setPhase("idle");
@@ -242,120 +456,602 @@
         setDone(false);
       }
 
+      const comparativoDisponivel =
+        simulacoesSalvas.simulacao1 &&
+        simulacoesSalvas.simulacao2;
+
       return (
         <div className="dfs-root">
+
           <style>{`
             .dfs-root {
-              --bg: #14081f; --panel: #1f1033; --panel-2: #271340; --line: #3a2158;
-              --text: #f4eefb; --muted: #a996c4; --magenta: #d946c7;
-              --magenta-soft: rgba(217, 70, 199, 0.18); --danger: #f0546a; --safe: #2dd8ad;
-              font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
-              background: radial-gradient(120% 140% at 15% 0%, #24123f 0%, var(--bg) 55%);
-              color: var(--text); border-radius: 22px; padding: 34px 30px 30px;
-              max-width: 820px; margin: 0 auto; border: 1px solid var(--line);
+              --bg: #14081f;
+              --panel: #1f1033;
+              --panel-2: #271340;
+              --line: #3a2158;
+              --text: #f4eefb;
+              --muted: #a996c4;
+              --magenta: #d946c7;
+              --magenta-soft: rgba(217, 70, 199, 0.18);
+              --danger: #f0546a;
+              --safe: #2dd8ad;
+
+              font-family: -apple-system, "Segoe UI", Inter,
+                system-ui, sans-serif;
+
+              background: radial-gradient(
+                120% 140% at 15% 0%,
+                #24123f 0%,
+                var(--bg) 55%
+              );
+
+              color: var(--text);
+              border-radius: 22px;
+              padding: 34px 30px 30px;
+              max-width: 820px;
+              margin: 0 auto;
+              border: 1px solid var(--line);
             }
-            .dfs-head h2 { margin: 0 0 6px; font-size: 23px; letter-spacing: -0.01em; }
-            .dfs-head p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; max-width: 58ch; }
-            .dfs-controls { display: flex; gap: 10px; margin: 24px 0 36px; flex-wrap: wrap; }
-            .dfs-btn { border: 1px solid var(--line); background: var(--panel); color: var(--text);
-              padding: 10px 17px; border-radius: 10px; font-size: 14px; cursor: pointer;
-              transition: border-color .15s, transform .1s, background .2s; }
-            .dfs-btn:hover:not(:disabled) { border-color: #6a3f96; }
-            .dfs-btn:active:not(:disabled) { transform: scale(.98); }
-            .dfs-btn:disabled { opacity: .4; cursor: default; }
-            .dfs-btn.primary { background: linear-gradient(135deg, #b6349d, #7c3aed); border-color: transparent; font-weight: 600; }
-            .dfs-btn.ghost { background: transparent; }
-            .dfs-track { display: flex; align-items: flex-end; gap: 24px; padding: 44px 4px 10px; position: relative; }
-            .dfs-domino { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 128px; }
-            .dfs-tile-wrap { height: 104px; display: flex; align-items: flex-end; position: relative; }
-            .dfs-tile { width: 44px; height: 92px; border-radius: 6px; background: var(--panel-2);
-              border: 1px solid var(--line); transform-origin: bottom center;
-              transition: transform .5s cubic-bezier(.36,.07,.19,.97), background .3s, box-shadow .3s; }
-            .dfs-tile.fell { background: var(--danger); transform: rotate(78deg); }
-            .dfs-tile.sensing { animation: dfs-wobble 0.35s ease-in-out infinite; }
-            .dfs-tile.caught { background: var(--magenta); transform: rotate(20deg); box-shadow: 0 0 0 8px var(--magenta-soft); }
-            @keyframes dfs-wobble { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
-            .dfs-label { margin-top: 14px; font-size: 13.5px; font-weight: 600; text-align: center; }
-            .dfs-label.hit { color: var(--danger); }
-            .dfs-label.caught { color: var(--magenta); }
-            .dfs-detail { margin-top: 4px; font-size: 12px; color: var(--muted); text-align: center; line-height: 1.4; max-width: 20ch; }
-            .dfs-arrow { color: var(--line); font-size: 20px; padding-bottom: 40px; }
-            .dfs-alert { margin-top: 8px; display: grid; grid-template-columns: auto 1fr; gap: 12px;
-              align-items: start; background: var(--panel); border: 1px solid var(--magenta);
-              border-radius: 14px; padding: 14px 16px; opacity: 0; transform: translateY(-8px);
-              transition: opacity .35s ease, transform .35s ease; }
-            .dfs-alert.show { opacity: 1; transform: translateY(0); }
-            .dfs-alert-icon { font-size: 20px; line-height: 1; }
-            .dfs-alert-title { font-size: 14px; font-weight: 700; margin: 0 0 3px; }
-            .dfs-alert-sub { font-size: 12.5px; color: var(--muted); margin: 0 0 10px; }
-            .dfs-progress { height: 5px; border-radius: 4px; background: var(--line); overflow: hidden; }
-            .dfs-progress-fill { height: 100%; background: linear-gradient(90deg, var(--magenta), var(--safe));
-              width: 0%; transition: width 1.05s cubic-bezier(.22,.61,.36,1); }
-            .dfs-progress-fill.go { width: 100%; }
-            .dfs-progress-label { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
-            .dfs-result { margin-top: 22px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line);
-              font-size: 14px; line-height: 1.55; opacity: 0; transform: translateY(6px);
-              animation: dfs-fadein .4s ease forwards; }
-            @keyframes dfs-fadein { to { opacity: 1; transform: translateY(0); } }
-            .dfs-result.danger { border-color: rgba(240,84,106,.4); background: rgba(240,84,106,.07); }
-            .dfs-result.safe { border-color: rgba(45,216,173,.4); background: rgba(45,216,173,.08); }
-            .dfs-result b { font-weight: 700; }
-            .dfs-result ul { margin: 10px 0 0; padding-left: 18px; }
-            .dfs-compare { margin-top: 18px; display: grid; gap: 16px; }
-            .dfs-crow-head { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
-            .dfs-bar-track { height: 10px; border-radius: 6px; background: var(--panel-2); overflow: hidden; margin-bottom: 4px; }
-            .dfs-bar-fill { height: 100%; border-radius: 6px; width: 0%; transition: width 1s cubic-bezier(.22,.61,.36,1) .1s; }
-            .dfs-bar-fill.red { background: var(--danger); }
-            .dfs-bar-fill.green { background: var(--safe); }
-            .dfs-crow-labels { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); }
-            .dfs-crow-labels b { color: var(--text); }
 
-            .pl-title { margin: 36px 0 12px; font-size: 16px; font-weight: 700; }
-            .pl-line { display: flex; gap: 10px; flex-wrap: wrap; }
-            .pl-machine { border: 1px solid var(--line); background: var(--panel); color: var(--text);
-              padding: 12px 14px; border-radius: 10px; font-size: 13.5px; cursor: pointer;
-              transition: border-color .15s, background .2s; }
-            .pl-machine:hover { border-color: #6a3f96; }
-            .pl-machine.active { border-color: var(--magenta); background: var(--magenta-soft); }
-            .pl-panel { margin-top: 16px; padding: 18px 20px; border: 1px solid var(--line);
-              border-radius: 14px; background: var(--panel); display: grid; gap: 16px; }
-            .pl-panel h3 { margin: 0; font-size: 15px; }
-            .pl-ind-head { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px; }
-            .pl-ind-head b.alerta { color: var(--danger); }
-            .pl-bar { height: 8px; border-radius: 6px; background: var(--panel-2); overflow: hidden; }
-            .pl-fill { height: 100%; border-radius: 6px; background: var(--safe); transition: width .5s ease, background .3s; }
-            .pl-fill.alerta { background: var(--danger); }
-            .pl-ind-foot { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
-            .pl-ind-foot.alerta { color: var(--danger); }
-            .pl-hist { font-size: 12px; color: var(--muted); }
-            .pl-hist li { margin: 2px 0; }
-            .pl-hint { font-size: 13px; color: var(--muted); margin-top: 12px; }
-            .dfs-tabs { display: flex; gap: 8px; margin: 22px 0 0; border-bottom: 1px solid var(--line); }
-            .dfs-tab { background: transparent; border: none; color: var(--muted); padding: 10px 16px;
-              font-size: 14px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-            .dfs-tab:hover { color: var(--text); }
-            .dfs-tab.active { color: var(--text); font-weight: 600; border-bottom-color: var(--magenta); }
+            .dfs-head h2 {
+              margin: 0 0 6px;
+              font-size: 23px;
+              letter-spacing: -0.01em;
+            }
 
-            .us4-box { margin-top: 20px; padding: 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
-            .us4-box.alerta { background: var(--panel-2); border-color: var(--danger); }
-            .us4-box h3 { margin-top: 0; }
-            .us4-acoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-            .us4-status { color: var(--muted); font-size: 14px; }
-            .us4-tl p { margin: 6px 0; font-size: 14px; }
+            .dfs-head p {
+              margin: 0;
+              color: var(--muted);
+              font-size: 14.5px;
+              line-height: 1.55;
+              max-width: 58ch;
+            }
+
+            .dfs-controls {
+              display: flex;
+              gap: 10px;
+              margin: 24px 0 36px;
+              flex-wrap: wrap;
+            }
+
+            .dfs-btn {
+              border: 1px solid var(--line);
+              background: var(--panel);
+              color: var(--text);
+              padding: 10px 17px;
+              border-radius: 10px;
+              font-size: 14px;
+              cursor: pointer;
+              transition:
+                border-color .15s,
+                transform .1s,
+                background .2s;
+            }
+
+            .dfs-btn:hover:not(:disabled) {
+              border-color: #6a3f96;
+            }
+
+            .dfs-btn:active:not(:disabled) {
+              transform: scale(.98);
+            }
+
+            .dfs-btn:disabled {
+              opacity: .4;
+              cursor: default;
+            }
+
+            .dfs-btn.primary {
+              background: linear-gradient(
+                135deg,
+                #b6349d,
+                #7c3aed
+              );
+              border-color: transparent;
+              font-weight: 600;
+            }
+
+            .dfs-btn.ghost {
+              background: transparent;
+            }
+
+            .dfs-track {
+              display: flex;
+              align-items: flex-end;
+              gap: 24px;
+              padding: 44px 4px 10px;
+              position: relative;
+            }
+
+            .dfs-domino {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              flex: 1;
+              min-width: 128px;
+            }
+
+            .dfs-tile-wrap {
+              height: 104px;
+              display: flex;
+              align-items: flex-end;
+              position: relative;
+            }
+
+            .dfs-tile {
+              width: 44px;
+              height: 92px;
+              border-radius: 6px;
+              background: var(--panel-2);
+              border: 1px solid var(--line);
+              transform-origin: bottom center;
+              transition:
+                transform .5s cubic-bezier(.36,.07,.19,.97),
+                background .3s,
+                box-shadow .3s;
+            }
+
+            .dfs-tile.fell {
+              background: var(--danger);
+              transform: rotate(78deg);
+            }
+
+            .dfs-tile.sensing {
+              animation: dfs-wobble .35s ease-in-out infinite;
+            }
+
+            .dfs-tile.caught {
+              background: var(--magenta);
+              transform: rotate(20deg);
+              box-shadow: 0 0 0 8px var(--magenta-soft);
+            }
+
+            @keyframes dfs-wobble {
+              0%, 100% {
+                transform: rotate(-4deg);
+              }
+
+              50% {
+                transform: rotate(4deg);
+              }
+            }
+
+            .dfs-label {
+              margin-top: 14px;
+              font-size: 13.5px;
+              font-weight: 600;
+              text-align: center;
+            }
+
+            .dfs-label.hit {
+              color: var(--danger);
+            }
+
+            .dfs-label.caught {
+              color: var(--magenta);
+            }
+
+            .dfs-detail {
+              margin-top: 4px;
+              font-size: 12px;
+              color: var(--muted);
+              text-align: center;
+              line-height: 1.4;
+              max-width: 20ch;
+            }
+
+            .dfs-arrow {
+              color: var(--line);
+              font-size: 20px;
+              padding-bottom: 40px;
+            }
+
+            .dfs-alert {
+              margin-top: 8px;
+              display: grid;
+              grid-template-columns: auto 1fr;
+              gap: 12px;
+              align-items: start;
+              background: var(--panel);
+              border: 1px solid var(--magenta);
+              border-radius: 14px;
+              padding: 14px 16px;
+              opacity: 0;
+              transform: translateY(-8px);
+              transition:
+                opacity .35s ease,
+                transform .35s ease;
+            }
+
+            .dfs-alert.show {
+              opacity: 1;
+              transform: translateY(0);
+            }
+
+            .dfs-alert-icon {
+              font-size: 20px;
+              line-height: 1;
+            }
+
+            .dfs-alert-title {
+              font-size: 14px;
+              font-weight: 700;
+              margin: 0 0 3px;
+            }
+
+            .dfs-alert-sub {
+              font-size: 12.5px;
+              color: var(--muted);
+              margin: 0 0 10px;
+            }
+
+            .dfs-progress {
+              height: 5px;
+              border-radius: 4px;
+              background: var(--line);
+              overflow: hidden;
+            }
+
+            .dfs-progress-fill {
+              height: 100%;
+              background: linear-gradient(
+                90deg,
+                var(--magenta),
+                var(--safe)
+              );
+              width: 0%;
+              transition: width 1.05s cubic-bezier(.22,.61,.36,1);
+            }
+
+            .dfs-progress-fill.go {
+              width: 100%;
+            }
+
+            .dfs-progress-label {
+              font-size: 11.5px;
+              color: var(--muted);
+              margin-top: 6px;
+            }
+
+            .dfs-result {
+              margin-top: 22px;
+              padding: 18px 20px;
+              border-radius: 14px;
+              border: 1px solid var(--line);
+              font-size: 14px;
+              line-height: 1.55;
+              opacity: 0;
+              transform: translateY(6px);
+              animation: dfs-fadein .4s ease forwards;
+            }
+
+            @keyframes dfs-fadein {
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+
+            .dfs-result.danger {
+              border-color: rgba(240,84,106,.4);
+              background: rgba(240,84,106,.07);
+            }
+
+            .dfs-result.safe {
+              border-color: rgba(45,216,173,.4);
+              background: rgba(45,216,173,.08);
+            }
+
+            .dfs-result b {
+              font-weight: 700;
+            }
+
+            .dfs-result ul {
+              margin: 10px 0 0;
+              padding-left: 18px;
+            }
+
+            .dfs-compare {
+              margin-top: 18px;
+              display: grid;
+              gap: 16px;
+            }
+
+            .dfs-crow-head {
+              font-size: 12.5px;
+              color: var(--muted);
+              margin-bottom: 6px;
+            }
+
+            .dfs-bar-track {
+              height: 10px;
+              border-radius: 6px;
+              background: var(--panel-2);
+              overflow: hidden;
+              margin-bottom: 4px;
+            }
+
+            .dfs-bar-fill {
+              height: 100%;
+              border-radius: 6px;
+              width: 0%;
+              transition:
+                width 1s cubic-bezier(.22,.61,.36,1) .1s;
+            }
+
+            .dfs-bar-fill.red {
+              background: var(--danger);
+            }
+
+            .dfs-bar-fill.green {
+              background: var(--safe);
+            }
+
+            .dfs-crow-labels {
+              display: flex;
+              justify-content: space-between;
+              gap: 12px;
+              font-size: 12px;
+              color: var(--muted);
+            }
+
+            .dfs-crow-labels b {
+              color: var(--text);
+            }
+
+            .pl-title {
+              margin: 36px 0 12px;
+              font-size: 16px;
+              font-weight: 700;
+            }
+
+            .pl-line {
+              display: flex;
+              gap: 10px;
+              flex-wrap: wrap;
+            }
+
+            .pl-machine {
+              border: 1px solid var(--line);
+              background: var(--panel);
+              color: var(--text);
+              padding: 12px 14px;
+              border-radius: 10px;
+              font-size: 13.5px;
+              cursor: pointer;
+              transition:
+                border-color .15s,
+                background .2s;
+            }
+
+            .pl-machine:hover {
+              border-color: #6a3f96;
+            }
+
+            .pl-machine.active {
+              border-color: var(--magenta);
+              background: var(--magenta-soft);
+            }
+
+            .pl-panel {
+              margin-top: 16px;
+              padding: 18px 20px;
+              border: 1px solid var(--line);
+              border-radius: 14px;
+              background: var(--panel);
+              display: grid;
+              gap: 16px;
+            }
+
+            .pl-panel h3 {
+              margin: 0;
+              font-size: 15px;
+            }
+
+            .pl-ind-head {
+              display: flex;
+              justify-content: space-between;
+              font-size: 13.5px;
+              margin-bottom: 6px;
+            }
+
+            .pl-ind-head b.alerta {
+              color: var(--danger);
+            }
+
+            .pl-bar {
+              height: 8px;
+              border-radius: 6px;
+              background: var(--panel-2);
+              overflow: hidden;
+            }
+
+            .pl-fill {
+              height: 100%;
+              border-radius: 6px;
+              background: var(--safe);
+              transition:
+                width .5s ease,
+                background .3s;
+            }
+
+            .pl-fill.alerta {
+              background: var(--danger);
+            }
+
+            .pl-ind-foot {
+              font-size: 11.5px;
+              color: var(--muted);
+              margin-top: 5px;
+            }
+
+            .pl-ind-foot.alerta {
+              color: var(--danger);
+            }
+
+            .pl-hist {
+              font-size: 12px;
+              color: var(--muted);
+            }
+
+            .pl-hist li {
+              margin: 2px 0;
+            }
+
+            .pl-hint {
+              font-size: 13px;
+              color: var(--muted);
+              margin-top: 12px;
+            }
+
+            .dfs-tabs {
+              display: flex;
+              gap: 8px;
+              margin: 22px 0 0;
+              border-bottom: 1px solid var(--line);
+            }
+
+            .dfs-tab {
+              background: transparent;
+              border: none;
+              color: var(--muted);
+              padding: 10px 16px;
+              font-size: 14px;
+              cursor: pointer;
+              border-bottom: 2px solid transparent;
+              margin-bottom: -1px;
+            }
+
+            .dfs-tab:hover {
+              color: var(--text);
+            }
+
+            .dfs-tab.active {
+              color: var(--text);
+              font-weight: 600;
+              border-bottom-color: var(--magenta);
+            }
+
+            .us4-box {
+              margin-top: 20px;
+              padding: 20px;
+              border-radius: 14px;
+              border: 1px solid var(--line);
+              background: var(--panel);
+            }
+
+            .us4-box.alerta {
+              background: var(--panel-2);
+              border-color: var(--danger);
+            }
+
+            .us4-box h3 {
+              margin-top: 0;
+            }
+
+            .us4-acoes {
+              display: flex;
+              gap: 10px;
+              flex-wrap: wrap;
+              margin-top: 14px;
+            }
+
+            .us4-status {
+              color: var(--muted);
+              font-size: 14px;
+            }
+
+            .us4-tl p {
+              margin: 6px 0;
+              font-size: 14px;
+            }
+
+            .us9-status {
+              margin-top: 20px;
+              padding: 16px;
+              border-radius: 12px;
+              background: var(--panel);
+              border: 1px solid var(--line);
+              color: var(--muted);
+              font-size: 14px;
+              line-height: 1.6;
+            }
+
+            .us9-status p {
+              margin: 0 0 10px;
+            }
+
+            .us9-status p:last-child {
+              margin-bottom: 0;
+            }
+
+            .us9-status .sucesso {
+              color: var(--safe);
+            }
+
+            .us9-status .erro {
+              color: var(--danger);
+            }
+
+            @media (max-width: 700px) {
+              .dfs-root {
+                padding: 20px 14px;
+              }
+
+              .dfs-track {
+                gap: 6px;
+                overflow-x: auto;
+              }
+
+              .dfs-domino {
+                min-width: 100px;
+              }
+
+              .dfs-arrow {
+                font-size: 14px;
+              }
+
+              .dfs-controls {
+                margin-bottom: 20px;
+              }
+            }
           `}</style>
 
           <div className="dfs-head">
             <h2>Simulador de efeito dominó de uma parada</h2>
-            <p>A falha em uma única máquina pode se propagar por toda a operação. Rode os dois cenários e veja a diferença que a detecção antecipada faz.</p>
+
+            <p>
+              A falha em uma única máquina pode se propagar
+              por toda a operação. Rode os dois cenários
+              e veja a diferença que a detecção antecipada faz.
+            </p>
           </div>
+
           <div className="dfs-tabs">
-            <button className={`dfs-tab ${aba === "simulador" ? "active" : ""}`} onClick={() => setAba("simulador")}>
+            <button
+              className={`dfs-tab ${
+                aba === "simulador" ? "active" : ""
+              }`}
+              onClick={() => setAba("simulador")}
+            >
               Efeito dominó
             </button>
-            <button className={`dfs-tab ${aba === "linha" ? "active" : ""}`} onClick={() => setAba("linha")}>
+
+            <button
+              className={`dfs-tab ${
+                aba === "linha" ? "active" : ""
+              }`}
+              onClick={() => setAba("linha")}
+            >
               Linha de Produção
             </button>
-            <button className={`dfs-tab ${aba === "decisao" ? "active" : ""}`} onClick={() => setAba("decisao")}>
+
+            <button
+              className={`dfs-tab ${
+                aba === "decisao" ? "active" : ""
+              }`}
+              onClick={() => setAba("decisao")}
+            >
               Tomar decisão
             </button>
           </div>
@@ -363,142 +1059,421 @@
           {aba === "simulador" && (
             <>
               <div className="dfs-controls">
-                <button className="dfs-btn" disabled={running} onClick={() => run("no-bzu")}>Simular sem BZU</button>
-                <button className="dfs-btn primary" disabled={running} onClick={() => run("bzu")}>Simular com BZU</button>
-                <button className="dfs-btn ghost" onClick={reset}>Reiniciar</button>
+                <button
+                  className="dfs-btn"
+                  disabled={running}
+                  onClick={() => run("no-bzu")}
+                >
+                  Simular sem BZU
+                </button>
+
+                <button
+                  className="dfs-btn primary"
+                  disabled={running}
+                  onClick={() => run("bzu")}
+                >
+                  Simular com BZU
+                </button>
+
+                <button
+                  className="dfs-btn ghost"
+                  onClick={reset}
+                >
+                  Reiniciar
+                </button>
               </div>
 
               <div className="dfs-track">
                 {STAGES.map((stage, i) => {
                   const isFirst = i === 0;
-                  const fell = mode === "no-bzu" && fallen > i;
-                  const sensing = mode === "bzu" && isFirst && phase === "sensing";
-                  const caught = mode === "bzu" && isFirst && (phase === "alert" || phase === "resolved");
-                  const tileClass = fell ? "fell" : sensing ? "sensing" : caught ? "caught" : "";
+
+                  const fell =
+                    mode === "no-bzu" && fallen > i;
+
+                  const sensing =
+                    mode === "bzu" &&
+                    isFirst &&
+                    phase === "sensing";
+
+                  const caught =
+                    mode === "bzu" &&
+                    isFirst &&
+                    (
+                      phase === "alert" ||
+                      phase === "resolved"
+                    );
+
+                  const tileClass = fell
+                    ? "fell"
+                    : sensing
+                    ? "sensing"
+                    : caught
+                    ? "caught"
+                    : "";
+
                   return (
                     <React.Fragment key={stage.id}>
                       <div className="dfs-domino">
-                        <div className="dfs-tile-wrap"><div className={`dfs-tile ${tileClass}`} /></div>
-                        <div className={`dfs-label ${fell ? "hit" : caught ? "caught" : ""}`}>{stage.label}</div>
-                        <div className="dfs-detail">{stage.detail}</div>
+                        <div className="dfs-tile-wrap">
+                          <div
+                            className={`dfs-tile ${tileClass}`}
+                          />
+                        </div>
+
+                        <div
+                          className={`dfs-label ${
+                            fell
+                              ? "hit"
+                              : caught
+                              ? "caught"
+                              : ""
+                          }`}
+                        >
+                          {stage.label}
+                        </div>
+
+                        <div className="dfs-detail">
+                          {stage.detail}
+                        </div>
                       </div>
-                      {i < STAGES.length - 1 && <span className="dfs-arrow">→</span>}
+
+                      {i < STAGES.length - 1 && (
+                        <span className="dfs-arrow">
+                          →
+                        </span>
+                      )}
                     </React.Fragment>
                   );
                 })}
               </div>
 
               {mode === "bzu" && phase !== "idle" && (
-                <div className={`dfs-alert ${phase === "alert" || phase === "resolved" ? "show" : ""}`}>
-                  <span className="dfs-alert-icon">{phase === "resolved" ? "✅" : "⚠️"}</span>
+                <div
+                  className={`dfs-alert ${
+                    phase === "alert" ||
+                    phase === "resolved"
+                      ? "show"
+                      : ""
+                  }`}
+                >
+                  <span className="dfs-alert-icon">
+                    {phase === "resolved" ? "✅" : "⚠️"}
+                  </span>
+
                   <div>
-                    <p className="dfs-alert-title">{phase === "resolved" ? "Manutenção acionada" : "BZU detectou uma anomalia na máquina"}</p>
-                    <p className="dfs-alert-sub">{phase === "resolved" ? "A equipe foi avisada e a cascata foi interrompida na origem." : "Vibração fora do padrão identificada pelo sensor."}</p>
-                    <div className="dfs-progress"><div className={`dfs-progress-fill ${phase === "resolved" ? "go" : ""}`} /></div>
-                    <div className="dfs-progress-label">{phase === "resolved" ? "Alerta resolvido" : "Enviando alerta para a manutenção..."}</div>
+                    <p className="dfs-alert-title">
+                      {phase === "resolved"
+                        ? "Manutenção acionada"
+                        : "BZU detectou uma anomalia na máquina"}
+                    </p>
+
+                    <p className="dfs-alert-sub">
+                      {phase === "resolved"
+                        ? "A equipe foi avisada e a cascata foi interrompida na origem."
+                        : "Vibração fora do padrão identificada pelo sensor."}
+                    </p>
+
+                    <div className="dfs-progress">
+                      <div
+                        className={`dfs-progress-fill ${
+                          phase === "resolved" ? "go" : ""
+                        }`}
+                      />
+                    </div>
+
+                    <div className="dfs-progress-label">
+                      {phase === "resolved"
+                        ? "Alerta resolvido"
+                        : "Enviando alerta para a manutenção..."}
+                    </div>
                   </div>
                 </div>
               )}
 
               {mode === "no-bzu" && done && (
-                <div className="dfs-result danger">Sem monitoramento, o problema só foi percebido depois que <b>toda a cadeia</b> já tinha sido afetada — da máquina até o custo final.</div>
+                <div className="dfs-result danger">
+                  Sem monitoramento, o problema só foi
+                  percebido depois que <b>toda a cadeia</b>
+                  {" "}já tinha sido afetada — da máquina
+                  até o custo final.
+                </div>
               )}
 
               {mode === "bzu" && phase === "resolved" && (
-                <div className="dfs-result safe">Com a BZU, o problema foi resolvido <b>ainda na máquina</b>. Produção, pedido e custo nunca chegaram a ser impactados.</div>
+                <div className="dfs-result safe">
+                  Com a BZU, o problema foi resolvido
+                  {" "}<b>ainda na máquina</b>.
+                  Produção, pedido e custo nunca chegaram
+                  a ser impactados.
+                </div>
               )}
 
               {done && (
                 <div className="dfs-compare">
                   <div>
-                    <div className="dfs-crow-head">Etapas da cadeia afetadas</div>
-                    <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
-                    <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "0%" }} /></div>
-                    <div className="dfs-crow-labels"><span>Sem BZU: <b>4 de 4</b></span><span>Com BZU: <b>0 de 4</b></span></div>
+                    <div className="dfs-crow-head">
+                      Etapas da cadeia afetadas
+                    </div>
+
+                    <div className="dfs-bar-track">
+                      <div
+                        className="dfs-bar-fill red"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+
+                    <div className="dfs-bar-track">
+                      <div
+                        className="dfs-bar-fill green"
+                        style={{ width: "0%" }}
+                      />
+                    </div>
+
+                    <div className="dfs-crow-labels">
+                      <span>
+                        Sem BZU: <b>4 de 4</b>
+                      </span>
+
+                      <span>
+                        Com BZU: <b>0 de 4</b>
+                      </span>
+                    </div>
                   </div>
+
                   <div>
-                    <div className="dfs-crow-head">Momento da detecção</div>
-                    <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
-                    <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "8%" }} /></div>
-                    <div className="dfs-crow-labels"><span>Sem BZU: <b>Tardia</b></span><span>Com BZU: <b>Imediata</b></span></div>
+                    <div className="dfs-crow-head">
+                      Momento da detecção
+                    </div>
+
+                    <div className="dfs-bar-track">
+                      <div
+                        className="dfs-bar-fill red"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+
+                    <div className="dfs-bar-track">
+                      <div
+                        className="dfs-bar-fill green"
+                        style={{ width: "8%" }}
+                      />
+                    </div>
+
+                    <div className="dfs-crow-labels">
+                      <span>
+                        Sem BZU: <b>Tardia</b>
+                      </span>
+
+                      <span>
+                        Com BZU: <b>Imediata</b>
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
+
+              {/* US09 - Acesso ao comparativo */}
+
+              <div className="us9-status">
+                <p>
+                  <b>Comparativo das simulações</b>
+                </p>
+
+                <p>
+                  Simulação sem BZU:{" "}
+                  <span
+                    className={
+                      simulacoesSalvas.simulacao1
+                        ? "sucesso"
+                        : ""
+                    }
+                  >
+                    {simulacoesSalvas.simulacao1
+                      ? "Concluída e salva"
+                      : "Pendente"}
+                  </span>
+                </p>
+
+                <p>
+                  Simulação com BZU:{" "}
+                  <span
+                    className={
+                      simulacoesSalvas.simulacao2
+                        ? "sucesso"
+                        : ""
+                    }
+                  >
+                    {simulacoesSalvas.simulacao2
+                      ? "Concluída e salva"
+                      : "Pendente"}
+                  </span>
+                </p>
+
+                {erroSalvamento && (
+                  <p className="erro">
+                    Erro: {erroSalvamento}
+                  </p>
+                )}
+
+                <button
+                  className="dfs-btn primary"
+                  disabled={!comparativoDisponivel}
+                  onClick={() => {
+                    window.location.href = "/comparativo/";
+                  }}
+                >
+                  Ver comparativo das simulações
+                </button>
+              </div>
             </>
           )}
 
           {aba === "linha" && <ProductionLine />}
 
-          {/* ===== US04 - Execução da Simulação Com Monitoramento ===== */}
+          {/* US04 - Tomada de decisão */}
+
           {aba === "decisao" && (
             <div style={{ marginTop: "24px" }}>
               <h2>Tomada de decisão preventiva</h2>
-              <p style={{ color: "#a996c4", fontSize: "14px" }}>
+
+              <p
+                style={{
+                  color: "#a996c4",
+                  fontSize: "14px"
+                }}
+              >
                 Simulação 2 — Status do monitoramento:{" "}
-                <b style={{ color: "#2dd8ad" }}>ATIVO</b>
+                <b style={{ color: "#2dd8ad" }}>
+                  ATIVO
+                </b>
               </p>
 
-              {/* Passo 1: iniciar a simulação */}
               {simFase === "inativa" && (
-                <button className="dfs-btn primary" onClick={iniciarSimulacaoBzu}>
+                <button
+                  className="dfs-btn primary"
+                  onClick={iniciarSimulacaoBzu}
+                >
                   Iniciar simulação com BZU
                 </button>
               )}
 
-              {/* Passo 2: alerta com as opções de decisão */}
               {simFase === "alerta" && (
                 <div className="us4-box alerta">
-                  <h3>⚠️ Anomalia detectada — Máquina 02</h3>
+                  <h3>
+                    ⚠️ Anomalia detectada — Máquina 02
+                  </h3>
+
                   <p>
-                    O sensor detectou uma anomalia. Uma intervenção preventiva pode evitar
-                    a propagação da falha. O que você deseja fazer?
+                    O sensor detectou uma anomalia.
+                    Uma intervenção preventiva pode
+                    evitar a propagação da falha.
+                    O que você deseja fazer?
                   </p>
+
                   <p className="us4-status">
                     <b>Status: </b>
-                    <span style={{ color: "#f5a36c" }}>Aguardando decisão do operador</span>
+
+                    <span style={{ color: "#f5a36c" }}>
+                      Aguardando decisão do operador
+                    </span>
                   </p>
+
                   <div className="us4-acoes">
-                    <button className="dfs-btn" onClick={ignorarAlerta}>Ignorar alerta</button>
-                    <button className="dfs-btn" onClick={verificarDados}>Verificar dados</button>
-                    <button className="dfs-btn primary" onClick={acionarManutencao}>Acionar manutenção</button>
+                    <button
+                      className="dfs-btn"
+                      onClick={ignorarAlerta}
+                    >
+                      Ignorar alerta
+                    </button>
+
+                    <button
+                      className="dfs-btn"
+                      onClick={verificarDados}
+                    >
+                      Verificar dados
+                    </button>
+
+                    <button
+                      className="dfs-btn primary"
+                      onClick={acionarManutencao}
+                    >
+                      Acionar manutenção
+                    </button>
                   </div>
 
                   {dadosM2 && (
                     <div className="pl-panel">
                       <h3>{dadosM2.nome}</h3>
-                      <Indicador rotulo="Temperatura" item={dadosM2.temperatura} />
-                      <Indicador rotulo="Vibração" item={dadosM2.vibracao} />
-                      <Indicador rotulo="Eficiência" item={dadosM2.eficiencia} />
+
+                      <Indicador
+                        rotulo="Temperatura"
+                        item={dadosM2.temperatura}
+                      />
+
+                      <Indicador
+                        rotulo="Vibração"
+                        item={dadosM2.vibracao}
+                      />
+
+                      <Indicador
+                        rotulo="Eficiência"
+                        item={dadosM2.eficiencia}
+                      />
                     </div>
                   )}
                 </div>
               )}
 
-              {/* Resultado: alerta ignorado */}
               {simFase === "ignorada" && (
                 <div className="dfs-result danger">
-                  O alerta foi ignorado e a falha se espalhou por <b>toda a cadeia</b>:
+                  O alerta foi ignorado e a falha
+                  se espalhou por <b>toda a cadeia</b>:
                   produção, pedido e custo foram afetados.{" "}
-                  <button className="dfs-btn ghost" onClick={reiniciarSimulacao}>Tentar novamente</button>
+
+                  <button
+                    className="dfs-btn ghost"
+                    onClick={reiniciarSimulacao}
+                  >
+                    Tentar novamente
+                  </button>
                 </div>
               )}
 
-              {/* Resultado: manutenção acionada */}
               {simFase === "resolvida" && (
                 <div className="dfs-result safe">
-                  <b>Intervenção preventiva registrada. Máquina 02 estabilizada.</b>
+                  <b>
+                    Intervenção preventiva registrada.
+                    Máquina 02 estabilizada.
+                  </b>
+
                   <br />
-                  Impacto reduzido: produção, pedido e custo não foram afetados.
+
+                  Impacto reduzido: produção,
+                  pedido e custo não foram afetados.
+
                   <ul>
-                    <li><b>Tempo economizado:</b> {ECONOMIA.tempo}</li>
-                    <li><b>Custo economizado:</b> {ECONOMIA.custo}</li>
+                    <li>
+                      <b>Tempo economizado:</b>{" "}
+                      {ECONOMIA.tempo}
+                    </li>
+
+                    <li>
+                      <b>Resultado da intervenção:</b>{" "}
+                      {ECONOMIA.resultado}
+                    </li>
                   </ul>
                 </div>
               )}
 
-              {/* Botão do comparativo: só habilita após a manutenção */}
               {simFase !== "inativa" && (
-                <div style={{ marginTop: "16px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <div
+                  style={{
+                    marginTop: "16px",
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap"
+                  }}
+                >
                   <button
                     className="dfs-btn primary"
                     disabled={simFase !== "resolvida"}
@@ -506,38 +1481,81 @@
                   >
                     Ver comparativo final
                   </button>
-                  <button className="dfs-btn ghost" onClick={reiniciarSimulacao}>Reiniciar simulação</button>
+
+                  <button
+                    className="dfs-btn ghost"
+                    onClick={reiniciarSimulacao}
+                  >
+                    Reiniciar simulação
+                  </button>
                 </div>
               )}
 
               {verComparativo && (
                 <div className="dfs-compare">
                   <div>
-                    <div className="dfs-crow-head">Etapas da cadeia afetadas</div>
-                    <div className="dfs-bar-track"><div className="dfs-bar-fill red" style={{ width: "100%" }} /></div>
-                    <div className="dfs-bar-track"><div className="dfs-bar-fill green" style={{ width: "0%" }} /></div>
+                    <div className="dfs-crow-head">
+                      Etapas da cadeia afetadas
+                    </div>
+
+                    <div className="dfs-bar-track">
+                      <div
+                        className="dfs-bar-fill red"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+
+                    <div className="dfs-bar-track">
+                      <div
+                        className="dfs-bar-fill green"
+                        style={{ width: "0%" }}
+                      />
+                    </div>
+
                     <div className="dfs-crow-labels">
-                      <span>Sem BZU: <b>4 de 4</b></span>
-                      <span>Com BZU: <b>0 de 4</b></span>
+                      <span>
+                        Sem BZU: <b>4 de 4</b>
+                      </span>
+
+                      <span>
+                        Com BZU: <b>0 de 4</b>
+                      </span>
                     </div>
                   </div>
+
                   <div>
-                    <div className="dfs-crow-head">Tempo e custo</div>
+                    <div className="dfs-crow-head">
+                      Tempo de parada e produtividade
+                    </div>
+
                     <div className="dfs-crow-labels">
-                      <span>Sem BZU: <b>perda total</b></span>
-                      <span>Com BZU: <b>{ECONOMIA.tempo}; {ECONOMIA.custo}</b></span>
+                      <span>
+                        Sem BZU: <b>Parada potencialmente prolongada</b>
+                      </span>
+
+                      <span>
+                        Com BZU:{" "}
+                        <b>
+                          {ECONOMIA.tempo}; {ECONOMIA.resultado}
+                        </b>
+                      </span>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Linha do tempo da intervenção */}
               {historicoDecisao.length > 0 && (
                 <div className="us4-box us4-tl">
-                  <h3>Linha do tempo da intervenção</h3>
+                  <h3>
+                    Linha do tempo da intervenção
+                  </h3>
+
                   {historicoDecisao.map((e, i) => (
                     <p key={i}>
-                      <span style={{ color: "#2dd8ad" }}>✓</span> {e.hora} — {e.texto}
+                      <span style={{ color: "#2dd8ad" }}>
+                        ✓
+                      </span>{" "}
+                      {e.hora} — {e.texto}
                     </p>
                   ))}
                 </div>
@@ -548,7 +1566,10 @@
       );
     }
 
-    const root = ReactDOM.createRoot(document.getElementById("root"));
+    const root = ReactDOM.createRoot(
+      document.getElementById("root")
+    );
+
     root.render(<DominoEffectSimulator />);
   </script>
 </body>

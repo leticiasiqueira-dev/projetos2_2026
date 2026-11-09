@@ -26,8 +26,14 @@ urlpatterns = [
     path(
         "forum/",
         include("forum.urls")
+    ), 
+    
+    # Comparativo das simulações
+    path(
+        "comparativo/", 
+        include("comparativo.urls")
     ),
-
+    
     #Aplicativo quem somos
     path(
         "quem_somos/", 

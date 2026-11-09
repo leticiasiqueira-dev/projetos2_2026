@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'chave-local-de-desenvolvimento-2026')
 ENVIRONMENT = os.getenv('ENVIRONMENT')
 
 if ENVIRONMENT == 'development':
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'forum',
     'quem_somos',
     'telemetria',
+    'comparativo',
 ]
 
 MIDDLEWARE = [
