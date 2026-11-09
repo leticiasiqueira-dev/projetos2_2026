@@ -28,5 +28,10 @@ class Atuador(models.Model):
         auto_now=True
     )
 
+    class Meta:
+        permissions = [
+            ('enviar_comando_atuador', 'Pode enviar comandos aos atuadores'),
+        ]
+
     def __str__(self):
         return self.nome
