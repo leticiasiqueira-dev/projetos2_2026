@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Telemetria{% endblock %} — BZU</title>
+    <style>
+        :root {
+            --bg: #14081f; --panel: #1f1033; --panel-2: #271340; --line: #3a2158;
+            --text: #f4eefb; --muted: #a996c4; --magenta: #d946c7;
+            --magenta-soft: rgba(217, 70, 199, 0.18); --danger: #f0546a; --safe: #2dd8ad;
+        }
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        body {
+            margin: 0; min-height: 100vh; padding: 24px;
+            background: radial-gradient(120% 140% at 15% 0%, #24123f 0%, var(--bg) 55%);
+            color: var(--text);
+            font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+        }
+        .pagina { max-width: 900px; margin: 0 auto; }
+        h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: -0.01em; }
+        .sub { margin: 0 0 22px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+        .voltar { display: inline-block; margin-bottom: 18px; color: var(--muted); text-decoration: none; font-size: 14px; }
+        .voltar:hover { color: var(--text); }
+        .topo { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+
+        .cartao { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; }
+        .badge.online { background: rgba(45, 216, 173, .15); color: var(--safe); }
+        .badge.offline { background: rgba(240, 84, 106, .15); color: var(--danger); }
+
+        .alerta { margin: 0 0 14px; padding: 12px 16px; border-radius: 12px; font-size: 14px;
+            background: rgba(240, 84, 106, .1); border: 1px solid rgba(240, 84, 106, .4); color: #ffb3bf; }
+        .alerta.aviso { background: var(--magenta-soft); border-color: var(--magenta); color: var(--text); }
+
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+        .disp { display: block; text-decoration: none; color: var(--text); background: var(--panel);
+            border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; transition: border-color .15s; }
+        .disp:hover { border-color: #6a3f96; }
+        .disp.offline { border-color: rgba(240, 84, 106, .6); }
+        .disp .linha { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .disp .idade { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+        .disp .alerta { margin: 0; padding: 8px 12px; font-size: 13px; }
+
+        .metricas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px; }
+        .metricas .rotulo { display: block; color: var(--muted); font-size: 12.5px; margin-bottom: 6px; }
+        .metricas strong { font-size: 24px; }
+        .grafico-box { height: 340px; position: relative; }
+
+        .vazio { text-align: center; padding: 50px 20px; background: var(--panel);
+            border: 1px solid var(--line); border-radius: 14px; }
+        .vazio p { color: var(--muted); }
+        @media (max-width: 600px) { body { padding: 14px; } }
+    </style>
+    <script>
+        function rotuloIdade(s) {
+            if (s === null || s === undefined) return "Sem leituras ainda";
+            if (s < 10) return "Agora mesmo";
+            if (s < 60) return "há " + Math.floor(s) + " s";
+            if (s < 3600) return "há " + Math.floor(s / 60) + " min";
+            return "há " + Math.floor(s / 3600) + " h";
+        }
+    </script>
+</head>
+<body>
+    <main class="pagina">
+        {% block conteudo %}{% endblock %}
+    </main>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

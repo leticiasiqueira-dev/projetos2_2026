@@ -1,0 +1,124 @@
+{% extends "telemetria/base.html" %}
+
+{% block titulo %}{% if dispositivo %}{{ dispositivo.nome }}{% else %}Dispositivo não encontrado{% endif %}{% endblock %}
+
+{% block conteudo %}
+<a class="voltar" href="{% url 'telemetria:lista' %}">← Todos os dispositivos</a>
+
+{% if not dispositivo %}
+    <div class="vazio">
+        <h1>Dispositivo não encontrado</h1>
+        <p>Não existe um dispositivo com o código {{ dispositivo_id }}.</p>
+    </div>
+{% else %}
+    <div class="topo">
+        <div>
+            <h1>{{ dispositivo.nome }}</h1>
+            <p class="sub">Envia dados a cada {{ dispositivo.intervalo_envio }} segundos</p>
+        </div>
+        <span id="status" class="badge offline">Offline</span>
+    </div>
+
+    <div id="alerta-offline" class="alerta" hidden>⚠️ Sem sinal: este dispositivo não envia leituras há mais de 3 minutos.</div>
+    <div id="erro-rede" class="alerta aviso" hidden>Falha ao consultar o servidor. Tentando novamente…</div>
+
+    <div class="metricas">
+        <div class="cartao"><span class="rotulo">Temperatura atual</span><strong id="temp-atual">—</strong></div>
+        <div class="cartao"><span class="rotulo">Última atualização</span><strong id="ultima">—</strong></div>
+    </div>
+
+    <div class="cartao grafico-box"><canvas id="grafico"></canvas></div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if dispositivo %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+    const URL_DADOS = "{% url 'telemetria:dados' dispositivo.id %}";
+    const LIMITE_OFFLINE = {{ limite_offline }};
+    const MAX_PONTOS = 60;
+
+    const badge = document.getElementById("status");
+    const alertaOffline = document.getElementById("alerta-offline");
+    const erroRede = document.getElementById("erro-rede");
+    const ultimaEl = document.getElementById("ultima");
+    const tempAtualEl = document.getElementById("temp-atual");
+
+    const grafico = new Chart(document.getElementById("grafico"), {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "Temperatura (°C)",
+                data: [],
+                borderColor: "#d946c7",
+                backgroundColor: "rgba(217, 70, 199, 0.15)",
+                fill: true,
+                tension: 0.3,
+                pointRadius: 2
+            }]
+        },
+        options: {
+            animation: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { ticks: { color: "#a996c4", maxTicksLimit: 8 }, grid: { color: "#3a2158" } },
+                y: { ticks: { color: "#a996c4" }, grid: { color: "#3a2158" } }
+            },
+            plugins: { legend: { labels: { color: "#f4eefb" } } }
+        }
+    });
+
+    let ultimoId = 0;
+    let idadeBase = null;   // segundos desde a última leitura, no momento da consulta
+    let momentoBase = 0;
+
+    function idadeAtual() {
+        return idadeBase === null ? null : idadeBase + (performance.now() - momentoBase) / 1000;
+    }
+
+    function mostrarStatus() {
+        const idade = idadeAtual();
+        const online = idade !== null && idade <= LIMITE_OFFLINE;
+        badge.textContent = online ? "Online" : "Offline";
+        badge.className = "badge " + (online ? "online" : "offline");
+        alertaOffline.hidden = online;
+        ultimaEl.textContent = rotuloIdade(idade);
+    }
+
+    async function atualizar() {
+        try {
+            const url = ultimoId ? URL_DADOS + "?apos=" + ultimoId : URL_DADOS;
+            const r = await fetch(url, { cache: "no-store" });
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            const dados = await r.json();
+
+            dados.leituras.forEach(function (l) {
+                grafico.data.labels.push(new Date(l.registrado_em).toLocaleTimeString("pt-BR"));
+                grafico.data.datasets[0].data.push(l.temperatura);
+                tempAtualEl.textContent = l.temperatura.toFixed(1) + " °C";
+                ultimoId = l.id;
+            });
+            while (grafico.data.labels.length > MAX_PONTOS) {
+                grafico.data.labels.shift();
+                grafico.data.datasets[0].data.shift();
+            }
+            if (dados.leituras.length) grafico.update();
+
+            idadeBase = dados.segundos_desde_ultima;
+            momentoBase = performance.now();
+            erroRede.hidden = true;
+        } catch (e) {
+            erroRede.hidden = false;
+        }
+        mostrarStatus();
+    }
+
+    atualizar();
+    setInterval(atualizar, 5000);      // busca novos pontos
+    setInterval(mostrarStatus, 1000);  // mantém "Agora mesmo" / Offline em dia
+</script>
+{% endif %}
+{% endblock %}

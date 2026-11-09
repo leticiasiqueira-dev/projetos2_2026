@@ -1,0 +1,54 @@
+{% extends "telemetria/base.html" %}
+
+{% block titulo %}Dispositivos{% endblock %}
+
+{% block conteudo %}
+<h1>Monitoramento de dispositivos</h1>
+<p class="sub">O status é atualizado automaticamente. O dispositivo fica offline após 3 minutos sem enviar leituras.</p>
+
+{% if itens %}
+<div class="grade">
+    {% for d in itens %}
+    <a class="disp {% if not d.online %}offline{% endif %}" href="{% url 'telemetria:painel' d.id %}" data-id="{{ d.id }}">
+        <div class="linha">
+            <strong>{{ d.nome }}</strong>
+            <span class="badge {% if d.online %}online{% else %}offline{% endif %}" data-badge>{% if d.online %}Online{% else %}Offline{% endif %}</span>
+        </div>
+        <div class="idade" data-idade>—</div>
+        <div class="alerta" data-alerta {% if d.online %}hidden{% endif %}>⚠️ Sem sinal do dispositivo</div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="vazio">
+    <p>Nenhum dispositivo cadastrado ainda. Cadastre em <strong>/admin/</strong>.</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const URL_STATUS = "{% url 'telemetria:status' %}";
+
+    async function atualizarLista() {
+        try {
+            const r = await fetch(URL_STATUS, { cache: "no-store" });
+            if (!r.ok) return;
+            const dados = await r.json();
+            dados.dispositivos.forEach(function (d) {
+                const el = document.querySelector('.disp[data-id="' + d.id + '"]');
+                if (!el) return;
+                el.classList.toggle("offline", !d.online);
+                const badge = el.querySelector("[data-badge]");
+                badge.textContent = d.online ? "Online" : "Offline";
+                badge.className = "badge " + (d.online ? "online" : "offline");
+                el.querySelector("[data-idade]").textContent = "Última atualização: " + rotuloIdade(d.segundos);
+                el.querySelector("[data-alerta]").hidden = d.online;
+            });
+        } catch (e) { /* tenta de novo no próximo ciclo */ }
+    }
+
+    atualizarLista();
+    setInterval(atualizarLista, 10000);
+</script>
+{% endblock %}
