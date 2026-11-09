@@ -16,6 +16,12 @@ urlpatterns = [
         include("efeito_domino.urls")
     ),
 
+    path(
+        "forum/dispositivos/",
+        include("telemetria.urls")
+    ),
+
+    
     # Aplicativo do fórum
     path(
         "forum/",
