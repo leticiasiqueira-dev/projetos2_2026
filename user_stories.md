@@ -176,3 +176,28 @@ Cenário: Falha na resposta do atuador (Timeout de Comando)
 ```
 
 ---
+
+## US09 – Comparação dos Resultados das Simulações
+
+**Como** gestor de produção ou usuário do simulador
+
+**Quero** visualizar um comparativo dos resultados da simulação sem monitoramento e da simulação com monitoramento BZU
+
+**Para que** eu possa compreender os benefícios da utilização de sensores IoT na redução de falhas, prejuízos e tempo de parada das máquinas.
+
+### Cenários de Validação (BDD)
+
+```gherkin
+Cenário 1: Visualização do comparativo final (Positivo)**
+  Dado que concluí as duas simulações do sistema
+  Quando clico no botão "Ver comparativo final"
+  Então o sistema apresenta os resultados das duas simulações
+  E exibe os indicadores de tempo de parada e custos operacionais
+  E destaca a redução dos impactos com o monitoramento BZU.
+
+Cenário 2: Tentativa de visualizar o comparativo sem concluir as simulações (Negativo)**
+  Dado que não concluí as duas simulações do sistema
+  Quando tento acessar o comparativo final
+  Então o sistema informa que é necessário concluir ambas as simulações
+  E não exibe o comparativo até que as duas simulações sejam finalizadas.
+```
