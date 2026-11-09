@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Atuadores | IoTech</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+            background: #14081f;
+            color: #f4eefb;
+        }
+
+        header {
+            max-width: 1000px;
+            margin: 0 auto 30px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+            color: #f4eefb;
+        }
+
+        header p {
+            margin: 0;
+            color: #a996c4;
+        }
+
+        .painel {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #1f1033;
+            border: 1px solid #3a2158;
+            padding: 25px;
+            border-radius: 14px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #f4eefb;
+            font-size: 20px;
+        }
+
+        .tipo {
+            color: #a996c4;
+            font-size: 14px;
+        }
+
+        .estado {
+            display: inline-block;
+            padding: 8px 14px;
+            margin: 15px 0;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .ligado {
+            background: rgba(45, 216, 173, 0.15);
+            color: #2dd8ad;
+            border: 1px solid rgba(45, 216, 173, 0.3);
+        }
+
+        .desligado {
+            background: rgba(169, 150, 196, 0.12);
+            color: #a996c4;
+            border: 1px solid #3a2158;
+        }
+
+        .acoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            border: 1px solid #3a2158;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-ligar {
+            background: rgba(45, 216, 173, 0.12);
+            border-color: rgba(45, 216, 173, 0.35);
+            color: #2dd8ad;
+        }
+
+        .btn-ligar:hover:not(:disabled) {
+            background: rgba(45, 216, 173, 0.22);
+        }
+
+        .btn-desligar {
+            background: rgba(240, 84, 106, 0.12);
+            border-color: rgba(240, 84, 106, 0.35);
+            color: #f0546a;
+        }
+
+        .btn-desligar:hover:not(:disabled) {
+            background: rgba(240, 84, 106, 0.22);
+        }
+
+        .mensagem {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #a996c4;
+            min-height: 18px;
+        }
+
+        .vazio {
+            color: #a996c4;
+            background: #1f1033;
+            border: 1px solid #3a2158;
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        dialog {
+            background: #1f1033;
+            color: #f4eefb;
+            border: 1px solid #6a3f96;
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        dialog::backdrop {
+            background: rgba(10, 3, 18, 0.8);
+        }
+
+        dialog h2 {
+            color: #f4eefb;
+            margin-top: 0;
+        }
+
+        dialog p {
+            color: #a996c4;
+            line-height: 1.5;
+        }
+
+        .modal-acoes {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn-cancelar {
+            background: #271340;
+            border-color: #3a2158;
+            color: #f4eefb;
+        }
+
+        .btn-cancelar:hover {
+            border-color: #6a3f96;
+        }
+
+        .btn-confirmar {
+            background: linear-gradient(135deg, #b6349d, #7c3aed);
+            border: none;
+            color: white;
+        }
+
+        .btn-confirmar:hover:not(:disabled) {
+            filter: brightness(1.15);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Controle de Atuadores</h1>
+        <p>Gerenciamento remoto dos dispositivos IoT.</p>
+    </header>
+
+    <main class="painel">
+
+        {% for atuador in atuadores %}
+
+            <section class="card">
+
+                <h2>{{ atuador.nome }}</h2>
+
+                <p class="tipo">
+                    Tipo: {{ atuador.get_tipo_display }}
+                </p>
+
+                <p>
+                    Estado atual:
+                    <span class="estado {% if atuador.estado %}ligado{% else %}desligado{% endif %}">
+                        {% if atuador.estado %}
+                            LIGADO
+                        {% else %}
+                            DESLIGADO
+                        {% endif %}
+                    </span>
+                </p>
+
+                <form
+                    class="form-comando"
+                    method="POST"
+                    action="{% url 'enviar_comando' atuador.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <input type="hidden" name="comando" value="">
+
+                    <div class="acoes">
+
+                        <button
+                            type="button"
+                            class="btn-ligar"
+                            data-command="LIGAR"
+                        >
+                            LIGAR
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn-desligar"
+                            data-command="DESLIGAR"
+                        >
+                            DESLIGAR
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <p class="mensagem" aria-live="polite"></p>
+
+            </section>
+
+        {% empty %}
+
+            <p class="vazio">Nenhum atuador cadastrado.</p>
+
+        {% endfor %}
+
+    </main>
+
+    <dialog id="modalConfirmacao">
+
+        <h2>Confirmar atuação</h2>
+
+        <p id="textoConfirmacao">
+            Deseja realmente executar este comando?
+        </p>
+
+        <div class="modal-acoes">
+
+            <button
+                type="button"
+                class="btn-cancelar"
+                id="cancelar"
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                class="btn-confirmar"
+                id="confirmar"
+            >
+                Confirmar ação
+            </button>
+
+        </div>
+
+    </dialog>
+
+    <script>
+        const modal = document.getElementById('modalConfirmacao');
+        const textoConfirmacao = document.getElementById('textoConfirmacao');
+        const botaoCancelar = document.getElementById('cancelar');
+        const botaoConfirmar = document.getElementById('confirmar');
+
+        let formularioSelecionado = null;
+        let comandoSelecionado = null;
+
+        document.querySelectorAll('.form-comando').forEach(formulario => {
+
+            const botoes = formulario.querySelectorAll('[data-command]');
+
+            botoes.forEach(botao => {
+
+                botao.addEventListener('click', () => {
+
+                    formularioSelecionado = formulario;
+                    comandoSelecionado = botao.dataset.command;
+
+                    textoConfirmacao.textContent =
+                        `Deseja realmente ${comandoSelecionado} o atuador?`;
+
+                    modal.showModal();
+
+                });
+
+            });
+
+        });
+
+        botaoCancelar.addEventListener('click', () => {
+            modal.close();
+        });
+
+        botaoConfirmar.addEventListener('click', async () => {
+
+            if (!formularioSelecionado) return;
+
+            const formulario = formularioSelecionado;
+            const campoComando = formulario.querySelector('[name="comando"]');
+            const mensagem = formulario.parentElement.querySelector('.mensagem');
+
+            campoComando.value = comandoSelecionado;
+
+            botaoConfirmar.disabled = true;
+            mensagem.textContent = 'Enviando solicitação...';
+            mensagem.style.color = '#f5a36c';
+
+            try {
+
+                const resposta = await fetch(formulario.action, {
+                    method: 'POST',
+                    body: new FormData(formulario),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const dados = await resposta.json();
+
+                mensagem.textContent = dados.mensagem;
+
+                if (!resposta.ok || !dados.sucesso) {
+                    mensagem.style.color = '#f0546a';
+                } else {
+                    mensagem.style.color = '#2dd8ad';
+                }
+
+            } catch (erro) {
+
+                mensagem.textContent = 'Erro ao comunicar com o servidor.';
+                mensagem.style.color = '#f0546a';
+
+            } finally {
+
+                modal.close();
+                botaoConfirmar.disabled = false;
+                formularioSelecionado = null;
+                comandoSelecionado = null;
+
+            }
+
+        });
+    </script>
+
+</body>
+</html>
