@@ -21,7 +21,10 @@
 </div>
 {% else %}
 <div class="vazio">
-    <p>Nenhum dispositivo cadastrado ainda. Cadastre em <strong>/admin/</strong>.</p>
+<p>Nenhum dispositivo disponível no momento.</p>
+{% if user.is_staff %}
+<p>Cadastre um dispositivo em <a href="/admin/telemetria/dispositivo/add/" style="color:#d946c7;">/admin/</a>.</p>
+{% endif %}
 </div>
 {% endif %}
 {% endblock %}
