@@ -148,3 +148,6 @@ MAILERS = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  #definir chave primária de 64 bits
+
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/atuadores/'
