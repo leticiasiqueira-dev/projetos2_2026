@@ -1,265 +1,189 @@
-from django.test import override_settings
-from django.utils import timezone
-from os import link
+"""
+Testes E2E (Selenium) - app efeito_domino
+  US01 - Acesso e início da experiência do simulador
+  US02 - Execução da simulação sem monitoramento
+  US03 - Transição para o cenário de monitoramento (com BZU)
 
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+Dica: a numeração nas classes/métodos define a ordem de execução
+(o unittest roda em ordem alfabética).
+"""
 from selenium.webdriver.common.by import By
-
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from webdriver_manager.chrome import ChromeDriverManager
-
-import time
-
-from forum.models import Pergunta
+from project.selenium_base import BaseTestCase
 
 
+class Teste_01_US01_PaginaInicial(BaseTestCase):
+    """US01: página inicial com apresentação dos conceitos e botão de início."""
 
+    def test_01_deve_exibir_apresentacao_dos_conceitos(self):
+        print("US01 - Teste 01: Apresentação dos conceitos na página inicial.")
 
-class BaseTestCase(StaticLiveServerTestCase):
-    """
-    Classe-base que inicializa e encerra o Chrome em modo headless
-    (sem interface gráfica) antes e depois de cada teste.
+        self.abrir_pagina("/efeito_domino/")
 
-    StaticLiveServerTestCase sobe um servidor HTTP temporário em uma 
-    porta aleatória na própria máquina que está rodando os testes, usando 
-    um banco de dados de teste isolado, e disponibiliza self.live_server_url 
-    para que o Selenium possa acessá-lo.
+        h1 = self.wait.until(EC.visibility_of_element_located((By.TAG_NAME, "h1")))
+        self.assertIn("Quando uma máquina para", h1.text)
 
-    live_server_url aponta sempre para localhost. Ex: http://127.0.0.1:54321
-    Esse servidor existe apenas durante a execução dos testes e é destruído 
-    logo depois. 
+        body = self.driver.find_element(By.TAG_NAME, "body").text
+        self.assertIn("Máquina → Produção → Pedido → Cliente → Prejuízo", body)
+        self.assertIn("tecnologia IoT", body)
+        self.assertIn("BZU", self.driver.title)
 
-    """
-     
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+        self.pausa(3)
 
-        opts = Options()
-        opts.add_argument("--headless")
-        opts.add_argument("--no-sandbox")
-        opts.add_argument("--disable-dev-shm-usage")
-        opts.add_argument("--disable-gpu")
-        opts.add_argument("--window-size=1280,800")
+    def test_02_deve_exibir_botao_de_inicio(self):
+        print("US01 - Teste 02: Botão 'Explorar simulador' visível.")
 
-        service = Service(ChromeDriverManager().install())
-        cls.driver = webdriver.Chrome(service=service, options=opts)
+        self.abrir_pagina("/efeito_domino/")
 
-        cls.wait = WebDriverWait(cls.driver, 10)
-
-    @classmethod
-    def tearDownClass(cls):
-        if hasattr(cls, "driver"):
-            cls.driver.quit()
-        super().tearDownClass()
-
-    # -------------------------------------------------------------------------
-    # Métodos utilitários reutilizados pelos testes
-    # -------------------------------------------------------------------------
-
-    def abrir_pagina(self, caminho="/forum/"):
-        """Navega para uma URL relativa ao servidor de teste."""
-        self.driver.get(self.live_server_url + caminho)
-
-    def criar_pergunta_via_model(
-        self,
-        titulo="Título de teste",
-        detalhe="Detalhe da pergunta de teste.",
-        tentativa="Tentativa de solução.",
-        usuario="Equipe de engenheiros de testes",
-    ):
-        """Cria uma Pergunta diretamente no banco — útil para preparar o estado
-        do sistema antes de um teste, sem depender da UI de inserção."""
-        return Pergunta.objects.create(
-            titulo=titulo,
-            detalhe=detalhe,
-            tentativa=tentativa,
-            data_criacao=timezone.now(),
-            usuario=usuario,
+        botao = self.wait.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "a.botao"))
         )
+        self.assertIn("Explorar simulador", botao.text)
 
-    def criar_resposta_via_model(self, pergunta, texto="Resposta de teste.", usuario="respondedor"):
-        """Cria uma Resposta diretamente no banco."""
-        return pergunta.resposta_set.create(
-            texto=texto,
-            data_criacao=timezone.now(),
-            usuario=usuario,
-        )
+        self.pausa(2)
 
-# dica: colocar a numeração dos testes nas classes e métodos indica 
-# a ordem de execução (o unittest roda os testes em ordem alfabética).
-#  Embora os testes definidos aqui sejam todos independentes
-# e possam executar em qualquer ordem, ordenar a execução ajuda a 
-# visualizar o processo de testes e a criação do screencast. 
-class Teste_01_PaginaInicial(BaseTestCase):
-    
-    """Testa a listagem de perguntas na página inicial do fórum."""
+    def test_03_deve_iniciar_simulador_ao_clicar_no_botao(self):
+        print("US01 - Teste 03: Clique no botão leva ao simulador.")
 
-    def test_01_deve_carregar_pagina_inicial_sem_perguntas(self):
-        print("Teste 01: Visualização da página inicial sem perguntas.")
+        self.abrir_pagina("/efeito_domino/")
 
-        # abre a página inicial do fórum
-        self.abrir_pagina("/forum/")
-
-        body = self.wait.until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
-
-          # verifica se aparece a mensagem de nenhuma pergunta disponível
-        self.assertIn("Nenhuma ocorrência registrada.", body.text)
-       
-      
-        time.sleep(3)  # Apenas para visualizar o teste, pode ser removido
-        
-
-    def test_02_deve_carregar_pagina_inicial_com_perguntas(self):
-
-        print("Teste 02: Visualização da página inicial com uma pergunta cadastrada.")
-        # Cria uma pergunta no banco de dados
-        self.criar_pergunta_via_model()
-
-        # abre a página inicial do fórum
-        self.abrir_pagina("/forum/")
-
-        body = self.wait.until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
-
-        # verifica se a pergunta criada aparece na página
-        self.assertIn("Título de teste", body.text)
-
-        time.sleep(3)  # Apenas para visualizar o teste, pode ser removido
-
-
-    def test_03_deve_carregar_pagina_inicial_com_tres_perguntas_cadastradas(self):
-       
-        print("Teste 03: Visualização da página inicial com três perguntas cadastradas.")
-        
-        titulos = [
-            "Como usar list comprehension em Python?",
-            "O que é uma closure em JavaScript?",
-            "Como funciona o JOIN no SQL?",
-        ]
-        
-        # Cria 3 perguntas diretamente no banco.
-        for t in titulos:
-            self.criar_pergunta_via_model(titulo=t)
-
-        # abre a página inicial
-        self.abrir_pagina("/forum/")
-
-        # verifica se os 3 títulos aparecem como links.
-        links = self.driver.find_elements(By.CSS_SELECTOR, "ul li a")
-        textos_encontrados = [l.text.strip() for l in links]
-
-        for titulo in titulos:
-            self.assertIn(titulo, textos_encontrados,
-                          f"Título '{titulo}' não encontrado na listagem.")
-
-        time.sleep(3)  # Apenas para visualizar o teste, pode ser removido
-
-
-class Teste_02_CriacaoPergunta(BaseTestCase):
-
-    """Testa a criação de perguntas no fórum."""
-
-    def test_04_deve_criar_pergunta(self):
-        print("Teste 04: Criação de pergunta e visualização da mesma.")
-        
-        # abre a página de criação de pergunta
-        self.abrir_pagina("/forum/inserir/")
- 
-        # pega os campos do formulário de criação de pergunta
-        titulo = self.wait.until(
-            EC.presence_of_element_located((By.NAME, "titulo"))
-        )
-        detalhe = self.wait.until(
-            EC.presence_of_element_located((By.NAME, "detalhe"))
-        )
-
-        tentativa = self.wait.until(
-            EC.presence_of_element_located((By.NAME, "tentativa"))
-        )
-
-        # preenche os dados da pergunta.
-        titulo.send_keys("Teste 04: Como usar o Selenium com Django?")
-
-        detalhe.send_keys("Podem me indicar tutoriais ou exemplos de uso do Selenium para testes em Django?")
-
-        tentativa.send_keys("Não tentei nada ainda.")
-
-        time.sleep(3)  # Apenas para visualizar o teste, pode ser removido
-        
-        # clica no botão de submit do formulário para gravar a pergunta
-        self.driver.find_element(By.TAG_NAME, "form").submit()
-
-        # espera a página recarregar e exibir conteúdo
-        body = self.wait.until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
-
-        # verifica se o título da pergunta criada aparece na página
-        self.assertIn("Como usar o Selenium com Django?", body.text)
-        
-        time.sleep(10)  # Apenas para visualizar o teste, pode ser removido
-
-    def test_05_deve_criar_pergunta_e_acessar_pergunta_criada_pela_pagina_principal_e_exibir_detalhes_pergunta(self):
-        print("Teste 05: Criação de pergunta, acesso pela página principal e visualização dos seus detalhes.")
-        
-        # acessa página de criação de pergunta
-        self.abrir_pagina("/forum/inserir/")
-
-        titulo = self.wait.until(
-            EC.presence_of_element_located((By.NAME, "titulo"))
-        )
-        detalhe = self.wait.until(
-            EC.presence_of_element_located((By.NAME, "detalhe"))
-        )
-
-        tentativa = self.wait.until(
-            EC.presence_of_element_located((By.NAME, "tentativa"))
-        )
-
-        # preenche campos.
-        titulo.send_keys("Teste 05: Como criar jogos no Unity?")
-
-        detalhe.send_keys("Podem me ajudar por favor?")
-
-        tentativa.send_keys("Ainda não tentei nada, quero muito começar a programar jogos.")
-
-        time.sleep(2)  # Apenas para visualizar o teste, pode ser removido
-
-        # grava a pergunta
-        self.driver.find_element(By.TAG_NAME, "form").submit()
-
-        # espera redirecionamento/listagem
         self.wait.until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
+            EC.element_to_be_clickable((By.LINK_TEXT, "Explorar simulador"))
+        ).click()
+
+        self.wait.until(EC.url_contains("/efeito_domino/simulador/"))
+        self.wait_longo.until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//h2[contains(., 'Simulador de efeito dominó')]")
+            )
         )
 
-        time.sleep(3)  # Apenas para visualizar o teste, pode ser removido
+        self.pausa(3)
 
-        # vai para página inicial
-        self.abrir_pagina("/forum/")
 
-        # clica no link da pergunta criada para acessar detalhes
-        link = self.wait.until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "Teste 05: Como criar jogos no Unity?"))
+class Teste_02_US02_SimulacaoSemMonitoramento(BaseTestCase):
+    """US02: simulação sem BZU mostra a falha se propagando pela cadeia."""
+
+    def test_04_deve_exibir_botoes_de_simulacao(self):
+        print("US02 - Teste 04: Botões de simulação disponíveis.")
+
+        self.abrir_simulador()
+
+        for texto in ["Simular sem BZU", "Simular com BZU", "Reiniciar"]:
+            botao = self.driver.find_element(
+                By.XPATH, f"//button[normalize-space(.)='{texto}']"
+            )
+            self.assertTrue(botao.is_displayed(), f"Botão '{texto}' não visível.")
+
+        self.pausa(2)
+
+    def test_05_deve_executar_simulacao_sem_monitoramento(self):
+        print("US02 - Teste 05: Falha em cadeia sem monitoramento IoT.")
+
+        self.abrir_simulador()
+        botao = self.clicar_botao("Simular sem BZU")
+
+        # enquanto roda, o botão fica desabilitado
+        self.wait.until(lambda d: not botao.is_enabled())
+
+        # ao final aparece a mensagem de prejuízo em toda a cadeia
+        resultado = self.wait_longo.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".dfs-result.danger"))
+        )
+        self.assertIn("Sem monitoramento", resultado.text)
+
+        # todas as etapas da cadeia foram afetadas (dominós caídos)
+        total = len(self.driver.find_elements(By.CSS_SELECTOR, ".dfs-tile"))
+        caidos = len(self.driver.find_elements(By.CSS_SELECTOR, ".dfs-tile.fell"))
+        self.assertGreater(total, 1)
+        self.assertEqual(total, caidos, "Nem todas as etapas caíram.")
+
+        # sem BZU não existe alerta de detecção
+        self.assertEqual(self.driver.find_elements(By.CSS_SELECTOR, ".dfs-alert"), [])
+
+        self.pausa(4)
+
+    def test_06_deve_reiniciar_simulacao(self):
+        print("US02 - Teste 06: Reiniciar limpa o resultado.")
+
+        self.abrir_simulador()
+        self.clicar_botao("Simular sem BZU")
+        self.wait_longo.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".dfs-result.danger"))
         )
 
-        time.sleep(4)  # Apenas para visualizar o teste, pode ser removido
+        self.clicar_botao("Reiniciar")
 
-        link.click()
-
-        body = self.wait.until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
+        self.wait.until(
+            EC.invisibility_of_element_located((By.CSS_SELECTOR, ".dfs-result"))
+        )
+        self.assertEqual(
+            self.driver.find_elements(By.CSS_SELECTOR, ".dfs-tile.fell"), []
         )
 
-        time.sleep(10)  # Apenas para visualizar o teste, pode ser removido
+        self.pausa(2)
 
-        self.assertIn("Podem me ajudar por favor?", body.text)
+
+class Teste_03_US03_CenarioComMonitoramento(BaseTestCase):
+    """US03: cenário com BZU - alerta antecipado interrompe a cascata."""
+
+    def test_07_deve_executar_simulacao_com_monitoramento(self):
+        print("US03 - Teste 07: Cenário com BZU detecta e resolve na origem.")
+
+        self.abrir_simulador()
+        self.clicar_botao("Simular com BZU")
+
+        # o bloco de alerta aparece assim que o sensor detecta a anomalia
+        self.wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".dfs-alert"))
+        )
+
+        # estado final: manutenção acionada e cascata interrompida
+        self.wait_longo.until(
+            EC.text_to_be_present_in_element(
+                (By.CSS_SELECTOR, ".dfs-alert-title"), "Manutenção acionada"
+            )
+        )
+        sub = self.driver.find_element(By.CSS_SELECTOR, ".dfs-alert-sub").text
+        self.assertIn("cascata foi interrompida na origem", sub)
+
+        resultado = self.wait.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".dfs-result.safe"))
+        )
+        self.assertIn("ainda na máquina", resultado.text)
+
+        # nenhuma etapa da cadeia caiu e não há mensagem de prejuízo
+        self.assertEqual(
+            self.driver.find_elements(By.CSS_SELECTOR, ".dfs-tile.fell"), []
+        )
+        self.assertEqual(
+            self.driver.find_elements(By.CSS_SELECTOR, ".dfs-result.danger"), []
+        )
+
+        self.pausa(4)
+
+    def test_08_deve_transitar_do_cenario_sem_bzu_para_com_bzu(self):
+        print("US03 - Teste 08: Transição do cenário sem BZU para com BZU.")
+
+        self.abrir_simulador()
+
+        # 1º cenário: sem monitoramento
+        self.clicar_botao("Simular sem BZU")
+        self.wait_longo.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".dfs-result.danger"))
+        )
+        self.pausa(2)
+
+        # 2º cenário: com monitoramento (botão volta a ficar habilitado)
+        self.clicar_botao("Simular com BZU")
+
+        # a mensagem de prejuízo some e entra a de problema resolvido
+        self.wait_longo.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".dfs-result.safe"))
+        )
+        self.assertEqual(
+            self.driver.find_elements(By.CSS_SELECTOR, ".dfs-result.danger"), []
+        )
+
+        self.pausa(3)
